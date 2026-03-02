@@ -146,6 +146,3 @@ vercel --prod
 | **Usability** | Skip-to-content links, semantic HTML, ARIA labels, lazy loading, keyboard navigation, sticky filter bars |
 | **Creativity** | Web Components architecture, brutalist-modern design language, hexagonal "years of excellence" animation, gradient research cards |
 
----
-
-© 2026 30668301@sun.ac.za — Div & Conquer Hackathon 1st Place
