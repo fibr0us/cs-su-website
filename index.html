@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>var t=localStorage.getItem("su-theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Stellenbosch University Computer Science Division — advancing the frontiers of AI, software engineering, and intelligent systems." />
+  <meta name="keywords" content="computer science, Stellenbosch University, AI, machine learning, software engineering, research" />
+  <title>Computer Science | Stellenbosch University</title>
+  <link rel="icon" type="image/svg+xml" href="su-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="theme.css" />
+  <style>
+    /* Page-specific tokens: none — all tokens from theme.css */
+
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--light);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul, ol { list-style: none; }
+    button { border: none; cursor: pointer; font-family: var(--font-body); }
+
+    /* ─── Utility ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+    .section-header { margin-bottom: 56px; }
+    .section-header.centered { text-align: center; }
+    .section-header.centered .section-subtitle { margin: 0 auto; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: var(--transition);
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border: 2px solid var(--primary);
+    }
+    .btn-primary:hover {
+      background: var(--primary-light);
+      border-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(153,24,50,0.35);
+    }
+    .btn-outline-white {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    .btn-outline-white:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: #fff;
+      transform: translateY(-2px);
+    }
+    .btn-outline-primary {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    .btn-outline-primary:hover {
+      background: var(--primary);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(153,24,50,0.25);
+    }
+    .btn-sm { padding: 10px 20px; font-size: 0.85rem; }
+
+    /* ─── Animate Up ─── */
+    .animate-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .animate-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--dark);
+      overflow: hidden;
+      padding: 120px 24px 80px;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .hero-shape {
+      position: absolute;
+      border-radius: 50%;
+      animation: heroFloat linear infinite;
+    }
+    .hero-shape-1 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(153,24,50,0.18) 0%, transparent 70%);
+      top: -100px; left: -100px;
+      animation-duration: 18s;
+    }
+    .hero-shape-2 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(201,162,39,0.12) 0%, transparent 70%);
+      top: 20%; right: -80px;
+      animation-duration: 24s;
+      animation-delay: -8s;
+    }
+    .hero-shape-3 {
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(153,24,50,0.12) 0%, transparent 70%);
+      bottom: 15%; left: 10%;
+      animation-duration: 20s;
+      animation-delay: -4s;
+    }
+    .hero-shape-4 {
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(201,162,39,0.1) 0%, transparent 70%);
+      bottom: 30%; right: 15%;
+      animation-duration: 16s;
+      animation-delay: -12s;
+    }
+    .hero-triangle {
+      position: absolute;
+      width: 0; height: 0;
+      animation: heroFloat linear infinite;
+    }
+    .hero-triangle-1 {
+      border-left: 60px solid transparent;
+      border-right: 60px solid transparent;
+      border-bottom: 100px solid rgba(153,24,50,0.07);
+      top: 40%; left: 5%;
+      animation-duration: 22s;
+      animation-delay: -6s;
+    }
+    .hero-triangle-2 {
+      border-left: 40px solid transparent;
+      border-right: 40px solid transparent;
+      border-bottom: 70px solid rgba(201,162,39,0.07);
+      top: 15%; right: 25%;
+      animation-duration: 19s;
+      animation-delay: -10s;
+    }
+    .hero-dots {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(153,24,50,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(153,24,50,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+    @keyframes heroFloat {
+      0%   { transform: translateY(0px) rotate(0deg); }
+      33%  { transform: translateY(-30px) rotate(5deg); }
+      66%  { transform: translateY(15px) rotate(-3deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 860px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(153,24,50,0.2);
+      border: 1px solid rgba(153,24,50,0.4);
+      border-radius: 100px;
+      padding: 8px 18px;
+      margin-bottom: 28px;
+      animation: fadeInDown 0.8s ease forwards;
+    }
+    .hero-badge span {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.05em;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.4); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.9s ease 0.15s both;
+    }
+    .hero-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-subtitle {
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      color: rgba(255,255,255,0.7);
+      line-height: 1.75;
+      margin-bottom: 40px;
+      max-width: 660px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeInUp 0.9s ease 0.3s both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.9s ease 0.45s both;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px; left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 1;
+      animation: fadeInUp 1s ease 0.8s both;
+    }
+    .hero-scroll span {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+    .hero-scroll-arrow {
+      width: 28px; height: 28px;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: bounceDown 2s ease infinite;
+    }
+    .hero-scroll-arrow svg { color: rgba(255,255,255,0.5); }
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* ─── Stats Bar ─── */
+    .stats-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+      box-shadow: var(--shadow-md);
+    }
+    .stats-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 28px 32px;
+      border-right: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: var(--light); }
+    .stat-emoji {
+      font-size: 2rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .stat-text { display: flex; flex-direction: column; }
+    .stat-value {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── About Section ─── */
+    #about {
+      padding: 100px 0;
+      background: var(--light);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-text .section-title { color: var(--text-primary); }
+    .about-body {
+      font-size: 1.02rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .about-highlights {
+      margin: 32px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .about-highlight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .about-highlight-icon {
+      width: 36px; height: 36px;
+      background: rgba(153,24,50,0.08);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .about-highlight-icon svg { color: var(--primary); }
+    .about-highlight-text { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5; }
+    .about-highlight-text strong { color: var(--text-primary); font-weight: 600; }
+    .about-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 420px;
+    }
+    .about-hex-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .hex-shape {
+      position: absolute;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      transition: var(--transition);
+    }
+    .hex-shape:hover { transform: scale(1.05); }
+    .hex-1 {
+      width: 140px; height: 156px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      top: 10px; left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.7;
+    }
+    .hex-2 {
+      width: 110px; height: 122px;
+      background: linear-gradient(135deg, var(--accent), #b8880a);
+      top: 50px; left: 10%;
+      opacity: 0.6;
+    }
+    .hex-3 {
+      width: 110px; height: 122px;
+      background: linear-gradient(135deg, var(--dark-mid), var(--dark));
+      top: 50px; right: 5%;
+      opacity: 0.65;
+    }
+    .hex-4 {
+      width: 90px; height: 100px;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      bottom: 60px; left: 12%;
+      opacity: 0.55;
+    }
+    .hex-5 {
+      width: 90px; height: 100px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      bottom: 60px; right: 10%;
+      opacity: 0.55;
+    }
+    .hex-6 {
+      width: 70px; height: 78px;
+      background: linear-gradient(135deg, var(--dark), var(--dark-mid));
+      bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.45;
+    }
+    .hex-center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .hex-center-year {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .hex-center-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .about-visual-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1.5px dashed;
+      animation: spinRing linear infinite;
+      pointer-events: none;
+    }
+    .ring-1 {
+      width: 320px; height: 320px;
+      border-color: rgba(153,24,50,0.12);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation-duration: 30s;
+    }
+    .ring-2 {
+      width: 420px; height: 420px;
+      border-color: rgba(201,162,39,0.1);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation-duration: 45s;
+      animation-direction: reverse;
+    }
+    @keyframes spinRing {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* ─── Research Section ─── */
+    #research {
+      padding: 100px 0;
+      background: var(--dark);
+    }
+    #research .section-title { color: #fff; }
+    #research .section-subtitle { color: rgba(255,255,255,0.6); }
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+    .research-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .research-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0.4;
+    }
+    .research-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(153,24,50,0.25);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.4), 0 0 30px rgba(153,24,50,0.1);
+    }
+    /* Alternate maroon/gold on odd/even research cards */
+    .research-card:nth-child(odd) {
+      border-left-color: var(--primary);
+    }
+    .research-card:nth-child(odd)::before {
+      background: linear-gradient(90deg, var(--primary-light, #c02040), transparent);
+    }
+    .research-card:nth-child(odd) .research-icon {
+      background: rgba(153,24,50,0.12);
+      border-color: rgba(153,24,50,0.2);
+    }
+    .research-card:nth-child(odd) .research-icon svg {
+      color: var(--primary-light, #c02040);
+    }
+    .research-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .research-icon {
+      width: 52px; height: 52px;
+      background: rgba(201,162,39,0.12);
+      border: 1px solid rgba(201,162,39,0.2);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .research-icon svg { color: var(--accent); }
+    .research-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .research-card-tag {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(153,24,50,0.2);
+      border: 1px solid rgba(153,24,50,0.3);
+      border-radius: 100px;
+      padding: 3px 10px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: rgba(255,200,200,0.95);
+      letter-spacing: 0.04em;
+    }
+    .research-card p {
+      font-size: 0.93rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .research-members {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .member-tag {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 5px 12px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .member-tag:hover {
+      background: rgba(201,162,39,0.15);
+      border-color: rgba(201,162,39,0.3);
+      color: var(--accent-light);
+    }
+
+    /* ─── Programmes Section ─── */
+    #programmes {
+      padding: 100px 0;
+      background: var(--light);
+    }
+    .programmes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .programme-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .programme-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: var(--transition);
+    }
+    .programme-card:hover {
+      border-color: transparent;
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-6px);
+    }
+    .programme-card:hover::after { transform: scaleX(1); }
+    .programme-emoji {
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+    .programme-badges {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .badge-red { background: rgba(153,24,50,0.1); color: var(--primary); }
+    .badge-gold { background: rgba(201,162,39,0.12); color: var(--accent); }
+    .badge-dark { background: rgba(26,26,46,0.08); color: var(--dark); }
+    .programme-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .programme-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 24px;
+    }
+    .programme-card .btn { align-self: flex-start; }
+
+    /* ─── Staff Section ─── */
+    #staff {
+      padding: 100px 0;
+      background: var(--surface-alt, #f2f3f8);
+    }
+    .staff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .staff-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .staff-card:hover {
+      border-color: transparent;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+    .staff-avatar {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 auto 16px;
+      position: relative;
+      overflow: hidden;
+      background: var(--surface-alt);
+    }
+    .staff-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .staff-avatar::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      opacity: 0.45;
+    }
+    .staff-name {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .staff-title {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .staff-office {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .staff-email {
+      font-size: 0.75rem;
+      margin-bottom: 14px;
+    }
+    .staff-email a {
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+      transition: var(--transition);
+    }
+    .staff-email a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+    .staff-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+    }
+    .staff-tag {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 3px 10px;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+
+    /* ─── Divider ─── */
+    .section-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary), var(--accent), var(--primary), transparent);
+    }
+
+    /* ─── Publications Section ─── */
+    #publications {
+      padding: 5rem 0;
+      background: var(--dark, #0a0a0a);
+    }
+    #publications .section-title { color: #fff; }
+    #publications .section-subtitle { color: rgba(255,255,255,0.6); }
+    .pub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .pub-card { padding: 1.5rem; }
+    .pub-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .pub-year {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #fff;
+      background: rgba(153,24,50,0.55);
+      border: 1px solid rgba(153,24,50,0.7);
+      padding: 0.15em 0.55em;
+      border-radius: 3px;
+    }
+    .pub-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+    }
+    .pub-authors {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.75rem;
+    }
+    .pub-abstract {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+    .research-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    .research-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(201,162,39,0.1);
+      border: 1px solid rgba(201,162,39,0.3);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .research-link:hover {
+      background: rgba(201,162,39,0.2);
+      border-color: var(--accent);
+      color: var(--accent-light, #e0b93a);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(201,162,39,0.15);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 1024px) {
+      .research-grid { grid-template-columns: 1fr; }
+      .programmes-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-visual { height: 300px; }
+    }
+    @media (max-width: 768px) {
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:nth-child(1),
+      .stat-item:nth-child(2) { border-right: 1px solid var(--border); }
+      .stat-item:last-child { border-bottom: none; }
+      .programmes-grid { grid-template-columns: 1fr; }
+      #about, #research, #programmes, #staff { padding: 64px 0; }
+      .hero-actions { flex-direction: column; align-items: center; }
+    }
+    @media (max-width: 480px) {
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+      .staff-grid { grid-template-columns: repeat(2, 1fr); }
+      .scroll-to-top { bottom: 20px; right: 20px; }
+      .research-link { padding: 0.6rem 1rem; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- ─── NAVIGATION (Web Component) ─── -->
+  <script src="components.js"></script>
+  <su-nav></su-nav>
+
+  <main id="main-content">
+    <!-- ─── HERO ─── -->
+    <header class="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-dots"></div>
+        <div class="hero-grid-lines"></div>
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+        <div class="hero-shape hero-shape-3"></div>
+        <div class="hero-shape hero-shape-4"></div>
+        <div class="hero-triangle hero-triangle-1"></div>
+        <div class="hero-triangle hero-triangle-2"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="hero-badge-dot" aria-hidden="true"></span>
+          <span>Stellenbosch University · CS Division Est. 1972</span>
+        </div>
+        <h1 class="hero-title">
+          Advancing the <em>Frontiers</em><br/>of Computing
+        </h1>
+        <p class="hero-subtitle">
+          Stellenbosch University's Computer Science Division — where theory meets innovation.
+          Join a community shaping the future of AI, software, and intelligent systems.
+        </p>
+        <div class="hero-actions">
+          <a href="programmes.html" class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Explore Programmes
+          </a>
+          <a href="#research" class="btn btn-outline-white">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            Meet Our Researchers
+          </a>
+        </div>
+      </div>
+      <div class="hero-scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="hero-scroll-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- ─── STATS BAR ─── -->
+    <section class="stats-bar" aria-label="Department statistics">
+      <div class="container">
+        <div class="stats-inner">
+          <div class="stat-item animate-up">
+            <div class="stat-emoji" aria-hidden="true">🏛️</div>
+            <div class="stat-text">
+              <span class="stat-value">1972</span>
+              <span class="stat-label">Founded</span>
+            </div>
+          </div>
+          <div class="stat-item animate-up">
+            <div class="stat-emoji" aria-hidden="true">👥</div>
+            <div class="stat-text">
+              <span class="stat-value">20+</span>
+              <span class="stat-label">Academic Staff</span>
+            </div>
+          </div>
+          <div class="stat-item animate-up">
+            <div class="stat-emoji" aria-hidden="true">🔬</div>
+            <div class="stat-text">
+              <span class="stat-value">4</span>
+              <span class="stat-label">Research Groups</span>
+            </div>
+          </div>
+          <div class="stat-item animate-up">
+            <div class="stat-emoji" aria-hidden="true">🎓</div>
+            <div class="stat-text">
+              <span class="stat-value">5+</span>
+              <span class="stat-label">Degree Pathways</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── ABOUT ─── -->
+    <section id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text animate-up">
+            <span class="section-label">Our Division</span>
+            <h2 class="section-title" id="about-title">About the Division</h2>
+            <p class="about-body">
+              Founded in 1972, the Computer Science Division is a proud part of the Department of Mathematical Sciences
+              at Stellenbosch University. Situated in the heart of one of South Africa's most beautiful university towns,
+              we are home to 11 full academic staff members and a vibrant community of postgraduate researchers.
+            </p>
+            <p class="about-body">
+              Our division bridges the gap between rigorous theoretical foundations and cutting-edge applied research,
+              producing graduates who lead in industry, academia, and public service across South Africa and beyond.
+            </p>
+            <div class="about-highlights">
+              <div class="about-highlight-item">
+                <div class="about-highlight-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                </div>
+                <p class="about-highlight-text"><strong>Research Excellence</strong> — Four active research groups spanning Automata Theory, Software Engineering, Machine Learning, and Computer Networks.</p>
+              </div>
+              <div class="about-highlight-item">
+                <div class="about-highlight-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <p class="about-highlight-text"><strong>Comprehensive Curriculum</strong> — From foundational BSc to doctoral research, with strong industry connections and interfaculty programmes.</p>
+              </div>
+              <div class="about-highlight-item">
+                <div class="about-highlight-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </div>
+                <p class="about-highlight-text"><strong>Located in Matieland</strong> — Stellenbosch campus offers world-class facilities in a collaborative and inspiring environment.</p>
+              </div>
+            </div>
+          </div>
+          <div class="about-visual animate-up" aria-hidden="true">
+            <div class="about-hex-wrap">
+              <div class="about-visual-ring ring-1"></div>
+              <div class="about-visual-ring ring-2"></div>
+              <div class="hex-shape hex-1"></div>
+              <div class="hex-shape hex-2"></div>
+              <div class="hex-shape hex-3"></div>
+              <div class="hex-shape hex-4"></div>
+              <div class="hex-shape hex-5"></div>
+              <div class="hex-shape hex-6"></div>
+              <div class="hex-center-text">
+                <div class="hex-center-year">54</div>
+                <div class="hex-center-label">Years of Excellence</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── RESEARCH ─── -->
+    <section id="research" aria-labelledby="research-title">
+      <div class="container">
+        <div class="section-header animate-up">
+          <span class="section-label">Research</span>
+          <h2 class="section-title" id="research-title">Our Research Groups</h2>
+          <p class="section-subtitle">
+            Four dynamic research clusters advancing the boundaries of computer science knowledge and application.
+          </p>
+        </div>
+        <div class="research-grid">
+
+          <!-- Theory & Automata -->
+          <article class="research-card animate-up" aria-label="Theory and Automata research group">
+            <div class="research-card-header">
+              <div class="research-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/>
+                  <path d="M12 8v4l2.5 2.5"/>
+                  <path d="M7.5 4.2C6 5.4 5 7.1 5 9a7 7 0 0 0 7 7 7 7 0 0 0 5-2.1"/>
+                  <circle cx="12" cy="12" r="1"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Theory &amp; Automata</h3>
+                <span class="research-card-tag">Formal Methods</span>
+              </div>
+            </div>
+            <p>NFA theory, pattern layout algorithms, cellular automata, algorithmic music generation, and grammar correction — exploring the theoretical limits of computation.</p>
+            <div class="research-members" aria-label="Group members">
+              <span class="member-tag">Willem Bester</span>
+
+
+              <span class="member-tag">Brink van der Merwe</span>
+              <span class="member-tag">Lynette van Zijl</span>
+            </div>
+          </article>
+
+          <!-- Software Engineering -->
+          <article class="research-card animate-up" aria-label="Software Engineering and Verification research group">
+            <div class="research-card-header">
+              <div class="research-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/>
+                  <path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Software Engineering &amp; Verification</h3>
+                <span class="research-card-tag">Verification</span>
+              </div>
+            </div>
+            <p>Computer-aided verification, systematic software testing, OS kernel correctness, and protocol verification — ensuring software systems work as intended.</p>
+            <div class="research-members" aria-label="Group members">
+              <span class="member-tag">Bernd Fischer</span>
+              <span class="member-tag">Cornelia Inggs</span>
+              <span class="member-tag">Willem Visser</span>
+              <span class="member-tag">Andrew Collett</span>
+            </div>
+          </article>
+
+          <!-- Machine Learning -->
+          <article class="research-card animate-up" aria-label="Machine Learning and AI research group">
+            <div class="research-card-header">
+              <div class="research-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.54"/>
+                  <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-1.54"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Machine Learning &amp; AI</h3>
+                <span class="research-card-tag">Artificial Intelligence</span>
+              </div>
+            </div>
+            <p>Sequential decision-making, reinforcement learning, planning under uncertainty, neural networks, and earth observation satellite data analysis.</p>
+            <div class="research-members" aria-label="Group members">
+              <span class="member-tag">Steve Kroon</span>
+              <span class="member-tag">Trienko Grobler</span>
+              <span class="member-tag">Mkhuseli Ngxande</span>
+              <span class="member-tag">Andries Engelbrecht</span>
+            </div>
+          </article>
+
+          <!-- Computer Networks -->
+          <article class="research-card animate-up" aria-label="Computer Networks and HCI research group">
+            <div class="research-card-header">
+              <div class="research-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="2" width="6" height="6" rx="1"/>
+                  <rect x="16" y="2" width="6" height="6" rx="1"/>
+                  <rect x="16" y="16" width="6" height="6" rx="1"/>
+                  <rect x="2" y="16" width="6" height="6" rx="1"/>
+                  <path d="M8 5h8M5 8v8M19 8v8M8 19h8"/>
+                  <circle cx="12" cy="12" r="2"/>
+                  <path d="M10 12H8M14 12h2M12 10V8M12 14v2"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Computer Networks &amp; HCI</h3>
+                <span class="research-card-tag">Networks &amp; Society</span>
+              </div>
+            </div>
+            <p>Network architecture and applications, human-computer interaction, social impact of technology, ethical computing practices, and accessible system design.</p>
+            <div class="research-members" aria-label="Group members">
+              <span class="member-tag">Bill Tucker</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── PUBLICATIONS / RESEARCH OUTPUT ─── -->
+    <section id="publications" aria-labelledby="publications-title">
+      <div class="container">
+        <div class="section-header animate-up">
+          <span class="section-label">Research Output</span>
+          <h2 class="section-title" id="publications-title">Selected Publications</h2>
+          <p class="section-subtitle">
+            Recent peer-reviewed contributions from our research groups — spanning theory, AI, software engineering, and networks.
+          </p>
+        </div>
+
+        <div class="pub-grid">
+
+          <!-- Publication 1 -->
+          <article class="research-card pub-card animate-up">
+            <div class="pub-meta">
+              <span class="research-card-tag">Machine Learning</span>
+              <span class="pub-year">2025</span>
+            </div>
+            <h3>Scalable Reinforcement Learning for Resource-Constrained Environments</h3>
+            <p class="pub-authors">S. Kroon, M. Ngxande — <em>NeurIPS 2025</em></p>
+            <p class="pub-abstract">Novel policy-gradient methods that reduce sample complexity by 40%, enabling deployment on edge devices for real-time decision-making in agricultural monitoring systems.</p>
+          </article>
+
+          <!-- Publication 2 -->
+          <article class="research-card pub-card animate-up">
+            <div class="pub-meta">
+              <span class="research-card-tag">Software Verification</span>
+              <span class="pub-year">2025</span>
+            </div>
+            <h3>Automated Protocol Verification with Compositional Model Checking</h3>
+            <p class="pub-authors">B. Fischer, W. Visser — <em>ICSE 2025</em></p>
+            <p class="pub-abstract">A compositional approach to verifying complex distributed protocols, achieving order-of-magnitude speedups over monolithic methods while maintaining completeness guarantees.</p>
+          </article>
+
+          <!-- Publication 3 -->
+          <article class="research-card pub-card animate-up">
+            <div class="pub-meta">
+              <span class="research-card-tag">Formal Methods</span>
+              <span class="pub-year">2025</span>
+            </div>
+            <h3>Minimal NFA Constructions for Pattern Matching with Bounded Delay</h3>
+            <p class="pub-authors">L. van Zijl, A.B. van der Merwe — <em>Theoretical Computer Science, Vol. 987</em></p>
+            <p class="pub-abstract">New constructions for bounded-delay NFAs that are provably minimal, with applications to streaming pattern matching and real-time text processing systems.</p>
+          </article>
+
+          <!-- Publication 4 -->
+          <article class="research-card pub-card animate-up">
+            <div class="pub-meta">
+              <span class="research-card-tag">Computer Vision</span>
+              <span class="pub-year">2024</span>
+            </div>
+            <h3>Deep Satellite Image Segmentation for Precision Agriculture in Southern Africa</h3>
+            <p class="pub-authors">T.L. Grobler, M. Ngxande — <em>Remote Sensing, 16(4)</em></p>
+            <p class="pub-abstract">Transfer learning techniques applied to Sentinel-2 imagery for automated crop classification and yield estimation, validated across multiple South African biomes.</p>
+          </article>
+
+          <!-- Publication 5 -->
+          <article class="research-card pub-card animate-up">
+            <div class="pub-meta">
+              <span class="research-card-tag">Swarm Intelligence</span>
+              <span class="pub-year">2024</span>
+            </div>
+            <h3>Particle Swarm Optimization for Large-Scale Neural Architecture Search</h3>
+            <p class="pub-authors">A.P. Engelbrecht — <em>IEEE Transactions on Evolutionary Computation, 28(3)</em></p>
+            <p class="pub-abstract">Multi-objective PSO variants that co-optimize accuracy and computational cost in neural architecture search, outperforming gradient-based NAS methods on standard benchmarks.</p>
+          </article>
+
+          <!-- Publication 6 -->
+          <article class="research-card pub-card animate-up">
+            <div class="pub-meta">
+              <span class="research-card-tag">HCI &amp; Accessibility</span>
+              <span class="pub-year">2024</span>
+            </div>
+            <h3>Accessible Mobile Interfaces for Low-Literacy Users in Resource-Limited Settings</h3>
+            <p class="pub-authors">B. Tucker — <em>ACM CHI 2024</em></p>
+            <p class="pub-abstract">Co-designed mobile health interfaces for rural South African communities, demonstrating 65% improvement in task completion for users with limited digital literacy.</p>
+          </article>
+
+        </div>
+
+        <!-- Research profile links -->
+        <div class="research-links animate-up">
+          <a href="https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=stellenbosch+university+computer+science" target="_blank" rel="noopener noreferrer" class="research-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/></svg>
+            Google Scholar
+          </a>
+          <a href="https://dblp.org/search?q=stellenbosch+university+computer+science" target="_blank" rel="noopener noreferrer" class="research-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 1v22l7-3.5V6l8-4V1L3 1zm8 5v13.5l7-3.5V2.5L11 6z"/></svg>
+            DBLP
+          </a>
+          <a href="https://www.scopus.com/affil/profile.uri?afid=60001067" target="_blank" rel="noopener noreferrer" class="research-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+            Scopus
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── PROGRAMMES ─── -->
+    <section id="programmes" aria-labelledby="programmes-title">
+      <div class="container">
+        <div class="section-header centered animate-up">
+          <span class="section-label">Academic Programmes</span>
+          <h2 class="section-title" id="programmes-title">Your Path in Computer Science</h2>
+          <p class="section-subtitle">
+            From foundational undergraduate degrees to cutting-edge doctoral research — find the programme that matches your ambitions.
+          </p>
+        </div>
+        <div class="programmes-grid">
+
+          <article class="programme-card animate-up" aria-label="BSc Computer Science programme">
+            <div class="programme-emoji" aria-hidden="true">🎓</div>
+            <div class="programme-badges">
+              <span class="badge badge-dark">3 Years</span>
+              <span class="badge badge-red">NQF 7</span>
+              <span class="badge badge-gold">Undergraduate</span>
+            </div>
+            <h3>BSc Computer Science</h3>
+            <p>Build deep expertise in both theory and practice. Choose from 5 focal areas including AI, software engineering, formal methods, and more. The foundation of a distinguished CS career.</p>
+            <a href="undergraduate.html" class="btn btn-outline-primary btn-sm">Learn More →</a>
+          </article>
+
+          <article class="programme-card animate-up" aria-label="BDatSci Data Science programme">
+            <div class="programme-emoji" aria-hidden="true">📊</div>
+            <div class="programme-badges">
+              <span class="badge badge-dark">4 Years</span>
+              <span class="badge badge-red">NQF 8</span>
+              <span class="badge badge-gold">Interfaculty</span>
+            </div>
+            <h3>BDatSci Data Science</h3>
+            <p>An interfaculty programme combining a complete CS curriculum with advanced statistical and data science training. Perfect for the era of big data and intelligent systems.</p>
+            <a href="undergraduate.html" class="btn btn-outline-primary btn-sm">Learn More →</a>
+          </article>
+
+          <article class="programme-card animate-up" aria-label="BCmp Honours programme">
+            <div class="programme-emoji" aria-hidden="true">🏆</div>
+            <div class="programme-badges">
+              <span class="badge badge-dark">1 Year</span>
+              <span class="badge badge-red">NQF 8</span>
+              <span class="badge badge-gold">Honours</span>
+            </div>
+            <h3>BCmp Honours</h3>
+            <p>Advanced specialization in AI, Software Engineering, or Formal Methods. Includes an independent research project supervised by leading academics in the division.</p>
+            <a href="honours.html" class="btn btn-outline-primary btn-sm">Learn More →</a>
+          </article>
+
+          <article class="programme-card animate-up" aria-label="Master's degree programme">
+            <div class="programme-emoji" aria-hidden="true">🔬</div>
+            <div class="programme-badges">
+              <span class="badge badge-dark">2 Years</span>
+              <span class="badge badge-red">NQF 9</span>
+              <span class="badge badge-gold">Postgraduate</span>
+            </div>
+            <h3>Master's Degree</h3>
+            <p>Conduct original research under expert supervision in one of our four research groups. Contribute to the global body of knowledge in your chosen specialization area.</p>
+            <a href="masters.html" class="btn btn-outline-primary btn-sm">Learn More →</a>
+          </article>
+
+          <article class="programme-card animate-up" aria-label="PhD programme">
+            <div class="programme-emoji" aria-hidden="true">🌟</div>
+            <div class="programme-badges">
+              <span class="badge badge-dark">3–4 Years</span>
+              <span class="badge badge-red">NQF 10</span>
+              <span class="badge badge-gold">Doctoral</span>
+            </div>
+            <h3>PhD in Computer Science</h3>
+            <p>Push the absolute boundaries of computing knowledge. Make an original and significant contribution to computer science under world-class supervision at Stellenbosch University.</p>
+            <a href="phd.html" class="btn btn-outline-primary btn-sm">Learn More →</a>
+          </article>
+
+          <article class="programme-card animate-up" aria-label="All programmes overview" style="background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-color:transparent;">
+            <div class="programme-emoji" aria-hidden="true" style="filter:grayscale(1) brightness(2);">📋</div>
+            <div class="programme-badges">
+              <span class="badge" style="background:rgba(255,255,255,0.15);color:#fff;">All Options</span>
+            </div>
+            <h3 style="color:#fff;">Not Sure Where to Start?</h3>
+            <p style="color:rgba(255,255,255,0.75);">Explore our full programmes guide, admission requirements, and frequently asked questions about studying CS at Stellenbosch.</p>
+            <a href="programmes.html" class="btn btn-outline-white btn-sm">View All Programmes →</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── STAFF ─── -->
+    <section id="staff" aria-labelledby="staff-title">
+      <div class="container">
+        <div class="section-header centered animate-up">
+          <span class="section-label">Our People</span>
+          <h2 class="section-title" id="staff-title">Meet the Academic Staff</h2>
+          <p class="section-subtitle">
+            World-class researchers and educators dedicated to advancing computer science and nurturing the next generation of innovators.
+          </p>
+        </div>
+        <div class="staff-grid">
+
+          <article class="staff-card animate-up" aria-label="George Azzopardi">
+            <div class="staff-avatar"><img src="staff-photos/gazzopardi.jpg" alt="George Azzopardi" loading="lazy"></div>
+            <div class="staff-name">George Azzopardi</div>
+            <div class="staff-title">Assoc. Prof. Extraordinary</div>
+            <div class="staff-office">Remote</div>
+            <div class="staff-tags">
+              <span class="staff-tag">Computer Vision</span>
+              <span class="staff-tag">Pattern Rec.</span>
+              <span class="staff-tag">ML</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Wolf-Tilo Balke &amp; Florian Plötzky">
+            <div class="staff-avatar"><img src="staff-photos/tbalke.jpg" alt="Wolf-Tilo Balke" loading="lazy"></div>
+            <div class="staff-name">Wolf-Tilo Balke &amp; Florian Plötzky</div>
+            <div class="staff-title">Visiting Academic</div>
+            <div class="staff-email"><a href="mailto:balke@ifis.cs.tu-bs.de">balke@ifis.cs.tu-bs.de</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Query Processing</span>
+              <span class="staff-tag">User Modelling</span>
+              <span class="staff-tag">P2P Networks</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Willem Bester">
+            <div class="staff-avatar"><img src="staff-photos/whkbester.jpg" alt="Willem Bester" loading="lazy"></div>
+            <div class="staff-name">Willem Bester</div>
+            <div class="staff-title">Junior Lecturer</div>
+            <div class="staff-office">Office A508</div>
+            <div class="staff-email"><a href="mailto:whkbester@cs.sun.ac.za">whkbester@cs.sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Software Eng.</span>
+              <span class="staff-tag">Formal Methods</span>
+              <span class="staff-tag">Automata</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Judith Bishop">
+            <div class="staff-avatar"><img src="staff-photos/jbishop.jpg" alt="Judith Bishop" loading="lazy"></div>
+            <div class="staff-name">Judith Bishop</div>
+            <div class="staff-title">Prof. Extraordinary</div>
+            <div class="staff-email"><a href="mailto:jbishop@sun.ac.za">jbishop@sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Programming</span>
+              <span class="staff-tag">Software Eng.</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Loek Cleophas">
+            <div class="staff-avatar"><img src="staff-photos/lcleophas.jpg" alt="Loek Cleophas" loading="lazy"></div>
+            <div class="staff-name">Loek Cleophas</div>
+            <div class="staff-title">Assoc. Prof. Extraordinary</div>
+            <div class="staff-office">Remote</div>
+            <div class="staff-tags">
+              <span class="staff-tag">Model-Driven Eng.</span>
+              <span class="staff-tag">Digital Twins</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Marcel Dunaiski">
+            <div class="staff-avatar"><img src="staff-photos/mdunaiski.jpg" alt="Marcel Dunaiski" loading="lazy"></div>
+            <div class="staff-name">Marcel Dunaiski</div>
+            <div class="staff-title">Senior Lecturer</div>
+            <div class="staff-office">Office A519</div>
+            <div class="staff-email"><a href="mailto:marceldunaiski@sun.ac.za">marceldunaiski@sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Data Science</span>
+              <span class="staff-tag">Informetrics</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="David Baker Effendi">
+            <div class="staff-avatar"><img src="staff-photos/deffendi.jpg" alt="David Baker Effendi" loading="lazy"></div>
+            <div class="staff-name">David Baker Effendi</div>
+            <div class="staff-title">Research Fellow</div>
+            <div class="staff-office">Remote</div>
+            <div class="staff-tags">
+              <span class="staff-tag">Program Analysis</span>
+              <span class="staff-tag">Static Analysis</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Andries Engelbrecht">
+            <div class="staff-avatar"><img src="staff-photos/engel.jpg" alt="Andries Engelbrecht" loading="lazy"></div>
+            <div class="staff-name">Andries Engelbrecht</div>
+            <div class="staff-title">Professor</div>
+            <div class="staff-office">Office B2023, Industrial Eng. Building</div>
+            <div class="staff-email"><a href="mailto:engel@sun.ac.za">engel@sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Swarm Intel.</span>
+              <span class="staff-tag">Neural Networks</span>
+              <span class="staff-tag">ML</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Bernd Fischer">
+            <div class="staff-avatar"><img src="staff-photos/bfischer.jpg" alt="Bernd Fischer" loading="lazy"></div>
+            <div class="staff-name">Bernd Fischer</div>
+            <div class="staff-title">Professor</div>
+            <div class="staff-office">Office A513</div>
+            <div class="staff-email"><a href="mailto:bfischer@cs.sun.ac.za">bfischer@cs.sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Verification</span>
+              <span class="staff-tag">Program Analysis</span>
+              <span class="staff-tag">AI</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Trienko Grobler">
+            <div class="staff-avatar"><img src="staff-photos/tlgrobler.jpg" alt="Trienko Grobler" loading="lazy"></div>
+            <div class="staff-name">Trienko Grobler</div>
+            <div class="staff-title">Lecturer</div>
+            <div class="staff-office">Office A510</div>
+            <div class="staff-email"><a href="mailto:tlgrobler@sun.ac.za">tlgrobler@sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">ML</span>
+              <span class="staff-tag">Remote Sensing</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="McElory Hoffmann">
+            <div class="staff-avatar"><img src="staff-photos/mcelory.jpg" alt="McElory Hoffmann" loading="lazy"></div>
+            <div class="staff-name">McElory Hoffmann</div>
+            <div class="staff-title">Senior Lecturer Extraordinary</div>
+            <div class="staff-office">Remote</div>
+            <div class="staff-email"><a href="mailto:mcelory@praelexis.co.za">mcelory@praelexis.co.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Computer Vision</span>
+              <span class="staff-tag">Smart Cameras</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Cornelia Inggs">
+            <div class="staff-avatar"><img src="staff-photos/cinggs.jpg" alt="Cornelia Inggs" loading="lazy"></div>
+            <div class="staff-name">Cornelia Inggs</div>
+            <div class="staff-title">Senior Lecturer</div>
+            <div class="staff-office">Office A509</div>
+            <div class="staff-email"><a href="mailto:cinggs@cs.sun.ac.za">cinggs@cs.sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Formal Methods</span>
+              <span class="staff-tag">Model Checking</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Maria Keet">
+            <div class="staff-avatar"><img src="staff-photos/mkeet.png" alt="Maria Keet" loading="lazy"></div>
+            <div class="staff-name">Maria Keet</div>
+            <div class="staff-title">Prof. Extraordinary</div>
+            <div class="staff-office">Remote</div>
+            <div class="staff-tags">
+              <span class="staff-tag">Ontology</span>
+              <span class="staff-tag">Knowledge Rep.</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Steve Kroon">
+            <div class="staff-avatar"><img src="staff-photos/kroon.jpg" alt="Steve Kroon" loading="lazy"></div>
+            <div class="staff-name">Steve Kroon</div>
+            <div class="staff-title">Associate Professor</div>
+            <div class="staff-office">Office A515</div>
+            <div class="staff-email"><a href="mailto:kroon@sun.ac.za">kroon@sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">AI / ML</span>
+              <span class="staff-tag">Statistical Learning</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Mkhuseli Ngxande">
+            <div class="staff-avatar"><img src="staff-photos/ngxandem.jpg" alt="Mkhuseli Ngxande" loading="lazy"></div>
+            <div class="staff-name">Mkhuseli Ngxande</div>
+            <div class="staff-title">Lecturer</div>
+            <div class="staff-office">Office A518</div>
+            <div class="staff-email"><a href="mailto:ngxandem@sun.ac.za">ngxandem@sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">ML</span>
+              <span class="staff-tag">Computer Vision</span>
+              <span class="staff-tag">Bioinformatics</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Francesco Petruccione">
+            <div class="staff-avatar"><img src="staff-photos/petruccione.jpg" alt="Francesco Petruccione" loading="lazy"></div>
+            <div class="staff-name">Francesco Petruccione</div>
+            <div class="staff-title">Visiting Academic</div>
+            <div class="staff-office">Office MIV 1003</div>
+            <div class="staff-email"><a href="mailto:petruccione@sun.ac.za">petruccione@sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Quantum Computing</span>
+              <span class="staff-tag">NITheCS</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Laurette Pretorius">
+            <div class="staff-avatar"><img src="staff-photos/lpretorius.jpg" alt="Laurette Pretorius" loading="lazy"></div>
+            <div class="staff-name">Laurette Pretorius</div>
+            <div class="staff-title">Assoc. Prof. Extraordinary</div>
+            <div class="staff-tags">
+              <span class="staff-tag">NLP</span>
+              <span class="staff-tag">Ontology</span>
+              <span class="staff-tag">Machine Trans.</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Moeketsi Raselimo">
+            <div class="staff-avatar"><img src="staff-photos/mraselimo.jpg" alt="Moeketsi Raselimo" loading="lazy"></div>
+            <div class="staff-name">Moeketsi Raselimo</div>
+            <div class="staff-title">Lecturer Extraordinary</div>
+            <div class="staff-office">Remote</div>
+            <div class="staff-tags">
+              <span class="staff-tag">Prog. Languages</span>
+              <span class="staff-tag">Fuzzing</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Gavin Rens">
+            <div class="staff-avatar"><img src="staff-photos/grens.jpg" alt="Gavin Rens" loading="lazy"></div>
+            <div class="staff-name">Gavin Rens</div>
+            <div class="staff-title">Lecturer</div>
+            <div class="staff-office">Office A508</div>
+            <div class="staff-email"><a href="mailto:gavinrens@sun.ac.za">gavinrens@sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Cognitive Robotics</span>
+              <span class="staff-tag">RL</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="William Tucker">
+            <div class="staff-avatar"><img src="staff-photos/btucker.jpg" alt="William Tucker" loading="lazy"></div>
+            <div class="staff-name">William (Bill) Tucker</div>
+            <div class="staff-title">Professor</div>
+            <div class="staff-office">Office A522</div>
+            <div class="staff-email"><a href="mailto:btucker@sun.ac.za">btucker@sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">HCI</span>
+              <span class="staff-tag">Networks</span>
+              <span class="staff-tag">Ethics</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Brink van der Merwe">
+            <div class="staff-avatar"><img src="staff-photos/abvdm.jpg" alt="Brink van der Merwe" loading="lazy"></div>
+            <div class="staff-name">Brink van der Merwe</div>
+            <div class="staff-title">Professor &amp; Head of Division</div>
+            <div class="staff-office">Office A511</div>
+            <div class="staff-email"><a href="mailto:abvdm@cs.sun.ac.za">abvdm@cs.sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Tree Automata</span>
+              <span class="staff-tag">Grammar Learning</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Lynette van Zijl">
+            <div class="staff-avatar"><img src="staff-photos/lvzijl.jpg" alt="Lynette van Zijl" loading="lazy"></div>
+            <div class="staff-name">Lynette van Zijl</div>
+            <div class="staff-title">Professor</div>
+            <div class="staff-office">Office A520</div>
+            <div class="staff-email"><a href="mailto:lvzijl@sun.ac.za">lvzijl@sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Automata</span>
+              <span class="staff-tag">Assistive Tech.</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Willem Visser">
+            <div class="staff-avatar"><img src="staff-photos/visserw.jpg" alt="Willem Visser" loading="lazy"></div>
+            <div class="staff-name">Willem Visser</div>
+            <div class="staff-title">Part-time Professor</div>
+            <div class="staff-office">Office A517</div>
+            <div class="staff-email"><a href="mailto:visserw@sun.ac.za">visserw@sun.ac.za</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Testing</span>
+              <span class="staff-tag">Model Checking</span>
+            </div>
+          </article>
+
+          <article class="staff-card animate-up" aria-label="Fabian Yamaguchi">
+            <div class="staff-avatar"><img src="staff-photos/fabian3.jpg" alt="Fabian Yamaguchi" loading="lazy"></div>
+            <div class="staff-name">Fabian Yamaguchi</div>
+            <div class="staff-title">Prof. Extraordinary</div>
+            <div class="staff-email"><a href="mailto:fabs@shiftleft.io">fabs@shiftleft.io</a></div>
+            <div class="staff-tags">
+              <span class="staff-tag">Security</span>
+              <span class="staff-tag">Program Analysis</span>
+              <span class="staff-tag">ML</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── FOOTER (Web Component) ─── -->
+  <su-footer></su-footer>
+
+  <!-- ─── SCROLL TO TOP ─── -->
+  <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top" title="Scroll to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+  <script>
+    (function(){var btn=document.getElementById('scrollToTop');window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>400)});btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();
+  </script>
+  <!-- ─── DARK MODE TOGGLE ─── -->
+  <button class="dm-toggle" id="dmToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+
+  <script>
+    // ─── Dark mode ───
+    const dmToggle = document.getElementById('dmToggle');
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('su-theme') || 'light';
+    html.setAttribute('data-theme', savedTheme);
+    dmToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+    dmToggle.addEventListener('click', () => {
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('su-theme', next);
+      dmToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+
+    // ─── IntersectionObserver: animate-up ───
+    const animateObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          animateObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    // Stagger grid children
+    document.querySelectorAll('.animate-up').forEach((el, i) => {
+      // Stagger siblings within same parent grid
+      const siblings = Array.from(el.parentElement.children).filter(c => c.classList.contains('animate-up'));
+      const idx = siblings.indexOf(el);
+      if (idx > 0) {
+        el.style.transitionDelay = `${Math.min(idx * 0.08, 0.48)}s`;
+      }
+      animateObserver.observe(el);
+    });
+
+  </script>
+
+</body>
+</html>

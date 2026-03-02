@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>var t=localStorage.getItem("su-theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Undergraduate | Computer Science | Stellenbosch University</title>
+  <meta name="description" content="BSc Computer Science and BDatSci Data Science undergraduate programmes at Stellenbosch University — curriculum, admission requirements, and career paths." />
+  <link rel="icon" type="image/svg+xml" href="su-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="theme.css" />
+  <style>
+    /* ─── Page-specific tokens ────────────────────────────────────── */
+    :root {
+      --blue:       #7a3b10;
+      --green:      #8a6d0a;
+      --purple:     #991832;
+      --orange:     #b8880a;
+    }
+
+    /* ─── Reset ────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      background: var(--light);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ─── Scroll-animation base ────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-left  { opacity: 0; transform: translateX(-40px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal-right { opacity: 0; transform: translateX(40px);  transition: opacity .6s ease, transform .6s ease; }
+    .reveal-left.visible, .reveal-right.visible { opacity: 1; transform: none; }
+    .delay-1 { transition-delay: .1s !important; }
+    .delay-2 { transition-delay: .2s !important; }
+    .delay-3 { transition-delay: .3s !important; }
+    .delay-4 { transition-delay: .4s !important; }
+    .delay-5 { transition-delay: .5s !important; }
+
+    /* ─── Hero / Page Header ───────────────────────────────────── */
+    .page-hero {
+      min-height: 52vh;
+      background: var(--dark);
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding-top: var(--su-nav-height, 72px);
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 20% 50%, rgba(153,24,50,.35) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 30%, rgba(201,162,39,.15) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .hero-grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+    .page-hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 64px 24px 72px;
+      width: 100%;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .8rem;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      font-weight: 500;
+    }
+    .breadcrumb a { color: rgba(255,255,255,.6); transition: var(--transition); }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb .sep { color: rgba(255,255,255,.25); }
+    .breadcrumb .current { color: var(--accent); }
+    .page-hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 800;
+      color: var(--light);
+      line-height: 1.12;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+    .page-hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .page-hero p {
+      font-size: clamp(.95rem, 1.8vw, 1.2rem);
+      color: rgba(255,255,255,.7);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(153,24,50,.25);
+      border: 1px solid rgba(153,24,50,.5);
+      color: #e85d75;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    /* ─── Layout helpers ───────────────────────────────────────── */
+    .section { padding: 96px 24px; }
+    .section-alt { background: var(--surface-alt); }
+    .container { max-width: 1240px; margin: 0 auto; }
+    .section-heading {
+      font-family: var(--font-head);
+      font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -1px;
+      line-height: 1.15;
+    }
+    .section-heading span { color: var(--primary); }
+    .section-subheading {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-top: 12px;
+      max-width: 680px;
+      line-height: 1.7;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: rgba(153,24,50,.08);
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(153,24,50,.15);
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* ─── BSc Overview ─────────────────────────────────────────── */
+    .prog-info-card {
+      background: var(--light);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .prog-info-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+    .prog-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .prog-name {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .prog-meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .prog-meta-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .prog-desc {
+      font-size: .97rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+    .entry-req h4 {
+      font-family: var(--font-head);
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .req-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .9rem;
+      color: var(--text-secondary);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .req-list li:last-child { border-bottom: none; }
+    .req-list li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── Degree Timeline ──────────────────────────────────────── */
+    .timeline-card {
+      background: var(--dark);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .timeline-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+    }
+    .timeline-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--light);
+      margin-bottom: 28px;
+      letter-spacing: -.3px;
+    }
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent), var(--primary));
+    }
+    .timeline-year {
+      position: relative;
+      margin-bottom: 28px;
+    }
+    .timeline-year:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -24px;
+      top: 4px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 2px solid var(--dark);
+      box-shadow: 0 0 0 3px rgba(153,24,50,.3);
+    }
+    .timeline-year-label {
+      font-family: var(--font-head);
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .timeline-modules {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .mod-chip {
+      display: inline-block;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.85);
+      font-size: .75rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 6px;
+      letter-spacing: .2px;
+    }
+    .mod-chip.core {
+      background: rgba(153,24,50,.2);
+      border-color: rgba(153,24,50,.4);
+      color: #e8a0b0;
+    }
+    .mod-chip.math {
+      background: rgba(201,162,39,.15);
+      border-color: rgba(201,162,39,.3);
+      color: var(--accent-light);
+    }
+
+    /* ─── Focal Areas ──────────────────────────────────────────── */
+    .focal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .focal-card {
+      background: var(--light);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .focal-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .focal-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 5px;
+      border-radius: 5px 0 0 5px;
+    }
+    .focal-card.red::before    { background: var(--primary); }
+    .focal-card.blue::before   { background: var(--blue); }
+    .focal-card.green::before  { background: var(--green); }
+    .focal-card.purple::before { background: var(--purple); }
+    .focal-card.orange::before { background: var(--orange); }
+
+    .focal-card-wide {
+      grid-column: 1 / -1;
+    }
+    .focal-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .focal-icon {
+      font-size: 2.2rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .focal-header h3 {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .focal-section-ref {
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .focal-desc {
+      font-size: .9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+    .focal-modules h4 {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .module-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 16px;
+    }
+    .mtag {
+      font-size: .72rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+    .mtag-cs {
+      background: rgba(153,24,50,.08);
+      color: var(--primary);
+      border: 1px solid rgba(153,24,50,.2);
+    }
+    .mtag-ext {
+      background: rgba(26,26,46,.07);
+      color: var(--dark);
+      border: 1px solid rgba(26,26,46,.15);
+    }
+    .career-paths {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .career-chip {
+      font-size: .72rem;
+      font-weight: 600;
+      padding: 4px 11px;
+      border-radius: 999px;
+    }
+    .red    .career-chip { background: rgba(153,24,50,.08);   color: var(--primary); border: 1px solid rgba(153,24,50,.2); }
+    .blue   .career-chip { background: rgba(138,109,10,.08); color: var(--blue);   border: 1px solid rgba(138,109,10,.2); }
+    .green  .career-chip { background: rgba(138,109,10,.08);  color: var(--green);  border: 1px solid rgba(138,109,10,.2); }
+    .purple .career-chip { background: rgba(153,24,50,.08); color: var(--purple); border: 1px solid rgba(153,24,50,.2); }
+    .orange .career-chip { background: rgba(230,81,0,.08);   color: var(--orange); border: 1px solid rgba(230,81,0,.2); }
+
+    .unique-combo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface-alt);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+    .unique-combo::before { content: '★'; color: var(--accent); font-size: 1rem; }
+
+    /* ─── BDatSci Section ──────────────────────────────────────── */
+    .bdatsci-card {
+      background: var(--dark);
+      border-radius: var(--radius-xl);
+      padding: 56px;
+      position: relative;
+      overflow: hidden;
+      color: var(--light);
+    }
+    .bdatsci-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 60% at 90% 50%, rgba(201,162,39,.12) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 10% 80%, rgba(153,24,50,.15) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .bdatsci-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .bdatsci-left {}
+    .bdatsci-big-icon {
+      font-size: 5rem;
+      line-height: 1;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .bdatsci-name {
+      font-family: var(--font-head);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--light);
+      margin-bottom: 8px;
+      letter-spacing: -.5px;
+    }
+    .bdatsci-meta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .bdatsci-tag {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.85);
+      font-size: .78rem;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 999px;
+    }
+    .bdatsci-desc {
+      font-size: .95rem;
+      color: rgba(255,255,255,.7);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .bdatsci-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(201,162,39,.12);
+      border: 1px solid rgba(201,162,39,.3);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: .83rem;
+      font-weight: 500;
+      color: var(--accent-light);
+    }
+    .bdatsci-note::before { content: 'ℹ'; font-size: 1rem; flex-shrink: 0; }
+    .bdatsci-right {}
+    .bdatsci-right h4 {
+      font-family: var(--font-head);
+      font-size: .85rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+    .bdatsci-modules {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 24px;
+    }
+    .bdatsci-mod {
+      font-size: .78rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 8px;
+    }
+    .bdatsci-mod.cs   { background: rgba(153,24,50,.25);   color: #e8a0b0; border: 1px solid rgba(153,24,50,.4); }
+    .bdatsci-mod.stat { background: rgba(138,109,10,.25); color: #e8b820; border: 1px solid rgba(138,109,10,.4); }
+    .bdatsci-mod.ds   { background: rgba(201,162,39,.2);  color: #f0c030; border: 1px solid rgba(201,162,39,.35); }
+    .bdatsci-careers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .bdatsci-career {
+      font-size: .78rem;
+      font-weight: 600;
+      padding: 5px 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.8);
+    }
+
+    /* ─── First Year Module Cards ──────────────────────────────── */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .module-card {
+      background: var(--light);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .module-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+    }
+    .module-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transform: scaleX(0);
+      transition: var(--transition);
+      transform-origin: left;
+    }
+    .module-card:hover::after { transform: scaleX(1); }
+    .module-code {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .module-sem {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+      background: rgba(153,24,50,.08);
+      border: 1px solid rgba(153,24,50,.18);
+      padding: 2px 9px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-bottom: 14px;
+    }
+    .module-name {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .module-desc {
+      font-size: .88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ─── Entry Requirements ───────────────────────────────────── */
+    .req-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .req-card {
+      background: var(--light);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .req-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+    }
+    .req-card:nth-child(1)::before {
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    }
+    .req-card:nth-child(2)::before {
+      background: linear-gradient(90deg, var(--blue), #c9a227);
+    }
+    .req-card-icon { font-size: 2.2rem; margin-bottom: 12px; display: block; }
+    .req-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+    .req-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .9rem;
+      color: var(--text-secondary);
+    }
+    .req-item:last-child { border-bottom: none; }
+    .req-item-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .65rem;
+      font-weight: 900;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .req-item-check.green { background: rgba(138,109,10,.15); color: var(--green); }
+    .req-item-check.blue  { background: rgba(138,109,10,.15); color: var(--blue); }
+
+    /* ─── After Undergraduate Section ─────────────────────────── */
+    .next-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .next-card {
+      background: var(--dark);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      border: 1px solid rgba(255,255,255,.07);
+    }
+    .next-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(153,24,50,.4);
+    }
+    .next-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(153,24,50,.2), transparent 60%);
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .next-card:hover::before { opacity: 1; }
+    .next-icon {
+      font-size: 2.8rem;
+      display: block;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .next-step-num {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--primary-light);
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .next-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--light);
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .next-card p {
+      font-size: .87rem;
+      color: rgba(255,255,255,.6);
+      line-height: 1.65;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .next-card a.btn {
+      display: inline-block;
+      padding: 9px 22px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.18);
+      color: var(--light);
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 600;
+      transition: var(--transition);
+      position: relative;
+      z-index: 1;
+    }
+    .next-card a.btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+
+    /* ─── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .focal-grid { grid-template-columns: 1fr; }
+      .focal-card-wide { grid-column: auto; }
+      .bdatsci-inner { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 768px) {
+      .section { padding: 64px 20px; }
+      .two-col { grid-template-columns: 1fr; gap: 28px; }
+      .modules-grid { grid-template-columns: 1fr; }
+      .req-grid { grid-template-columns: 1fr; }
+      .next-grid { grid-template-columns: 1fr; }
+      .bdatsci-card { padding: 32px 24px; }
+    }
+    @media (max-width: 480px) {
+      .prog-info-card { padding: 28px 22px; }
+      .timeline-card { padding: 24px 20px; }
+      .focal-card { padding: 22px 18px; }
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+<!-- ── NAVIGATION (Web Component) ── -->
+<script src="components.js"></script>
+<su-nav></su-nav>
+
+<!-- ─── Page Hero ────────────────────────────────────────────────── -->
+<header class="page-hero" id="main-content">
+  <div class="hero-grid-overlay"></div>
+  <div class="page-hero-inner">
+    <div class="breadcrumb reveal">
+      <a href="index.html">Home</a>
+      <span class="sep">›</span>
+      <a href="programmes.html">Programmes</a>
+      <span class="sep">›</span>
+      <span class="current">Undergraduate</span>
+    </div>
+    <div class="hero-badge reveal delay-1">🎓 Academic Programmes</div>
+    <h1 class="reveal delay-2">Undergraduate<br /><em>Programmes</em></h1>
+    <p class="reveal delay-3">Build the foundations of a computing career at Stellenbosch University — choose a pathway that matches your passions and ambitions.</p>
+  </div>
+</header>
+
+<!-- ─── Section 1: BSc CS Overview ──────────────────────────────── -->
+<section class="section" id="bsc-overview">
+  <div class="container">
+    <div class="section-label reveal">Flagship Degree</div>
+    <div class="section-heading reveal delay-1">BSc <span>Computer Science</span></div>
+    <p class="section-subheading reveal delay-2">A rigorous, world-class programme that prepares students for careers in software development, research, data science, and beyond.</p>
+
+    <div class="two-col" style="margin-top: 48px;">
+      <!-- Left: Programme Info Card -->
+      <div class="reveal-left">
+        <div class="prog-info-card">
+          <span class="prog-icon">🎓</span>
+          <div class="prog-name">BSc Computer Science</div>
+          <div class="prog-meta">
+            <span class="prog-meta-tag">⏱ 3 Years</span>
+            <span class="prog-meta-tag">📋 NQF Level 7</span>
+            <span class="prog-meta-tag">🏛 Faculty of Science</span>
+          </div>
+          <p class="prog-desc">
+            The flagship undergraduate programme in the Department of Computer Science at Stellenbosch University. Grounded in theoretical foundations and hands-on programming, this degree equips graduates with the analytical thinking and technical skills demanded by industry, academia, and innovation-driven careers. Students choose from five focal areas, tailoring their degree to their interests.
+          </p>
+          <div class="entry-req">
+            <h4>Entry Requirements</h4>
+            <ul class="req-list">
+              <li>Mathematics — at least 70% in Matric (NSC)</li>
+              <li>Physical Sciences recommended</li>
+              <li>National Senior Certificate or equivalent</li>
+              <li>English proficiency (NSC or equivalent)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Degree Timeline -->
+      <div class="reveal-right">
+        <div class="timeline-card">
+          <h3>📅 Three-Year Degree Structure</h3>
+          <div class="timeline">
+
+            <div class="timeline-year">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year-label">Year 1 — Foundations</div>
+              <div class="timeline-modules">
+                <span class="mod-chip core">CS114</span>
+                <span class="mod-chip core">CS144</span>
+                <span class="mod-chip math">Mathematics 1A</span>
+                <span class="mod-chip math">Mathematics 1B</span>
+                <span class="mod-chip">Physics / Science</span>
+                <span class="mod-chip">Elective</span>
+              </div>
+            </div>
+
+            <div class="timeline-year">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year-label">Year 2 — Core Development</div>
+              <div class="timeline-modules">
+                <span class="mod-chip core">CSE214</span>
+                <span class="mod-chip core">CS214</span>
+                <span class="mod-chip core">CS244</span>
+                <span class="mod-chip core">SC272</span>
+                <span class="mod-chip">Focal Area Modules</span>
+                <span class="mod-chip math">Applied Mathematics</span>
+              </div>
+            </div>
+
+            <div class="timeline-year">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year-label">Year 3 — Specialisation</div>
+              <div class="timeline-modules">
+                <span class="mod-chip core">CS313</span>
+                <span class="mod-chip core">CS314</span>
+                <span class="mod-chip">Advanced Electives</span>
+                <span class="mod-chip">Focal Area (Advanced)</span>
+                <span class="mod-chip math">Research Methods</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Section 2: Focal Areas ───────────────────────────────────── -->
+<section class="section section-alt" id="focal-areas">
+  <div class="container">
+    <div class="section-label reveal">Specialisation Tracks</div>
+    <div class="section-heading reveal delay-1">Choose Your <span>Focal Area</span></div>
+    <p class="section-subheading reveal delay-2">The BSc Computer Science programme offers five distinct focal areas, each combining the core CS curriculum with complementary disciplines. Your focal area shapes your identity as a computing professional.</p>
+
+    <div class="focal-grid" style="margin-top: 48px;">
+
+      <!-- Focal Area 1: General CS -->
+      <div class="focal-card red reveal delay-1">
+        <div class="focal-top">
+          <span class="focal-icon">🖥️</span>
+          <div class="focal-header">
+            <h3>General Computer Science</h3>
+            <span class="focal-section-ref">Section 4.4.1</span>
+          </div>
+        </div>
+        <p class="focal-desc">
+          The broadest focal area, combining Computer Science with additional Science modules. Perfect for those who want maximum flexibility and a strong theoretical foundation across multiple disciplines.
+        </p>
+        <div class="focal-modules">
+          <h4>Module Mix</h4>
+          <div class="module-tags">
+            <span class="mtag mtag-cs">CS114</span>
+            <span class="mtag mtag-cs">CS144</span>
+            <span class="mtag mtag-cs">CSE214</span>
+            <span class="mtag mtag-cs">CS214</span>
+            <span class="mtag mtag-cs">CS244</span>
+            <span class="mtag mtag-cs">CS313</span>
+            <span class="mtag mtag-ext">Mathematics</span>
+            <span class="mtag mtag-ext">Physics</span>
+            <span class="mtag mtag-ext">Statistics</span>
+          </div>
+        </div>
+        <h4 style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">Career Paths</h4>
+        <div class="career-paths">
+          <span class="career-chip">Software Engineer</span>
+          <span class="career-chip">Systems Architect</span>
+          <span class="career-chip">Research Scientist</span>
+          <span class="career-chip">Academic</span>
+          <span class="career-chip">Tech Entrepreneur</span>
+        </div>
+        <div class="unique-combo">Maximum flexibility — pair CS with almost any Science discipline</div>
+      </div>
+
+      <!-- Focal Area 2: Computer Systems -->
+      <div class="focal-card blue reveal delay-2">
+        <div class="focal-top">
+          <span class="focal-icon">⚡</span>
+          <div class="focal-header">
+            <h3>Computer Systems</h3>
+            <span class="focal-section-ref">Section 4.4.2</span>
+          </div>
+        </div>
+        <p class="focal-desc">
+          Combines Computer Science with Electrical &amp; Electronic Engineering modules. Ideal for those interested in embedded systems, hardware-software co-design, and low-level programming at the silicon layer.
+        </p>
+        <div class="focal-modules">
+          <h4>Module Mix</h4>
+          <div class="module-tags">
+            <span class="mtag mtag-cs">Full CS Curriculum</span>
+            <span class="mtag mtag-ext">EEE: Digital Systems</span>
+            <span class="mtag mtag-ext">EEE: Electronics</span>
+            <span class="mtag mtag-ext">Signal Processing</span>
+            <span class="mtag mtag-ext">Circuit Theory</span>
+          </div>
+        </div>
+        <h4 style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">Career Paths</h4>
+        <div class="career-paths">
+          <span class="career-chip">Embedded Systems Engineer</span>
+          <span class="career-chip">Hardware Engineer</span>
+          <span class="career-chip">IoT Developer</span>
+          <span class="career-chip">Systems Programmer</span>
+          <span class="career-chip">Robotics Engineer</span>
+        </div>
+        <div class="unique-combo">The only focal area bridging CS and EEE — opens doors in embedded and hardware</div>
+      </div>
+
+      <!-- Focal Area 3: Data Science -->
+      <div class="focal-card green reveal delay-3">
+        <div class="focal-top">
+          <span class="focal-icon">📊</span>
+          <div class="focal-header">
+            <h3>Data Science</h3>
+            <span class="focal-section-ref">Section 4.4.3</span>
+          </div>
+        </div>
+        <p class="focal-desc">
+          Combines Computer Science with Statistics and Data Science modules. The intersection of algorithms, mathematics, and data — tailor-made for the data-driven era and modern AI applications.
+        </p>
+        <div class="focal-modules">
+          <h4>Module Mix</h4>
+          <div class="module-tags">
+            <span class="mtag mtag-cs">Full CS Curriculum</span>
+            <span class="mtag mtag-ext">Statistical Inference</span>
+            <span class="mtag mtag-ext">Data Analysis</span>
+            <span class="mtag mtag-ext">ML Applications</span>
+            <span class="mtag mtag-ext">Applied Statistics</span>
+          </div>
+        </div>
+        <h4 style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">Career Paths</h4>
+        <div class="career-paths">
+          <span class="career-chip">Data Scientist</span>
+          <span class="career-chip">ML Engineer</span>
+          <span class="career-chip">Data Analyst</span>
+          <span class="career-chip">Quantitative Analyst</span>
+          <span class="career-chip">BI Developer</span>
+        </div>
+        <div class="unique-combo">Combines CS rigor with statistical theory — the strongest data science foundation</div>
+      </div>
+
+      <!-- Focal Area 4: CS with Genetics -->
+      <div class="focal-card purple reveal delay-4">
+        <div class="focal-top">
+          <span class="focal-icon">🧬</span>
+          <div class="focal-header">
+            <h3>CS with Genetics</h3>
+            <span class="focal-section-ref">Section 4.4.4</span>
+          </div>
+        </div>
+        <p class="focal-desc">
+          A unique interdisciplinary focal area combining Computer Science with Genetics. Perfect for bioinformatics, computational biology, and the rapidly growing field of genomic data analysis and personalised medicine.
+        </p>
+        <div class="focal-modules">
+          <h4>Module Mix</h4>
+          <div class="module-tags">
+            <span class="mtag mtag-cs">CS Core Curriculum</span>
+            <span class="mtag mtag-ext">Molecular Biology</span>
+            <span class="mtag mtag-ext">Genomics</span>
+            <span class="mtag mtag-ext">Genetics Fundamentals</span>
+            <span class="mtag mtag-ext">Bioinformatics Tools</span>
+          </div>
+        </div>
+        <h4 style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">Career Paths</h4>
+        <div class="career-paths">
+          <span class="career-chip">Bioinformatician</span>
+          <span class="career-chip">Computational Biologist</span>
+          <span class="career-chip">Genomics Data Scientist</span>
+          <span class="career-chip">Medical Informatics Specialist</span>
+        </div>
+        <div class="unique-combo">One of the few programmes in South Africa combining CS and Genetics</div>
+      </div>
+
+      <!-- Focal Area 5: CS with GIT — full width -->
+      <div class="focal-card orange focal-card-wide reveal delay-5">
+        <div class="focal-top">
+          <span class="focal-icon">🗺️</span>
+          <div class="focal-header">
+            <h3>CS with Geographical Information Technology</h3>
+            <span class="focal-section-ref">Section 4.4.5</span>
+          </div>
+        </div>
+        <p class="focal-desc">
+          Combines Computer Science with Geographical Information Technology. The intersection of spatial data, algorithms, and geospatial analysis — ideal for GIS software development, spatial data science, and smart-city technology.
+        </p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div>
+            <div class="focal-modules">
+              <h4>Module Mix</h4>
+              <div class="module-tags">
+                <span class="mtag mtag-cs">CS Core Curriculum</span>
+                <span class="mtag mtag-ext">GIS Theory</span>
+                <span class="mtag mtag-ext">Spatial Databases</span>
+                <span class="mtag mtag-ext">Remote Sensing</span>
+                <span class="mtag mtag-ext">Geospatial Analysis</span>
+                <span class="mtag mtag-ext">Cartography</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h4 style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">Career Paths</h4>
+            <div class="career-paths">
+              <span class="career-chip">GIS Developer</span>
+              <span class="career-chip">Spatial Data Scientist</span>
+              <span class="career-chip">Remote Sensing Analyst</span>
+              <span class="career-chip">Urban Planning Technologist</span>
+            </div>
+            <div class="unique-combo">Unique SA offering — combines CS with geospatial technology</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── BDatSci Section ───────────────────────────────────────────── -->
+<section class="section" id="bdatsci">
+  <div class="container">
+    <div class="section-label reveal">Four-Year Degree</div>
+    <div class="section-heading reveal delay-1">Bachelor of <span>Data Science</span></div>
+    <p class="section-subheading reveal delay-2">An interfaculty programme bringing together world-class computing and statistical expertise.</p>
+
+    <div style="margin-top: 48px;" class="reveal delay-3">
+      <div class="bdatsci-card">
+        <div class="bdatsci-inner">
+          <div class="bdatsci-left">
+            <span class="bdatsci-big-icon">📊</span>
+            <div class="bdatsci-name">BDatSci — Computer Science</div>
+            <div class="bdatsci-meta">
+              <span class="bdatsci-tag">⏱ 4 Years</span>
+              <span class="bdatsci-tag">📋 NQF Level 8</span>
+              <span class="bdatsci-tag">🤝 Interfaculty</span>
+            </div>
+            <p class="bdatsci-desc">
+              An interfaculty programme offered jointly by the Faculties of Science and Economic &amp; Management Sciences. The Computer Science focal area contains the complete CS curriculum alongside modules from Statistics and Data Science, producing graduates who are equally fluent in algorithms and quantitative methods.
+            </p>
+            <div class="bdatsci-note">
+              BDatSci is a 4-year degree at NQF Level 8, one level above the BSc — equivalent to an honours degree on entry into the workforce.
+            </div>
+          </div>
+          <div class="bdatsci-right">
+            <h4>Module Mix (All 4 Years)</h4>
+            <div class="bdatsci-modules">
+              <span class="bdatsci-mod cs">CS114</span>
+              <span class="bdatsci-mod cs">CS144</span>
+              <span class="bdatsci-mod cs">CSE214</span>
+              <span class="bdatsci-mod cs">CS214</span>
+              <span class="bdatsci-mod cs">CS244</span>
+              <span class="bdatsci-mod cs">CS313</span>
+              <span class="bdatsci-mod cs">CS314</span>
+              <span class="bdatsci-mod stat">Statistical Inference</span>
+              <span class="bdatsci-mod stat">Regression Analysis</span>
+              <span class="bdatsci-mod stat">Probability Theory</span>
+              <span class="bdatsci-mod ds">Machine Learning</span>
+              <span class="bdatsci-mod ds">Data Engineering</span>
+              <span class="bdatsci-mod ds">Research Methodology</span>
+              <span class="bdatsci-mod ds">Capstone Project</span>
+            </div>
+            <h4>Career Paths</h4>
+            <div class="bdatsci-careers">
+              <span class="bdatsci-career">Data Scientist</span>
+              <span class="bdatsci-career">ML Engineer</span>
+              <span class="bdatsci-career">Research Analyst</span>
+              <span class="bdatsci-career">Actuarial Data Analyst</span>
+              <span class="bdatsci-career">Quantitative Developer</span>
+              <span class="bdatsci-career">AI Researcher</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── First Year Modules ─────────────────────────────────────────── -->
+<section class="section section-alt" id="first-year">
+  <div class="container">
+    <div class="section-label reveal">Getting Started</div>
+    <div class="section-heading reveal delay-1">First-Year <span>CS Modules</span></div>
+    <p class="section-subheading reveal delay-2">Your journey in Computer Science begins here. These foundational modules build the programming fluency and conceptual thinking you'll use throughout your degree — and your career.</p>
+
+    <div class="modules-grid" style="margin-top: 48px;">
+
+      <div class="module-card reveal delay-1">
+        <div class="module-code">CS113</div>
+        <span class="module-sem">Semester 1</span>
+        <div class="module-name">Computer Science for Actuarial Studies</div>
+        <p class="module-desc">Financial programming, spreadsheet automation, and introductory programming tailored to actuarial and quantitative finance contexts. Bridges the gap between mathematical models and computational implementation.</p>
+      </div>
+
+      <div class="module-card reveal delay-2">
+        <div class="module-code">CS114</div>
+        <span class="module-sem">Semester 1</span>
+        <div class="module-name">Introductory Computer Science 1</div>
+        <p class="module-desc">The gateway module for all CS students. Covers basic programming constructs, data representation, arrays, recursion, and an introduction to object-oriented programming. Develops computational thinking from the ground up.</p>
+      </div>
+
+      <div class="module-card reveal delay-3">
+        <div class="module-code">CS144</div>
+        <span class="module-sem">Semester 2</span>
+        <div class="module-name">Introductory Computer Science 2</div>
+        <p class="module-desc">Building directly on CS114, this module introduces fundamental data structures, algorithm design, complexity theory, and advanced object-oriented programming concepts including design patterns and software architecture.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Entry Requirements ────────────────────────────────────────── -->
+<section class="section" id="entry-requirements">
+  <div class="container">
+    <div class="section-label reveal">Admissions</div>
+    <div class="section-heading reveal delay-1">Entry <span>Requirements</span></div>
+    <p class="section-subheading reveal delay-2">Stellenbosch University sets clear, transparent admission requirements to ensure all students are well-prepared for the rigour of a Computer Science degree.</p>
+
+    <div class="req-grid" style="margin-top: 48px;">
+
+      <div class="req-card reveal delay-1">
+        <span class="req-card-icon">🎓</span>
+        <h3>BSc Computer Science</h3>
+        <div class="req-item">
+          <div class="req-item-check green">✓</div>
+          <span>Mathematics — minimum 70% in the National Senior Certificate (NSC)</span>
+        </div>
+        <div class="req-item">
+          <div class="req-item-check green">✓</div>
+          <span>English — proficiency required (NSC or equivalent)</span>
+        </div>
+        <div class="req-item">
+          <div class="req-item-check green">✓</div>
+          <span>Physical Sciences — strongly recommended but not compulsory</span>
+        </div>
+        <div class="req-item">
+          <div class="req-item-check green">✓</div>
+          <span>National Senior Certificate, IEB, or equivalent qualifications accepted</span>
+        </div>
+        <div class="req-item">
+          <div class="req-item-check green">✓</div>
+          <span>Meeting minimum APS score as set by the Faculty of Science</span>
+        </div>
+      </div>
+
+      <div class="req-card reveal delay-2">
+        <span class="req-card-icon">📊</span>
+        <h3>BDatSci — Data Science</h3>
+        <div class="req-item">
+          <div class="req-item-check blue">✓</div>
+          <span>Mathematics — minimum 70% in NSC, strong quantitative background essential</span>
+        </div>
+        <div class="req-item">
+          <div class="req-item-check blue">✓</div>
+          <span>English — proficiency required</span>
+        </div>
+        <div class="req-item">
+          <div class="req-item-check blue">✓</div>
+          <span>Statistics or Mathematical Sciences highly recommended</span>
+        </div>
+        <div class="req-item">
+          <div class="req-item-check blue">✓</div>
+          <span>National Senior Certificate, IEB, or equivalent accepted</span>
+        </div>
+        <div class="req-item">
+          <div class="req-item-check blue">✓</div>
+          <span>Meeting minimum APS score as set by both participating Faculties</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── After Undergraduate ───────────────────────────────────────── -->
+<section class="section section-alt" id="after-undergrad">
+  <div class="container">
+    <div class="section-label reveal">What's Next</div>
+    <div class="section-heading reveal delay-1">After Your <span>Degree</span></div>
+    <p class="section-subheading reveal delay-2">Graduating with a BSc CS or BDatSci from Stellenbosch University opens multiple doors. Choose the path that matches your ambitions.</p>
+
+    <div class="next-grid" style="margin-top: 48px;">
+
+      <div class="next-card reveal delay-1">
+        <span class="next-icon">💼</span>
+        <div class="next-step-num">Option 1</div>
+        <h3>Enter Industry</h3>
+        <p>Join top tech companies, startups, or consulting firms as a software engineer, data scientist, product engineer, or systems specialist. Stellenbosch CS graduates are highly sought after globally.</p>
+        <a href="index.html#about" class="btn">Learn More</a>
+      </div>
+
+      <div class="next-card reveal delay-2">
+        <span class="next-icon">🏅</span>
+        <div class="next-step-num">Option 2</div>
+        <h3>BCmp Honours</h3>
+        <p>Deepen your expertise with a one-year honours degree. Specialise in algorithms, AI, computer graphics, security, or software engineering — the bridge to advanced research and senior engineering roles.</p>
+        <a href="honours.html" class="btn">View Honours</a>
+      </div>
+
+      <div class="next-card reveal delay-3">
+        <span class="next-icon">🔬</span>
+        <div class="next-step-num">Option 3</div>
+        <h3>Master's &amp; PhD</h3>
+        <p>Pursue original research and join a world-class research community. Contribute to breakthroughs in machine learning, bioinformatics, human-computer interaction, or formal methods. Shape the future of computing.</p>
+        <a href="masters.html" class="btn">Explore Research</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER (Web Component) ── -->
+<su-footer></su-footer>
+
+<!-- ─── JavaScript ────────────────────────────────────────────────── -->
+<script>
+  /* ── IntersectionObserver animations ──────────────────────────── */
+  const revealClasses = ['.reveal', '.reveal-left', '.reveal-right'];
+  const observerOptions = {
+    threshold: 0.12,
+    rootMargin: '0px 0px -60px 0px'
+  };
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target); // animate once
+      }
+    });
+  }, observerOptions);
+
+  revealClasses.forEach(cls => {
+    document.querySelectorAll(cls).forEach(el => revealObserver.observe(el));
+  });
+
+  /* ── Smooth scroll for anchor links ───────────────────────────── */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href').slice(1);
+      const target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        const offset = 80; // nav height
+        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+  <!-- ─── SCROLL TO TOP ─── -->
+  <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top" title="Scroll to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+  <script>
+    (function(){var btn=document.getElementById('scrollToTop');window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>400)});btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();
+  </script>
+  <!-- ─── DARK MODE TOGGLE ─── -->
+  <button class="dm-toggle" id="dmToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+  <script>
+    (function() {
+      var dmToggle = document.getElementById('dmToggle');
+      var htmlEl = document.documentElement;
+      var savedTheme = localStorage.getItem('su-theme') || 'light';
+      htmlEl.setAttribute('data-theme', savedTheme);
+      dmToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+      dmToggle.addEventListener('click', function() {
+        var isDark = htmlEl.getAttribute('data-theme') === 'dark';
+        var next = isDark ? 'light' : 'dark';
+        htmlEl.setAttribute('data-theme', next);
+        localStorage.setItem('su-theme', next);
+        dmToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+      });
+    })();
+  </script>
+</body>
+</html>

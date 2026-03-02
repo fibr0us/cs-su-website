@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>var t=localStorage.getItem("su-theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BCmp Honours | Computer Science | Stellenbosch University</title>
+  <meta name="description" content="BCmp Honours in Computer Science at Stellenbosch University — one-year programme combining advanced coursework with an independent research project." />
+  <link rel="icon" type="image/svg+xml" href="su-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="theme.css" />
+  <style>
+    /* ─── Page-specific tokens (honours tracks, layout) ──────── */
+    :root {
+      --honours-purple:      #991832;
+      --honours-purple-light:#cc2244;
+      --track-blue:          #7a3b10;
+      --track-blue-bg:       #faf4ec;
+      --track-green:         #8a6d0a;
+      --track-green-bg:      #faf6ee;
+      --track-orange:        #b8880a;
+      --track-orange-bg:     #fef8ee;
+      --track-purple:        #991832;
+      --track-purple-bg:     #fdf5f6;
+    }
+
+    /* ─── Reset & Base ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--light);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── Utility ───────────────────────────────────────────── */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+    .section-tag {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--honours-purple);
+      background: var(--track-purple-bg);
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 580px;
+      margin-bottom: 48px;
+    }
+
+    /* ─── Scroll Animation ──────────────────────────────────── */
+    .animate-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .animate-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── HERO ──────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 480px;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 60px;
+      padding-top: calc(var(--nav-h) + 40px);
+      background: var(--dark);
+      overflow: hidden;
+    }
+    .hero__glow {
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-30%);
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(153,24,50,.45) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero__glow-2 {
+      position: absolute;
+      bottom: -200px; right: -100px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(153,24,50,.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero__grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    .hero__content { position: relative; z-index: 1; }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .82rem;
+      color: rgba(255,255,255,.45);
+      margin-bottom: 20px;
+    }
+    .breadcrumb a {
+      color: rgba(255,255,255,.55);
+      transition: color var(--transition);
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb__sep { font-size: .7rem; }
+    .breadcrumb__current { color: rgba(255,255,255,.8); }
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(153,24,50,.3);
+      border: 1px solid rgba(204,34,68,.4);
+      color: #e85d75;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .hero__title {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .hero__title span { color: #e85d75; }
+    .hero__sub {
+      font-size: clamp(.95rem, 1.5vw, 1.15rem);
+      color: rgba(255,255,255,.65);
+      max-width: 620px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .hero__pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .hero__pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      color: #fff;
+      font-size: .875rem;
+      font-weight: 500;
+      padding: 8px 20px;
+      border-radius: 30px;
+      backdrop-filter: blur(4px);
+    }
+    .hero__pill svg { opacity: .7; }
+
+    /* ─── OVERVIEW ──────────────────────────────────────────── */
+    .overview {
+      padding: 96px 0;
+      background: var(--surface);
+    }
+    .overview__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .overview__lead {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    .overview__facts {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .fact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .fact-row:last-child { border-bottom: none; }
+    .fact-row__icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: var(--track-purple-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--honours-purple);
+      font-size: 1rem;
+    }
+    .fact-row__label {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+    }
+    .fact-row__value {
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--dark);
+    }
+    .fact-row__value a {
+      color: var(--honours-purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Credit card */
+    .credit-card {
+      background: linear-gradient(135deg, var(--dark) 0%, #3d1020 100%);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+      position: sticky;
+      top: calc(var(--nav-h) + 24px);
+    }
+    .credit-card__title {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #e85d75;
+      margin-bottom: 32px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .8rem;
+    }
+    /* Donut chart via CSS conic-gradient */
+    .donut-wrap {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+    .donut {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #e85d75 0% 75%,
+        #c9a227 75% 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .donut::after {
+      content: '';
+      position: absolute;
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--dark) 0%, #3d1020 100%);
+    }
+    .donut__label {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .donut__label strong {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .donut__label span {
+      font-size: .7rem;
+      color: rgba(255,255,255,.5);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .donut-legend { flex: 1; }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: .9rem;
+    }
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-dot--purple { background: #e85d75; }
+    .legend-dot--gold   { background: var(--accent); }
+    .legend-item__info strong { display: block; font-weight: 600; }
+    .legend-item__info span { font-size: .78rem; color: rgba(255,255,255,.55); }
+
+    .credit-bars { display: flex; flex-direction: column; gap: 16px; }
+    .cbar { }
+    .cbar__header {
+      display: flex;
+      justify-content: space-between;
+      font-size: .85rem;
+      margin-bottom: 6px;
+    }
+    .cbar__header span:last-child { font-weight: 600; color: #e85d75; }
+    .cbar__track {
+      height: 8px;
+      background: rgba(255,255,255,.12);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .cbar__fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 1s ease;
+    }
+    .cbar__fill--purple { background: linear-gradient(90deg, #cc2244, #e85d75); width: 75%; }
+    .cbar__fill--gold   { background: linear-gradient(90deg, var(--accent), #e0b93a); width: 25%; }
+    .credit-total {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .credit-total__label {
+      font-size: .85rem;
+      color: rgba(255,255,255,.6);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 600;
+    }
+    .credit-total__num {
+      font-family: var(--font-head);
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .credit-total__num span {
+      font-size: .85rem;
+      color: rgba(255,255,255,.5);
+      margin-left: 4px;
+    }
+
+    /* ─── IMPORTANT DATES ───────────────────────────────────── */
+    .dates {
+      padding: 96px 0;
+      background: var(--surface-alt);
+    }
+    .timeline {
+      position: relative;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 28px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--honours-purple), var(--accent));
+    }
+    .timeline__item {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 40px;
+      align-items: flex-start;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .timeline__item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .timeline__dot {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--honours-purple);
+      border: 3px solid var(--surface-alt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 4px rgba(153,24,50,.2);
+      position: relative;
+      z-index: 1;
+      color: #fff;
+      font-size: 1.3rem;
+    }
+    .timeline__item:nth-child(2) .timeline__dot { background: var(--primary); box-shadow: 0 0 0 4px rgba(153,24,50,.2); }
+    .timeline__item:nth-child(3) .timeline__dot { background: #7a3b10; box-shadow: 0 0 0 4px rgba(122,59,16,.2); }
+    .timeline__item:nth-child(4) .timeline__dot { background: var(--accent); box-shadow: 0 0 0 4px rgba(201,162,39,.2); }
+    .timeline__card {
+      flex: 1;
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-sm);
+      border-left: 3px solid var(--honours-purple);
+    }
+    .timeline__item:nth-child(2) .timeline__card { border-color: var(--primary); }
+    .timeline__item:nth-child(3) .timeline__card { border-color: #7a3b10; }
+    .timeline__item:nth-child(4) .timeline__card { border-color: var(--accent); }
+    .timeline__date {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--honours-purple);
+      margin-bottom: 6px;
+    }
+    .timeline__item:nth-child(2) .timeline__date { color: var(--primary); }
+    .timeline__item:nth-child(3) .timeline__date { color: #7a3b10; }
+    .timeline__item:nth-child(4) .timeline__date { color: var(--accent); }
+    .timeline__event {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .timeline__desc {
+      font-size: .9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .timeline__compulsory {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: rgba(153,24,50,.08);
+      padding: 3px 10px;
+      border-radius: 10px;
+    }
+
+    /* ─── TRACKS ────────────────────────────────────────────── */
+    .tracks {
+      padding: 96px 0;
+      background: var(--surface);
+    }
+    .tracks__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .track-card {
+      border-radius: var(--radius-md);
+      padding: 32px 28px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: transform var(--transition), box-shadow var(--transition);
+      cursor: default;
+    }
+    .track-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+    .track-card--blue   { border-top: 4px solid var(--track-blue);   background: linear-gradient(160deg, var(--track-blue-bg) 0%, var(--surface) 60%); }
+    .track-card--green  { border-top: 4px solid var(--track-green);  background: linear-gradient(160deg, var(--track-green-bg) 0%, var(--surface) 60%); }
+    .track-card--orange { border-top: 4px solid var(--track-orange); background: linear-gradient(160deg, var(--track-orange-bg) 0%, var(--surface) 60%); }
+    .track-card--purple { border-top: 4px solid var(--track-purple); background: linear-gradient(160deg, var(--track-purple-bg) 0%, var(--surface) 60%); }
+    .track-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 18px;
+    }
+    .track-card--blue   .track-icon { background: var(--track-blue-bg);   color: var(--track-blue);   }
+    .track-card--green  .track-icon { background: var(--track-green-bg);  color: var(--track-green);  }
+    .track-card--orange .track-icon { background: var(--track-orange-bg); color: var(--track-orange); }
+    .track-card--purple .track-icon { background: var(--track-purple-bg); color: var(--track-purple); }
+    .track-card__title {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+    .track-card__desc {
+      font-size: .88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+    .track-card__label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .track-card__modules {
+      font-size: .82rem;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+    .track-outcomes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .track-pill {
+      font-size: .72rem;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+    .track-card--blue   .track-pill { background: var(--track-blue-bg);   color: var(--track-blue);   }
+    .track-card--green  .track-pill { background: var(--track-green-bg);  color: var(--track-green);  }
+    .track-card--orange .track-pill { background: var(--track-orange-bg); color: var(--track-orange); }
+    .track-card--purple .track-pill { background: var(--track-purple-bg); color: var(--track-purple); }
+
+    /* ─── MODULE CATALOGUE ──────────────────────────────────── */
+    .modules {
+      padding: 96px 0;
+      background: var(--dark);
+    }
+    .modules .section-tag { background: rgba(204,34,68,.25); color: #e85d75; }
+    .modules .section-title { color: #fff; }
+    .modules .section-sub { color: rgba(255,255,255,.55); }
+    .modules__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .module-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .module-card:hover {
+      background: rgba(255,255,255,.08);
+      transform: translateY(-4px);
+    }
+    .module-card__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      gap: 12px;
+    }
+    .module-card__code {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #e85d75;
+    }
+    .module-card__credits {
+      flex-shrink: 0;
+      background: rgba(201,162,39,.15);
+      color: var(--accent);
+      border: 1px solid rgba(201,162,39,.3);
+      font-size: .72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+    .module-card__name {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .module-card__lecturer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .82rem;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 14px;
+    }
+    .module-card__lecturer svg { opacity: .6; }
+    .module-card__desc {
+      font-size: .85rem;
+      color: rgba(255,255,255,.6);
+      line-height: 1.65;
+    }
+    .module-card--project {
+      grid-column: 1 / -1;
+      border-color: rgba(201,162,39,.3);
+      background: rgba(201,162,39,.06);
+    }
+    .module-card--project .module-card__code { color: var(--accent); }
+    .modules__note {
+      margin-top: 28px;
+      padding: 18px 24px;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,.04);
+      border: 1px dashed rgba(255,255,255,.15);
+      font-size: .88rem;
+      color: rgba(255,255,255,.5);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .modules__note svg { flex-shrink: 0; opacity: .6; }
+
+    /* ─── APPLICATION ───────────────────────────────────────── */
+    .apply {
+      padding: 96px 0;
+      background: var(--surface);
+    }
+    .apply__layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 60px;
+      align-items: start;
+    }
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .step {
+      display: flex;
+      gap: 20px;
+      position: relative;
+    }
+    .step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 22px;
+      top: 52px;
+      bottom: -20px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--honours-purple), var(--border));
+    }
+    .step__num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--honours-purple);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .step__body { padding-bottom: 36px; }
+    .step__title {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 6px;
+      margin-top: 10px;
+    }
+    .step__desc { font-size: .9rem; color: var(--text-secondary); line-height: 1.6; }
+
+    .contact-card {
+      background: linear-gradient(135deg, #fdf5f6, var(--surface));
+      border: 1px solid rgba(153,24,50,.15);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      position: sticky;
+      top: calc(var(--nav-h) + 24px);
+    }
+    .contact-card__title {
+      font-family: var(--font-head);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--honours-purple);
+      margin-bottom: 20px;
+    }
+    .contact-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    .contact-item:last-child { margin-bottom: 0; }
+    .contact-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: var(--track-purple-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--honours-purple);
+    }
+    .contact-item__label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 3px;
+    }
+    .contact-item__value {
+      font-size: .9rem;
+      color: var(--dark);
+      font-weight: 500;
+    }
+    .contact-item__value a {
+      color: var(--honours-purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .apply-btn {
+      display: block;
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      text-align: center;
+      background: var(--honours-purple);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: .95rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .apply-btn:hover { background: #6b0020; transform: translateY(-2px); }
+
+    /* ─── AFTER HONOURS ─────────────────────────────────────── */
+    .after {
+      padding: 96px 0;
+      background: var(--surface-alt);
+    }
+    .after__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .path-card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .path-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
+    .path-card__icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+    .path-card:nth-child(1) .path-card__icon { background: #faf4ec; }
+    .path-card:nth-child(2) .path-card__icon { background: #faf6ee; }
+    .path-card:nth-child(3) .path-card__icon { background: #fef8ee; }
+    .path-card__title {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+    .path-card__desc {
+      font-size: .9rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .path-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--honours-purple);
+      transition: gap var(--transition);
+    }
+    .path-card__link:hover { gap: 10px; }
+
+
+    /* ─── RESPONSIVE ────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .overview__grid   { grid-template-columns: 1fr; gap: 40px; }
+      .credit-card      { position: static; }
+      .apply__layout    { grid-template-columns: 1fr; gap: 40px; }
+      .contact-card     { position: static; }
+      .after__grid      { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .tracks__grid     { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+      .modules__grid    { grid-template-columns: 1fr; }
+      .module-card--project { grid-column: 1; }
+      .hero__pill       { font-size: .78rem; padding: 7px 14px; }
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- ── NAVIGATION (Web Component) ── -->
+  <script src="components.js"></script>
+  <su-nav></su-nav>
+
+  <!-- ═══════════════════════════════════════════════════ HERO -->
+  <header class="hero" id="main-content">
+    <div class="hero__glow"  aria-hidden="true"></div>
+    <div class="hero__glow-2" aria-hidden="true"></div>
+    <div class="hero__grid"  aria-hidden="true"></div>
+    <div class="container hero__content">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <svg class="breadcrumb__sep" width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><path d="M2 1l3 3-3 3"/></svg>
+        <a href="programmes.html">Programmes</a>
+        <svg class="breadcrumb__sep" width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><path d="M2 1l3 3-3 3"/></svg>
+        <span class="breadcrumb__current">Honours</span>
+      </nav>
+
+      <div class="hero__badge" aria-label="Postgraduate qualification">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        Postgraduate · NQF Level 8
+      </div>
+
+      <h1 class="hero__title">BCmp <span>Honours</span></h1>
+      <p class="hero__sub">Advanced specialization in Computer Science — one year of intensive study and research</p>
+
+      <div class="hero__pills">
+        <div class="hero__pill">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          1 Year Full-Time
+        </div>
+        <div class="hero__pill">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l3 6.5H22l-5.5 4 2 7L12 16l-6.5 3.5 2-7L2 8.5h7L12 2z"/></svg>
+          NQF Level 8
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════ OVERVIEW -->
+  <section class="overview" id="about">
+    <div class="container">
+      <div class="overview__grid">
+        <!-- Left column -->
+        <div class="animate-up">
+          <span class="section-tag">Programme Overview</span>
+          <h2 class="section-title">One year. Serious depth.</h2>
+
+          <p class="overview__lead">
+            The BCmp Honours programme is a one-year postgraduate qualification designed for students
+            who have completed an undergraduate Computer Science degree. The programme combines
+            advanced coursework with a substantial research project, preparing graduates for research
+            careers or advanced industry roles.
+          </p>
+
+          <ul class="overview__facts" aria-label="Programme key facts">
+            <li class="fact-row">
+              <div class="fact-row__icon" aria-hidden="true">⏱</div>
+              <div>
+                <div class="fact-row__label">Duration</div>
+                <div class="fact-row__value">1 year full-time</div>
+              </div>
+            </li>
+            <li class="fact-row">
+              <div class="fact-row__icon" aria-hidden="true">🎓</div>
+              <div>
+                <div class="fact-row__label">Credits</div>
+                <div class="fact-row__value">128 total (6 × 16-credit modules + 32-credit project)</div>
+              </div>
+            </li>
+            <li class="fact-row">
+              <div class="fact-row__icon" aria-hidden="true">📋</div>
+              <div>
+                <div class="fact-row__label">NQF Level</div>
+                <div class="fact-row__value">8</div>
+              </div>
+            </li>
+            <li class="fact-row">
+              <div class="fact-row__icon" aria-hidden="true">🌐</div>
+              <div>
+                <div class="fact-row__label">Language of Instruction</div>
+                <div class="fact-row__value">English</div>
+              </div>
+            </li>
+            <li class="fact-row">
+              <div class="fact-row__icon" aria-hidden="true">✉</div>
+              <div>
+                <div class="fact-row__label">Contact</div>
+                <div class="fact-row__value">
+                  <a href="mailto:postgrad@cs.sun.ac.za">postgrad@cs.sun.ac.za</a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right column: Credit breakdown card -->
+        <div class="animate-up" style="transition-delay:.15s">
+          <div class="credit-card" role="region" aria-label="Credit breakdown">
+            <div class="credit-card__title">Credit Structure</div>
+
+            <div class="donut-wrap">
+              <div class="donut" aria-hidden="true">
+                <div class="donut__label">
+                  <strong>128</strong>
+                  <span>credits</span>
+                </div>
+              </div>
+              <div class="donut-legend">
+                <div class="legend-item">
+                  <div class="legend-dot legend-dot--purple"></div>
+                  <div class="legend-item__info">
+                    <strong>96 credits</strong>
+                    <span>6 modules × 16 credits</span>
+                  </div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot legend-dot--gold"></div>
+                  <div class="legend-item__info">
+                    <strong>32 credits</strong>
+                    <span>1 research project</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="credit-bars">
+              <div class="cbar">
+                <div class="cbar__header">
+                  <span>Coursework Modules</span>
+                  <span>96 credits (75%)</span>
+                </div>
+                <div class="cbar__track">
+                  <div class="cbar__fill cbar__fill--purple"></div>
+                </div>
+              </div>
+              <div class="cbar">
+                <div class="cbar__header">
+                  <span>Research Project</span>
+                  <span>32 credits (25%)</span>
+                </div>
+                <div class="cbar__track">
+                  <div class="cbar__fill cbar__fill--gold"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="credit-total">
+              <span class="credit-total__label">Total Credits</span>
+              <div class="credit-total__num">128 <span>NQF 8</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ IMPORTANT DATES -->
+  <section class="dates" id="dates">
+    <div class="container">
+      <div class="animate-up">
+        <span class="section-tag">Academic Calendar</span>
+        <h2 class="section-title">Important Dates — 2026</h2>
+        <p class="section-sub">Mark these dates. Some are compulsory.</p>
+      </div>
+
+      <div class="timeline" role="list">
+        <div class="timeline__item" role="listitem">
+          <div class="timeline__dot" aria-hidden="true">🎉</div>
+          <div class="timeline__card">
+            <div class="timeline__date">2 February 2026</div>
+            <div class="timeline__event">Orientation Day</div>
+            <p class="timeline__desc">Welcome session for all new honours students. Attendance is compulsory.</p>
+            <span class="timeline__compulsory">Compulsory</span>
+          </div>
+        </div>
+
+        <div class="timeline__item" role="listitem">
+          <div class="timeline__dot" aria-hidden="true">📝</div>
+          <div class="timeline__card">
+            <div class="timeline__date">6 February 2026</div>
+            <div class="timeline__event">Project Topic Deadline</div>
+            <p class="timeline__desc">Final deadline for submitting your honours project topic for approval.</p>
+          </div>
+        </div>
+
+        <div class="timeline__item" role="listitem">
+          <div class="timeline__dot" aria-hidden="true">📚</div>
+          <div class="timeline__card">
+            <div class="timeline__date">9 February 2026</div>
+            <div class="timeline__event">Lectures Begin</div>
+            <p class="timeline__desc">Commencement of all honours module lectures.</p>
+          </div>
+        </div>
+
+        <div class="timeline__item" role="listitem">
+          <div class="timeline__dot" aria-hidden="true">📄</div>
+          <div class="timeline__card">
+            <div class="timeline__date">November 2026</div>
+            <div class="timeline__event">Examinations</div>
+            <p class="timeline__desc">Honours examinations and project submission. Exact dates published mid-year.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ TRACKS -->
+  <section class="tracks" id="tracks">
+    <div class="container">
+      <div class="animate-up">
+        <span class="section-tag">Pathways</span>
+        <h2 class="section-title">Specialization Tracks</h2>
+        <p class="section-sub">Choose modules aligned with your research interests and career goals.</p>
+      </div>
+
+      <div class="tracks__grid">
+        <!-- AI & ML -->
+        <article class="track-card track-card--blue animate-up">
+          <div class="track-icon" aria-hidden="true">🧠</div>
+          <h3 class="track-card__title">Artificial Intelligence &amp; Machine Learning</h3>
+          <p class="track-card__desc">Deep dive into ML theory, neural networks, and intelligent system design.</p>
+          <div class="track-card__label">Relevant Modules</div>
+          <p class="track-card__modules">Advanced Algorithms, ML coursework</p>
+          <div class="track-card__label">Career Outcomes</div>
+          <div class="track-outcomes">
+            <span class="track-pill">ML Engineer</span>
+            <span class="track-pill">AI Researcher</span>
+            <span class="track-pill">Data Scientist</span>
+          </div>
+        </article>
+
+        <!-- Software Engineering -->
+        <article class="track-card track-card--green animate-up" style="transition-delay:.1s">
+          <div class="track-icon" aria-hidden="true">⚙️</div>
+          <h3 class="track-card__title">Software Engineering</h3>
+          <p class="track-card__desc">Advanced software development practices, formal verification, and program analysis.</p>
+          <div class="track-card__label">Relevant Modules</div>
+          <p class="track-card__modules">Advanced Topics in Vulnerability Discovery</p>
+          <div class="track-card__label">Career Outcomes</div>
+          <div class="track-outcomes">
+            <span class="track-pill">Senior Software Engineer</span>
+            <span class="track-pill">Security Researcher</span>
+            <span class="track-pill">Systems Architect</span>
+          </div>
+        </article>
+
+        <!-- Data Science -->
+        <article class="track-card track-card--orange animate-up" style="transition-delay:.2s">
+          <div class="track-icon" aria-hidden="true">📊</div>
+          <h3 class="track-card__title">Data Science</h3>
+          <p class="track-card__desc">Statistical learning, data mining, and computational data analysis at advanced level.</p>
+          <div class="track-card__label">Relevant Modules</div>
+          <p class="track-card__modules">Advanced Algorithms, ML coursework</p>
+          <div class="track-card__label">Career Outcomes</div>
+          <div class="track-outcomes">
+            <span class="track-pill">Senior Data Scientist</span>
+            <span class="track-pill">Research Analyst</span>
+            <span class="track-pill">Quantitative Developer</span>
+          </div>
+        </article>
+
+        <!-- Formal Methods -->
+        <article class="track-card track-card--purple animate-up" style="transition-delay:.3s">
+          <div class="track-icon" aria-hidden="true" style="font-family:monospace;font-size:1.4rem;font-weight:700;">λ</div>
+          <h3 class="track-card__title">Formal Methods &amp; Theory</h3>
+          <p class="track-card__desc">Mathematical foundations of computing — logic, type theory, automata, and verification.</p>
+          <div class="track-card__label">Relevant Modules</div>
+          <p class="track-card__modules">Advanced Topics in Ontology Engineering</p>
+          <div class="track-card__label">Career Outcomes</div>
+          <div class="track-outcomes">
+            <span class="track-pill">Verification Engineer</span>
+            <span class="track-pill">Academic Researcher</span>
+            <span class="track-pill">Formal Methods Specialist</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ MODULE CATALOGUE -->
+  <section class="modules" id="modules">
+    <div class="container">
+      <div class="animate-up">
+        <span class="section-tag">Curriculum</span>
+        <h2 class="section-title">2026 Module Offering</h2>
+        <p class="section-sub">All modules are 16 credits unless otherwise stated. The research project carries 32 credits.</p>
+      </div>
+
+      <div class="modules__grid">
+        <!-- Advanced Algorithms -->
+        <article class="module-card animate-up">
+          <div class="module-card__top">
+            <span class="module-card__code">CS 771</span>
+            <span class="module-card__credits">16 Credits</span>
+          </div>
+          <h3 class="module-card__name">Advanced Algorithms</h3>
+          <div class="module-card__lecturer" aria-label="Lecturer: Willem Bester">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Willem Bester
+          </div>
+          <p class="module-card__desc">
+            Advanced algorithm design and analysis: NP-completeness, approximation algorithms,
+            randomized algorithms, and computational complexity.
+          </p>
+        </article>
+
+        <!-- Vulnerability Discovery -->
+        <article class="module-card animate-up" style="transition-delay:.1s">
+          <div class="module-card__top">
+            <span class="module-card__code">CS 772</span>
+            <span class="module-card__credits">16 Credits</span>
+          </div>
+          <h3 class="module-card__name">Advanced Topics I: Vulnerability Discovery and Exploitation</h3>
+          <div class="module-card__lecturer" aria-label="Lecturer: Fabian Yamaguchi">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Fabian Yamaguchi
+          </div>
+          <p class="module-card__desc">
+            Modern techniques for discovering software vulnerabilities including static analysis,
+            fuzzing, symbolic execution, and responsible disclosure.
+          </p>
+        </article>
+
+        <!-- Ontology Engineering -->
+        <article class="module-card animate-up" style="transition-delay:.2s">
+          <div class="module-card__top">
+            <span class="module-card__code">CS 773</span>
+            <span class="module-card__credits">16 Credits</span>
+          </div>
+          <h3 class="module-card__name">Advanced Topics II: Ontology Engineering</h3>
+          <div class="module-card__lecturer" aria-label="Lecturer: Maria Keet">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Maria Keet
+          </div>
+          <p class="module-card__desc">
+            Design and implementation of ontologies for the Semantic Web and knowledge representation
+            systems. OWL, SPARQL, and ontology reasoning.
+          </p>
+        </article>
+
+        <!-- Honours Project (full-width) -->
+        <article class="module-card module-card--project animate-up" style="transition-delay:.3s">
+          <div class="module-card__top">
+            <span class="module-card__code">CS 771 — Project</span>
+            <span class="module-card__credits">32 Credits</span>
+          </div>
+          <h3 class="module-card__name">Honours Project 771</h3>
+          <div class="module-card__lecturer" aria-label="Supervisor: To be assigned">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Supervisor: TBA (assigned based on research interests)
+          </div>
+          <p class="module-card__desc">
+            Independent research project under faculty supervision, culminating in a written thesis
+            and oral presentation. Students are expected to make an original contribution to their
+            chosen field.
+          </p>
+        </article>
+      </div>
+
+      <div class="modules__note animate-up">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <span>
+          Additional modules from the postgraduate module pool may be announced each year.
+          Students select 6 modules in total; the project is compulsory. Module availability subject to change.
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ APPLICATION -->
+  <section class="apply" id="apply">
+    <div class="container">
+      <div class="animate-up">
+        <span class="section-tag">Admissions</span>
+        <h2 class="section-title">Application Process</h2>
+        <p class="section-sub">Four steps to joining the programme.</p>
+      </div>
+
+      <div class="apply__layout">
+        <!-- Steps -->
+        <div class="steps animate-up">
+          <div class="step">
+            <div class="step__num" aria-label="Step 1">1</div>
+            <div class="step__body">
+              <h3 class="step__title">Check Eligibility</h3>
+              <p class="step__desc">
+                You need a BSc in Computer Science or an equivalent qualification at NQF Level 7,
+                with a minimum 60% average in your final year. Contact us if unsure about equivalency.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step__num" aria-label="Step 2">2</div>
+            <div class="step__body">
+              <h3 class="step__title">Find a Supervisor</h3>
+              <p class="step__desc">
+                Before applying, identify a potential supervisor whose research interests align with yours.
+                Browse staff profiles and reach out via
+                <a href="mailto:postgrad@cs.sun.ac.za" style="color:var(--honours-purple)">postgrad@cs.sun.ac.za</a>.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step__num" aria-label="Step 3">3</div>
+            <div class="step__body">
+              <h3 class="step__title">Submit Application</h3>
+              <p class="step__desc">
+                Complete your application through Stellenbosch University's official online
+                application portal. Include your academic transcripts, CV, and motivation letter.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step__num" aria-label="Step 4">4</div>
+            <div class="step__body">
+              <h3 class="step__title">Accept Offer</h3>
+              <p class="step__desc">
+                Upon receiving an offer of admission, confirm your enrollment before the stated
+                deadline. Late confirmation may forfeit your place.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact card -->
+        <div class="animate-up" style="transition-delay:.15s">
+          <div class="contact-card" role="complementary" aria-label="Contact information">
+            <div class="contact-card__title">Contact Us</div>
+
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <div class="contact-item__label">Email</div>
+                <div class="contact-item__value">
+                  <a href="mailto:postgrad@cs.sun.ac.za">postgrad@cs.sun.ac.za</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012.18 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.46-1.46a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+              </div>
+              <div>
+                <div class="contact-item__label">Telephone</div>
+                <div class="contact-item__value">
+                  <a href="tel:+27218084232">+27 21 808 4232</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div class="contact-item__label">Address</div>
+                <div class="contact-item__value">Computer Science Division,<br>Dept of Mathematical Sciences</div>
+              </div>
+            </div>
+
+            <a href="https://www.sun.ac.za/english/Pages/Apply.aspx" class="apply-btn" target="_blank" rel="noopener">
+              Apply Online →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ AFTER HONOURS -->
+  <section class="after" id="after">
+    <div class="container">
+      <div class="animate-up">
+        <span class="section-tag">What's Next</span>
+        <h2 class="section-title">Where do Honours graduates go?</h2>
+        <p class="section-sub">Your honours degree opens multiple doors.</p>
+      </div>
+
+      <div class="after__grid">
+        <article class="path-card animate-up">
+          <div class="path-card__icon" aria-hidden="true">💼</div>
+          <h3 class="path-card__title">Industry</h3>
+          <p class="path-card__desc">
+            Honours graduates are highly sought after for senior developer, tech lead, and
+            specialized engineering roles at companies ranging from startups to global tech firms.
+          </p>
+          <a href="index.html#careers" class="path-card__link">
+            Explore careers
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </article>
+
+        <article class="path-card animate-up" style="transition-delay:.1s">
+          <div class="path-card__icon" aria-hidden="true">🔬</div>
+          <h3 class="path-card__title">Master's Degree</h3>
+          <p class="path-card__desc">
+            Continue your academic journey to MScComP or MSc in Computer Science.
+            An honours degree is the standard entry requirement for postgraduate research programmes.
+          </p>
+          <a href="masters.html" class="path-card__link">
+            View Masters programme
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </article>
+
+        <article class="path-card animate-up" style="transition-delay:.2s">
+          <div class="path-card__icon" aria-hidden="true">📡</div>
+          <h3 class="path-card__title">Research Roles</h3>
+          <p class="path-card__desc">
+            An Honours qualification opens doors to research assistant positions that lie on the
+            path to postdoctoral research, policy work, and national research foundations.
+          </p>
+          <a href="index.html#research" class="path-card__link">
+            Our research groups
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER (Web Component) ── -->
+  <su-footer></su-footer>
+
+  <!-- ═══════════════════════════════════════════════════ JS -->
+  <script>
+    /* ── IntersectionObserver: .animate-up ──────────────── */
+    const animateObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          animateObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.animate-up').forEach(el => animateObserver.observe(el));
+
+    /* ── IntersectionObserver: timeline sequential fade ─── */
+    const timelineItems = document.querySelectorAll('.timeline__item');
+    const timelineObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Stagger each item based on its index
+          const idx = Array.from(timelineItems).indexOf(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, idx * 160);
+          timelineObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+
+    timelineItems.forEach(item => timelineObserver.observe(item));
+
+    /* ── Animate credit bars when card enters view ───────── */
+    const creditCard = document.querySelector('.credit-card');
+    if (creditCard) {
+      const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.cbar__fill').forEach(bar => {
+              // Re-trigger CSS transition by briefly setting to 0
+              const target = bar.style.width || getComputedStyle(bar).width;
+              bar.style.width = '0%';
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  bar.style.width = bar.classList.contains('cbar__fill--purple') ? '75%' : '25%';
+                });
+              });
+            });
+            barObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      barObserver.observe(creditCard);
+    }
+  </script>
+  <!-- ─── SCROLL TO TOP ─── -->
+  <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top" title="Scroll to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+  <script>
+    (function(){var btn=document.getElementById('scrollToTop');window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>400)});btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();
+  </script>
+  <!-- ─── DARK MODE TOGGLE ─── -->
+  <button class="dm-toggle" id="dmToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+  <script>
+    (function() {
+      var dmToggle = document.getElementById('dmToggle');
+      var htmlEl = document.documentElement;
+      var savedTheme = localStorage.getItem('su-theme') || 'light';
+      htmlEl.setAttribute('data-theme', savedTheme);
+      dmToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+      dmToggle.addEventListener('click', function() {
+        var isDark = htmlEl.getAttribute('data-theme') === 'dark';
+        var next = isDark ? 'light' : 'dark';
+        htmlEl.setAttribute('data-theme', next);
+        localStorage.setItem('su-theme', next);
+        dmToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+      });
+    })();
+  </script>
+</body>
+</html>

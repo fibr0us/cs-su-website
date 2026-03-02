@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>var t=localStorage.getItem("su-theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courses | Computer Science | Stellenbosch University</title>
+  <meta name="description" content="Browse the full course catalogue for the Computer Science Division at Stellenbosch University — modules from first year through postgraduate level." />
+  <link rel="icon" type="image/svg+xml" href="su-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="theme.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--light);
+      color: var(--text-body);
+      line-height: 1.65;
+    }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 10rem 2rem 5rem;
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(153,24,50,0.35) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 80% 100%, rgba(201,162,39,0.12) 0%, transparent 60%);
+    }
+
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    }
+
+    .page-hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+
+    .breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1.5rem;
+      font-family: var(--font-heading);
+    }
+
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent-light); }
+    .breadcrumb span { color: rgba(255,255,255,0.3); }
+
+    .page-hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .page-hero h1 span { color: var(--accent); }
+
+    .page-hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 580px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    /* ── FILTER + SEARCH BAR ── */
+    .filter-bar {
+      position: sticky;
+      top: var(--su-nav-height, 72px);
+      z-index: 900;
+      background: var(--surface-alt);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--mid-gray);
+      padding: 0.85rem 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-bar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .year-tabs {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.42rem 1rem;
+      border-radius: 30px;
+      border: 1.5px solid var(--mid-gray);
+      background: var(--surface);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+    .tab-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+      box-shadow: 0 3px 10px rgba(153,24,50,0.3);
+    }
+
+    .search-wrap {
+      margin-left: auto;
+      position: relative;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    #module-search {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      padding: 0.52rem 1rem 0.52rem 2.5rem;
+      border: 1.5px solid var(--mid-gray);
+      border-radius: 30px;
+      background: var(--surface);
+      color: var(--text-body);
+      width: 240px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+    }
+
+    #module-search:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(153,24,50,0.12);
+    }
+
+    #module-search::placeholder { color: var(--text-muted); }
+
+    /* ── MAIN CONTENT ── */
+    .main { max-width: 1280px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+
+    /* ── YEAR SECTION HEADERS ── */
+    .year-section { margin-bottom: 3.5rem; }
+
+    .year-section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .year-badge {
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 30px;
+      background: var(--primary);
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .year-section-header h2 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: -0.02em;
+    }
+
+    .year-section-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--mid-gray) 0%, transparent 100%);
+    }
+
+    /* ── MODULE GRID ── */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* ── MODULE CARD ── */
+    .module-card {
+      background: var(--surface);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--mid-gray);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    .module-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .module-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(153,24,50,0.25);
+    }
+
+    .module-card-top {
+      padding: 1.4rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .module-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.9rem;
+    }
+
+    .module-code {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      background: var(--primary);
+      color: white;
+      padding: 0.28rem 0.7rem;
+      border-radius: var(--border-radius-sm);
+    }
+
+    .semester-badge {
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--border-radius-sm);
+      background: rgba(153,24,50,0.08);
+      color: var(--primary);
+      border: 1px solid rgba(153,24,50,0.2);
+    }
+
+    .credit-badge {
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: 1px solid var(--mid-gray);
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--border-radius-sm);
+      margin-left: auto;
+    }
+
+    .module-card-top h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 0.3rem;
+    }
+
+    .module-lecturer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .module-card-body {
+      padding: 1rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .module-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .prereqs {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+
+    .prereqs strong {
+      color: var(--text-body);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: auto;
+    }
+
+    .topic-chip {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 0.22rem 0.6rem;
+      border-radius: 30px;
+      background: var(--light-gray);
+      color: var(--text-body);
+      border: 1px solid var(--mid-gray);
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .module-card:hover .topic-chip {
+      background: rgba(153,24,50,0.05);
+      border-color: rgba(153,24,50,0.2);
+      color: var(--primary-dark);
+    }
+
+    /* ── NO RESULTS ── */
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-muted);
+    }
+
+    .no-results svg { margin-bottom: 1rem; opacity: 0.4; }
+    .no-results h3 { font-family: var(--font-heading); font-size: 1.3rem; color: var(--text-body); margin-bottom: 0.5rem; }
+    .no-results p { font-size: 0.9rem; }
+
+    /* ── CURRICULUM TABLE ── */
+    .curriculum-section {
+      margin: 4rem 0;
+      padding: 3rem 0;
+      border-top: 1px solid var(--mid-gray);
+    }
+
+    .section-label {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.6rem;
+    }
+
+    .curriculum-section h2 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+
+    .curriculum-section > p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+    }
+
+    .curriculum-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--mid-gray);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .curriculum-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .curriculum-table thead {
+      background: var(--dark);
+      color: white;
+    }
+
+    .curriculum-table thead th {
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 1rem 1.25rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .curriculum-table tbody tr {
+      border-bottom: 1px solid var(--mid-gray);
+      transition: background var(--transition);
+    }
+
+    .curriculum-table tbody tr:last-child { border-bottom: none; }
+    .curriculum-table tbody tr:hover { background: rgba(153,24,50,0.03); }
+
+    .curriculum-table tbody td {
+      padding: 0.9rem 1.25rem;
+      vertical-align: middle;
+      color: var(--text-body);
+    }
+
+    .curriculum-table tbody tr:nth-child(even) td { background: var(--surface-alt); }
+    .curriculum-table tbody tr:nth-child(even):hover td { background: rgba(153,24,50,0.03); }
+
+    .ct-code {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.82rem;
+    }
+
+    .ct-year {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      padding: 0.18rem 0.55rem;
+      border-radius: 30px;
+    }
+
+    .ct-year-1 { background: rgba(153,24,50,0.1); color: var(--primary); }
+    .ct-year-2 { background: rgba(22,33,62,0.1); color: var(--dark-mid); }
+    .ct-year-3 { background: rgba(15,52,96,0.12); color: var(--dark-card); }
+    .ct-year-h { background: rgba(153,24,50,0.1); color: var(--primary); }
+
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .modules-grid { grid-template-columns: 1fr; }
+      .filter-bar-inner { gap: 0.75rem; }
+      .page-hero { padding: 8rem 1.25rem 4rem; }
+    }
+
+    @media (max-width: 480px) {
+      .main { padding: 2.5rem 1.25rem 4rem; }
+      .year-tabs { gap: 0.3rem; }
+      .tab-btn { font-size: 0.75rem; padding: 0.35rem 0.75rem; }
+    }
+
+    /* ── HONOURS ACCENT ── */
+    .module-card[data-year="honours"] .module-code { background: var(--accent); color: #1a1400; }
+    .module-card[data-year="honours"] .year-badge { background: var(--accent); color: #1a1400; }
+
+    /* ── HIDDEN STATE ── */
+    .module-card.hidden { display: none; }
+    .year-section.hidden { display: none; }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+<!-- ── NAVIGATION (Web Component) ── -->
+<script src="components.js"></script>
+<su-nav></su-nav>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>Courses</span>
+    </div>
+    <h1>Course <span>Catalogue</span></h1>
+    <p>Explore the full Computer Science curriculum — from introductory programming to advanced research topics</p>
+  </div>
+</section>
+
+<!-- ── FILTER BAR ── -->
+<div class="filter-bar" id="filter-bar">
+  <div class="filter-bar-inner">
+    <div class="year-tabs" role="tablist" aria-label="Filter by year">
+      <button class="tab-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+      <button class="tab-btn" data-filter="1" role="tab" aria-selected="false">Year 1</button>
+      <button class="tab-btn" data-filter="2" role="tab" aria-selected="false">Year 2</button>
+      <button class="tab-btn" data-filter="3" role="tab" aria-selected="false">Year 3</button>
+      <button class="tab-btn" data-filter="honours" role="tab" aria-selected="false">Honours</button>
+    </div>
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="module-search" placeholder="Search modules…" aria-label="Search modules" autocomplete="off" />
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<main class="main" id="main-content">
+
+  <!-- YEAR 1 -->
+  <section class="year-section" id="section-year1">
+    <div class="year-section-header">
+      <span class="year-badge">Year 1</span>
+      <h2>First Year Modules</h2>
+    </div>
+    <div class="modules-grid">
+
+      <!-- CS113 -->
+      <article class="module-card fade-up" data-year="1" data-code="cs113" data-name="computer science for actuarial studies">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code">CS113</span>
+            <span class="semester-badge">Semester 1</span>
+            <span class="credit-badge">16 credits</span>
+          </div>
+          <h3>Computer Science for Actuarial Studies</h3>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">An introduction to computer science tailored for actuarial science students. Covers financial programming concepts, spreadsheet automation with Excel/VBA, and fundamental programming constructs.</p>
+          <p class="prereqs"><strong>Prerequisites:</strong> None</p>
+          <div class="topics">
+            <span class="topic-chip">Financial Programming</span>
+            <span class="topic-chip">Spreadsheets</span>
+            <span class="topic-chip">VBA</span>
+            <span class="topic-chip">Introductory Algorithms</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- CS114 -->
+      <article class="module-card fade-up" data-year="1" data-code="cs114" data-name="introductory computer science 1">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code">CS114</span>
+            <span class="semester-badge">Semester 1</span>
+            <span class="credit-badge">16 credits</span>
+          </div>
+          <h3>Introductory Computer Science 1</h3>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">The foundation module for all Computer Science students. Introduces programming in Python/Java, covering basic control flow, data representation, arrays, recursion, and an introduction to object-oriented programming.</p>
+          <p class="prereqs"><strong>Prerequisites:</strong> NSC Mathematics</p>
+          <div class="topics">
+            <span class="topic-chip">Python/Java</span>
+            <span class="topic-chip">Control Flow</span>
+            <span class="topic-chip">Data Representation</span>
+            <span class="topic-chip">Arrays</span>
+            <span class="topic-chip">Recursion</span>
+            <span class="topic-chip">OOP Intro</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- CS144 -->
+      <article class="module-card fade-up" data-year="1" data-code="cs144" data-name="introductory computer science 2">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code">CS144</span>
+            <span class="semester-badge">Semester 2</span>
+            <span class="credit-badge">16 credits</span>
+          </div>
+          <h3>Introductory Computer Science 2</h3>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">Continues from CS114. Covers fundamental data structures (linked lists, trees, graphs), classical sorting and searching algorithms, full object-oriented programming with design patterns, and an introduction to computational complexity theory.</p>
+          <p class="prereqs"><strong>Prerequisites:</strong> CS114</p>
+          <div class="topics">
+            <span class="topic-chip">Data Structures</span>
+            <span class="topic-chip">Algorithms</span>
+            <span class="topic-chip">OOP</span>
+            <span class="topic-chip">Design Patterns</span>
+            <span class="topic-chip">Big-O Complexity</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- YEAR 2 -->
+  <section class="year-section" id="section-year2">
+    <div class="year-section-header">
+      <span class="year-badge" style="background:var(--dark-mid);">Year 2</span>
+      <h2>Second Year Modules</h2>
+    </div>
+    <div class="modules-grid">
+
+      <!-- CSE214 -->
+      <article class="module-card fade-up" data-year="2" data-code="cse214" data-name="object-oriented programming">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code">CSE214</span>
+            <span class="semester-badge">Semester 1</span>
+            <span class="credit-badge">16 credits</span>
+          </div>
+          <h3>Object-Oriented Programming</h3>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">Advanced object-oriented programming principles. In-depth study of design patterns (GoF), SOLID principles, refactoring techniques, unit testing, and software quality. Uses Java.</p>
+          <p class="prereqs"><strong>Prerequisites:</strong> CS144</p>
+          <div class="topics">
+            <span class="topic-chip">Design Patterns</span>
+            <span class="topic-chip">SOLID Principles</span>
+            <span class="topic-chip">Refactoring</span>
+            <span class="topic-chip">Unit Testing</span>
+            <span class="topic-chip">Java</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- CS214 -->
+      <article class="module-card fade-up" data-year="2" data-code="cs214" data-name="data structures and algorithms">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code">CS214</span>
+            <span class="semester-badge">Semester 1</span>
+            <span class="credit-badge">16 credits</span>
+          </div>
+          <h3>Data Structures and Algorithms</h3>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">Classical data structures and algorithm design. Covers advanced trees (AVL, red-black), heaps, hash tables, graph algorithms (Dijkstra, Floyd-Warshall, Kruskal), dynamic programming, and algorithm analysis.</p>
+          <p class="prereqs"><strong>Prerequisites:</strong> CS144</p>
+          <div class="topics">
+            <span class="topic-chip">AVL Trees</span>
+            <span class="topic-chip">Hash Tables</span>
+            <span class="topic-chip">Graph Algorithms</span>
+            <span class="topic-chip">Dynamic Programming</span>
+            <span class="topic-chip">Algorithm Analysis</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- CS244 -->
+      <article class="module-card fade-up" data-year="2" data-code="cs244" data-name="computer architecture">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code">CS244</span>
+            <span class="semester-badge">Semester 2</span>
+            <span class="credit-badge">16 credits</span>
+          </div>
+          <h3>Computer Architecture</h3>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">Computer organization and architecture from first principles. Assembly language programming, memory hierarchy and caching, processor design, pipelining, and introduction to operating systems concepts.</p>
+          <p class="prereqs"><strong>Prerequisites:</strong> CS144</p>
+          <div class="topics">
+            <span class="topic-chip">Assembly Language</span>
+            <span class="topic-chip">Memory Architecture</span>
+            <span class="topic-chip">CPU Design</span>
+            <span class="topic-chip">Pipelining</span>
+            <span class="topic-chip">OS Concepts</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- SC272 -->
+      <article class="module-card fade-up" data-year="2" data-code="sc272" data-name="scientific computing">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code">SC272</span>
+            <span class="semester-badge">Both Semesters</span>
+            <span class="credit-badge">16 credits</span>
+          </div>
+          <h3>Scientific Computing</h3>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">Practical computing skills for science students. Linux command line, shell scripting, Python for scientific computing (NumPy, SciPy, Matplotlib), numerical methods, and version control with Git.</p>
+          <p class="prereqs"><strong>Prerequisites:</strong> CS114</p>
+          <div class="topics">
+            <span class="topic-chip">Linux</span>
+            <span class="topic-chip">Shell Scripting</span>
+            <span class="topic-chip">Python</span>
+            <span class="topic-chip">NumPy</span>
+            <span class="topic-chip">Matplotlib</span>
+            <span class="topic-chip">Git</span>
+            <span class="topic-chip">Numerical Methods</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- YEAR 3 -->
+  <section class="year-section" id="section-year3">
+    <div class="year-section-header">
+      <span class="year-badge" style="background:var(--dark-card);">Year 3</span>
+      <h2>Third Year Modules</h2>
+    </div>
+    <div class="modules-grid">
+
+      <!-- CS313 -->
+      <article class="module-card fade-up" data-year="3" data-code="cs313" data-name="computer networks">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code">CS313</span>
+            <span class="semester-badge">Semester 1</span>
+            <span class="credit-badge">16 credits</span>
+          </div>
+          <h3>Computer Networks</h3>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">Principles and protocols of computer networks. The TCP/IP stack in depth — physical, data link, network, transport, and application layers. Socket programming, network security basics, and performance analysis.</p>
+          <p class="prereqs"><strong>Prerequisites:</strong> CS244</p>
+          <div class="topics">
+            <span class="topic-chip">TCP/IP</span>
+            <span class="topic-chip">Socket Programming</span>
+            <span class="topic-chip">Network Protocols</span>
+            <span class="topic-chip">Security</span>
+            <span class="topic-chip">Performance</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- CS314 -->
+      <article class="module-card fade-up" data-year="3" data-code="cs314" data-name="concurrency">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code">CS314</span>
+            <span class="semester-badge">Semester 1/2</span>
+            <span class="credit-badge">16 credits</span>
+          </div>
+          <h3>Concurrency</h3>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">Concurrent and parallel programming. Thread management, synchronization primitives (mutexes, semaphores, monitors), deadlock detection and prevention, parallel algorithms, and introduction to distributed systems.</p>
+          <p class="prereqs"><strong>Prerequisites:</strong> CS244</p>
+          <div class="topics">
+            <span class="topic-chip">Threads</span>
+            <span class="topic-chip">Synchronization</span>
+            <span class="topic-chip">Deadlock</span>
+            <span class="topic-chip">Parallel Algorithms</span>
+            <span class="topic-chip">Distributed Systems</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- HONOURS -->
+  <section class="year-section" id="section-honours">
+    <div class="year-section-header">
+      <span class="year-badge" style="background:var(--accent);color:#1a1400;">Honours</span>
+      <h2>Honours Modules</h2>
+    </div>
+    <div class="modules-grid">
+
+      <!-- CSc771 -->
+      <article class="module-card fade-up" data-year="honours" data-code="csc771" data-name="advanced algorithms">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code" style="background:var(--accent);color:#1a1400;">CSc771</span>
+            <span class="credit-badge">16 credits</span>
+          </div>
+          <h3>Advanced Algorithms</h3>
+          <p class="module-lecturer">Lecturer: Willem Bester</p>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">Advanced topics in algorithm design and complexity theory. NP-completeness proofs, approximation algorithms for hard problems, randomized algorithms, streaming algorithms, and advanced data structures.</p>
+          <p class="prereqs"><strong>Prerequisites:</strong> CS Honours student</p>
+          <div class="topics">
+            <span class="topic-chip">NP-Completeness</span>
+            <span class="topic-chip">Approximation Algorithms</span>
+            <span class="topic-chip">Randomized Algorithms</span>
+            <span class="topic-chip">Complexity Theory</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- CSc772 -->
+      <article class="module-card fade-up" data-year="honours" data-code="csc772" data-name="advanced topics vulnerability discovery exploitation">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code" style="background:var(--accent);color:#1a1400;">CSc772</span>
+            <span class="credit-badge">16 credits</span>
+          </div>
+          <h3>Advanced Topics I: Vulnerability Discovery and Exploitation</h3>
+          <p class="module-lecturer">Lecturer: Fabian Yamaguchi</p>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">Modern vulnerability research techniques. Static and dynamic analysis, fuzzing (grey-box, coverage-guided), symbolic execution, binary analysis, CVE research methodology, and responsible disclosure.</p>
+          <div class="topics">
+            <span class="topic-chip">Fuzzing</span>
+            <span class="topic-chip">Static Analysis</span>
+            <span class="topic-chip">Symbolic Execution</span>
+            <span class="topic-chip">Binary Analysis</span>
+            <span class="topic-chip">CVE Research</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- CSc773 -->
+      <article class="module-card fade-up" data-year="honours" data-code="csc773" data-name="advanced topics ontology engineering">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code" style="background:var(--accent);color:#1a1400;">CSc773</span>
+            <span class="credit-badge">16 credits</span>
+          </div>
+          <h3>Advanced Topics II: Ontology Engineering</h3>
+          <p class="module-lecturer">Lecturer: Maria Keet</p>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">Theoretical foundations and practical construction of ontologies. OWL 2 language, SPARQL queries, ontology design patterns, reasoning with description logics, and Semantic Web applications.</p>
+          <div class="topics">
+            <span class="topic-chip">OWL 2</span>
+            <span class="topic-chip">SPARQL</span>
+            <span class="topic-chip">Ontology Design</span>
+            <span class="topic-chip">Description Logic</span>
+            <span class="topic-chip">Semantic Web</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- CSc781 -->
+      <article class="module-card fade-up" data-year="honours" data-code="csc781" data-name="honours project research thesis">
+        <div class="module-card-top">
+          <div class="module-card-meta">
+            <span class="module-code" style="background:var(--accent);color:#1a1400;">CSc781</span>
+            <span class="credit-badge">32 credits</span>
+          </div>
+          <h3>Honours Project</h3>
+        </div>
+        <div class="module-card-body">
+          <p class="module-desc">An independent research project under faculty supervision. Students investigate a novel computer science problem, conduct a literature review, perform experiments or develop a system, and write a research-quality thesis.</p>
+          <p class="prereqs"><strong>Prerequisites:</strong> CS Honours student</p>
+          <div class="topics">
+            <span class="topic-chip">Research Methods</span>
+            <span class="topic-chip">Literature Review</span>
+            <span class="topic-chip">Thesis Writing</span>
+            <span class="topic-chip">Oral Defense</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- NO RESULTS -->
+  <div class="no-results" id="no-results" aria-live="polite">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      <line x1="8" y1="11" x2="14" y2="11"/>
+    </svg>
+    <h3>No modules found</h3>
+    <p>Try adjusting your search term or clearing the filter.</p>
+  </div>
+
+  <!-- CURRICULUM TABLE -->
+  <section class="curriculum-section fade-up">
+    <div class="section-label">Overview</div>
+    <h2>Curriculum at a Glance</h2>
+    <p>A structured view of the CS programme across years and disciplines.</p>
+    <div class="curriculum-table-wrap">
+      <table class="curriculum-table" aria-label="Curriculum overview">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Module Name</th>
+            <th>Year</th>
+            <th>Semester</th>
+            <th>Credits</th>
+            <th>Prerequisites</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ct-code">CS113</td>
+            <td>Computer Science for Actuarial Studies</td>
+            <td><span class="ct-year ct-year-1">Year 1</span></td>
+            <td>1</td>
+            <td>16</td>
+            <td>None</td>
+          </tr>
+          <tr>
+            <td class="ct-code">CS114</td>
+            <td>Introductory Computer Science 1</td>
+            <td><span class="ct-year ct-year-1">Year 1</span></td>
+            <td>1</td>
+            <td>16</td>
+            <td>NSC Mathematics</td>
+          </tr>
+          <tr>
+            <td class="ct-code">CS144</td>
+            <td>Introductory Computer Science 2</td>
+            <td><span class="ct-year ct-year-1">Year 1</span></td>
+            <td>2</td>
+            <td>16</td>
+            <td>CS114</td>
+          </tr>
+          <tr>
+            <td class="ct-code">CSE214</td>
+            <td>Object-Oriented Programming</td>
+            <td><span class="ct-year ct-year-2">Year 2</span></td>
+            <td>1</td>
+            <td>16</td>
+            <td>CS144</td>
+          </tr>
+          <tr>
+            <td class="ct-code">CS214</td>
+            <td>Data Structures and Algorithms</td>
+            <td><span class="ct-year ct-year-2">Year 2</span></td>
+            <td>1</td>
+            <td>16</td>
+            <td>CS144</td>
+          </tr>
+          <tr>
+            <td class="ct-code">CS244</td>
+            <td>Computer Architecture</td>
+            <td><span class="ct-year ct-year-2">Year 2</span></td>
+            <td>2</td>
+            <td>16</td>
+            <td>CS144</td>
+          </tr>
+          <tr>
+            <td class="ct-code">SC272</td>
+            <td>Scientific Computing</td>
+            <td><span class="ct-year ct-year-2">Year 2</span></td>
+            <td>Both</td>
+            <td>16</td>
+            <td>CS114</td>
+          </tr>
+          <tr>
+            <td class="ct-code">CS313</td>
+            <td>Computer Networks</td>
+            <td><span class="ct-year ct-year-3">Year 3</span></td>
+            <td>1</td>
+            <td>16</td>
+            <td>CS244</td>
+          </tr>
+          <tr>
+            <td class="ct-code">CS314</td>
+            <td>Concurrency</td>
+            <td><span class="ct-year ct-year-3">Year 3</span></td>
+            <td>1/2</td>
+            <td>16</td>
+            <td>CS244</td>
+          </tr>
+          <tr>
+            <td class="ct-code">CSc771</td>
+            <td>Advanced Algorithms</td>
+            <td><span class="ct-year ct-year-h">Honours</span></td>
+            <td>—</td>
+            <td>16</td>
+            <td>Honours entry</td>
+          </tr>
+          <tr>
+            <td class="ct-code">CSc772</td>
+            <td>Advanced Topics I: Vulnerability Discovery</td>
+            <td><span class="ct-year ct-year-h">Honours</span></td>
+            <td>—</td>
+            <td>16</td>
+            <td>Honours entry</td>
+          </tr>
+          <tr>
+            <td class="ct-code">CSc773</td>
+            <td>Advanced Topics II: Ontology Engineering</td>
+            <td><span class="ct-year ct-year-h">Honours</span></td>
+            <td>—</td>
+            <td>16</td>
+            <td>Honours entry</td>
+          </tr>
+          <tr>
+            <td class="ct-code">CSc781</td>
+            <td>Honours Project</td>
+            <td><span class="ct-year ct-year-h">Honours</span></td>
+            <td>—</td>
+            <td>32</td>
+            <td>Honours entry</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER (Web Component) ── -->
+<su-footer></su-footer>
+
+<script>
+  // ── INTERSECTION OBSERVER ANIMATIONS ──
+  const observerOpts = { threshold: 0.08, rootMargin: '0px 0px -40px 0px' };
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, observerOpts);
+
+  document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+
+  // ── YEAR FILTER TABS ──
+  const tabs = document.querySelectorAll('.tab-btn');
+  const cards = document.querySelectorAll('.module-card');
+  const sections = document.querySelectorAll('.year-section');
+  const noResults = document.getElementById('no-results');
+  const searchInput = document.getElementById('module-search');
+
+  let activeFilter = 'all';
+  let searchTerm = '';
+
+  function applyFilters() {
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const year = card.dataset.year;
+      const code = card.dataset.code || '';
+      const name = card.dataset.name || '';
+      const fullText = code + ' ' + name;
+
+      const matchesYear = activeFilter === 'all' || year === activeFilter;
+      const matchesSearch = searchTerm === '' || fullText.includes(searchTerm.toLowerCase());
+
+      if (matchesYear && matchesSearch) {
+        card.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+
+    // Hide empty sections
+    sections.forEach(section => {
+      const visibleCards = section.querySelectorAll('.module-card:not(.hidden)');
+      section.classList.toggle('hidden', visibleCards.length === 0);
+    });
+
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      activeFilter = tab.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  searchInput.addEventListener('keyup', () => {
+    searchTerm = searchInput.value.trim();
+    applyFilters();
+  });
+
+  searchInput.addEventListener('search', () => {
+    searchTerm = searchInput.value.trim();
+    applyFilters();
+  });
+</script>
+  <!-- ─── SCROLL TO TOP ─── -->
+  <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top" title="Scroll to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+  <script>
+    (function(){var btn=document.getElementById('scrollToTop');window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>400)});btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();
+  </script>
+  <!-- ─── DARK MODE TOGGLE ─── -->
+  <button class="dm-toggle" id="dmToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+  <script>
+    (function() {
+      var dmToggle = document.getElementById('dmToggle');
+      var htmlEl = document.documentElement;
+      var savedTheme = localStorage.getItem('su-theme') || 'light';
+      htmlEl.setAttribute('data-theme', savedTheme);
+      dmToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+      dmToggle.addEventListener('click', function() {
+        var isDark = htmlEl.getAttribute('data-theme') === 'dark';
+        var next = isDark ? 'light' : 'dark';
+        htmlEl.setAttribute('data-theme', next);
+        localStorage.setItem('su-theme', next);
+        dmToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+      });
+    })();
+  </script>
+</body>
+</html>

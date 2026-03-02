@@ -1,0 +1,1837 @@
+/* ═══════════════════════════════════════════════════════════════
+   theme.css — Stellenbosch University CS Department
+   Shared design system, dark mode, and hackathon overrides.
+   Loaded by every page; inline <style> blocks add page-specific
+   layout rules only — colours and tokens live HERE.
+
+   Brand colours:
+     Maroon  #991832   (SU official)
+     Gold    #c9a227   (accent)
+     Dark    #111118   (near-black background)
+
+   ═══════════════════════════════════════════════════════════════
+
+   TABLE OF CONTENTS
+   ─────────────────
+    1.  Design Tokens — :root (light mode)            ~L 25
+    2.  Shared Layout Utility (.container)             ~L 60
+    3.  Dark Mode — Token Layer                        ~L 65
+    4.  Dark Mode — Body & Surface Overrides           ~L 110
+    5.  Dark Mode — Element Overrides                  ~L 155
+        (cards, forms, headings, text, tables, code,
+         FAQ, CTA, filters, news, events, footer)
+    6.  Dark Mode Toggle Button (.dm-toggle)           ~L 245
+    7.  Canonical Navigation (.su-nav)                 ~L 615
+        (bar, inner, logo, desktop links, hamburger,
+         mobile drawer, responsive, dark scrolled)
+    8.  Footer Logo Image (.footer-logo__img)          ~L 875
+    9.  Dark Mode — Page-Specific Gaps                 ~L 885
+        (courses, resources, honours, undergrad,
+         programmes)
+   10.  Hackathon Hero Overrides                       ~L 970
+        (backgrounds, titles, badges, buttons,
+         breadcrumbs, grid overlays, animations)
+   11.  Hackathon Section Overrides                    ~L 1185
+        (cards, CTAs, buttons, stats, filters, FAQs,
+         badges, accent lines)
+   12.  Hackathon Animations                           ~L 1350
+        (heroPulse, goldShimmer, slideUp)
+   13.  Unified Footer Styles                          ~L 1405
+        (grid, brand, links, contact, bottom,
+         responsive breakpoints)
+   14.  Hackathon Footer Overrides                     ~L 1535
+        (sharp edges, gold accent borders)
+   15.  Global Hackathon Polish                        ~L 1600
+        (::selection, smooth scroll, focus ring,
+         link underlines)
+   16.  Accessibility — Skip-to-Content               ~L 1630
+   17.  Scroll-to-Top Button                           ~L 1655
+   18.  Footer Tagline                                 ~L 1700
+
+   ═══════════════════════════════════════════════════════════════ */
+
+
+/* ══════════════════════════════════════════════════════════════
+   1. DESIGN TOKENS — :root (light mode)
+   All colour variables, spacing tokens, and component tokens.
+   Dark mode overrides these in section 3.
+   ══════════════════════════════════════════════════════════════ */
+:root {
+  --primary:        #991832;
+  --primary-light:  #c0263d;
+  --primary-dark:   #6b0f22;
+  --accent:         #c9a227;
+  --accent-light:   #e0b93a;
+  --dark:           #1a0a0e;
+  --dark-mid:       #2a1018;
+  --light:          #fafafa;
+  --surface:        #ffffff;
+  --surface-alt:    #f6f2f3;
+  --border:         #e8dde0;
+  --text-primary:   #1a0a0e;
+  --text-secondary: #5a3040;
+  --text-muted:     #9a7080;
+  --grey-800:       #1a0a0e;
+  --grey-600:       #5a3040;
+  --text-body:      #1a0a0e;
+  --text:           #1a0a0e;
+  --light-gray:     #f6f2f3;
+
+  /* degree-card colours — keep existing, just override soft tones */
+  --card-cs:        #991832;
+  --card-cs-soft:   #fff0f2;
+
+  --dm-toggle-size: 40px;
+
+  /* Navigation tokens (used in nav, footer, hero, focus styles) */
+  --su-nav-height: 72px;
+  --su-nav-bg-scrolled: rgba(10, 3, 8, 0.92);
+  --su-gold: #c9a227;
+  --su-gold-glow: rgba(201, 162, 39, 0.35);
+  --su-maroon: #991832;
+  --su-maroon-glow: rgba(153, 24, 50, 0.3);
+
+  /* Shared layout tokens (used across most pages) */
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md:  0 6px 24px rgba(0,0,0,0.12);
+  --shadow-lg:  0 16px 48px rgba(0,0,0,0.18);
+  --shadow-xl:  0 24px 64px rgba(0,0,0,0.2);
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --nav-height: 72px;
+
+  /* Aliases for pages that use older token names */
+  --border-radius:    12px;
+  --border-radius-sm: 6px;
+  --dark-card:  #0f3460;
+  --mid-gray:   #d8d8e8;
+  --font-head:  'Space Grotesk', sans-serif;
+  --max-w:      1200px;
+  --nav-h:      72px;
+  --shadow-red: 0 8px 32px rgba(153,24,50,.25);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   2. SHARED LAYOUT UTILITY
+   ══════════════════════════════════════════════════════════════ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   3. DARK MODE — TOKEN LAYER
+   Swaps every design token so the entire palette flips.
+   ══════════════════════════════════════════════════════════════ */
+html[data-theme="dark"] {
+  --primary:        #e05070;
+  --primary-light:  #f07090;
+  --primary-dark:   #c03050;
+  --accent:         #c9a227;
+  --accent-light:   #e0b93a;
+
+  --dark:           #0d0810;
+  --dark-mid:       #1a1020;
+
+  --light:          #111118;
+  --surface:        #1c1825;
+  --surface-alt:    #231e2e;
+  --border:         #2e2838;
+
+  --text-primary:   #f0eaf2;
+  --text-secondary: #c0b0c8;
+  --text-muted:     #806888;
+
+  /* aliases used by various pages */
+  --grey-800:       #f0eaf2;
+  --grey-600:       #c0b0c8;
+  --text-body:      #f0eaf2;
+  --text:           #f0eaf2;
+  --light-gray:     #231e2e;
+
+  /* per-page local tokens not otherwise overridden */
+  --card-bg:        #1c1825;   /* pages define --card-bg: #ffffff */
+  --gray-50:        #1c1825;   /* pages define --gray-50: #f8f8f8 */
+  --gray-100:       #231e2e;   /* pages define --gray-100: #f0f0f0 */
+  --light-gray-bg:  #231e2e;   /* alias for --light-gray used as bg */
+
+  --card-cs-soft:   #2a1018;
+  --card-datsc-soft:     #0a1830;
+  --card-honours-soft:   #1a0a28;
+  --card-masters-soft:   #081a18;
+  --card-phd-soft:       #1e0f00;
+  --card-cross-soft:     #101418;
+  --track-blue-bg:       #0a1830;
+  --track-green-bg:      #081a14;
+  --track-orange-bg:     #1e0f00;
+  --track-purple-bg:     #180820;
+  --mid-gray:            #2e2838;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   4. DARK MODE — BODY & SURFACE OVERRIDES
+   ══════════════════════════════════════════════════════════════ */
+html[data-theme="dark"] body {
+  background: var(--light);
+  color: var(--text-primary);
+}
+
+/* ── 4a. Surfaces ────────────────────────────────────────────── */
+html[data-theme="dark"] .stats-bar,
+html[data-theme="dark"] #about,
+html[data-theme="dark"] #programmes,
+html[data-theme="dark"] #staff,
+html[data-theme="dark"] #news,
+html[data-theme="dark"] .page-hero ~ section:not(#research):not(#contact) {
+  background: var(--light);
+}
+
+html[data-theme="dark"] #staff {
+  background: var(--surface-alt);
+}
+
+html[data-theme="dark"] .programme-card,
+html[data-theme="dark"] .staff-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .stat-item:hover {
+  background: var(--surface-alt);
+}
+
+html[data-theme="dark"] .staff-tag {
+  background: var(--surface-alt);
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+
+html[data-theme="dark"] .badge-dark {
+  background: rgba(240,234,242,0.10);
+  color: var(--text-secondary);
+}
+
+/* ── Programme "not sure" card keeps gradient ────────────────── */
+html[data-theme="dark"] .programme-card[style*="background:linear-gradient"] {
+  background: linear-gradient(135deg, var(--primary-dark), #3a0820) !important;
+}
+
+/* ── Form inputs ─────────────────────────────────────────────── */
+html[data-theme="dark"] .form-input,
+html[data-theme="dark"] .form-select,
+html[data-theme="dark"] .form-textarea {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+html[data-theme="dark"] .form-input::placeholder,
+html[data-theme="dark"] .form-textarea::placeholder {
+  color: var(--text-muted);
+}
+html[data-theme="dark"] .form-select option {
+  background: var(--surface);
+}
+
+/* ── Section divider ─────────────────────────────────────────── */
+html[data-theme="dark"] .section-divider {
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   5. DARK MODE — ELEMENT OVERRIDES
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 5a. Generic card / section overrides for sub-pages ──────── */
+html[data-theme="dark"] .card,
+html[data-theme="dark"] [class*="-card"]:not(.research-card):not(.news-card-top),
+html[data-theme="dark"] [class*="prog-card"],
+html[data-theme="dark"] .module-card,
+html[data-theme="dark"] .resource-card,
+html[data-theme="dark"] .track-card,
+html[data-theme="dark"] .req-card,
+html[data-theme="dark"] .faq-item {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4 {
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] p:not(footer p):not([class*="footer"]),
+html[data-theme="dark"] li:not(footer li):not([class*="footer"]),
+html[data-theme="dark"] span:not(.badge):not(.staff-tag):not([class*="tag"]):not(.nav-logo-cs):not(.nav-logo-sub):not([class*="nav__logo"]):not(.hero-badge span):not(.section-label):not(footer span):not([class*="footer"]) {
+  color: var(--text-secondary);
+}
+
+html[data-theme="dark"] .section-title {
+  color: var(--text-primary) !important;
+}
+
+html[data-theme="dark"] .section-subtitle,
+html[data-theme="dark"] .about-body,
+html[data-theme="dark"] .about-highlight-text {
+  color: var(--text-secondary) !important;
+}
+
+/* research & contact sections stay dark — they already have dark bg */
+html[data-theme="dark"] #research .section-title,
+html[data-theme="dark"] #contact .section-title {
+  color: #fff !important;
+}
+html[data-theme="dark"] #research .section-subtitle,
+html[data-theme="dark"] #contact .section-subtitle {
+  color: rgba(255,255,255,0.65) !important;
+}
+
+/* ── 5b. Page-hero (sub-pages) ────────────────────────────────── */
+html[data-theme="dark"] .page-hero {
+  background: #0d0810;
+}
+
+/* ── 5c. Light-bg sections on sub-pages ──────────────────────── */
+html[data-theme="dark"] section,
+html[data-theme="dark"] main > section {
+  background: var(--light);
+}
+/* Override for alternating grey sections */
+html[data-theme="dark"] .bg-alt,
+html[data-theme="dark"] section.alt,
+html[data-theme="dark"] .section-alt {
+  background: var(--surface-alt);
+}
+
+/* ── 5d. Inline links in light sections ──────────────────────── */
+html[data-theme="dark"] a:not(.btn):not(.nav-links a):not(.footer-links a):not(.footer-social):not(.contact-link):not(.footer-bottom a) {
+  color: var(--accent-light);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   6. DARK MODE TOGGLE BUTTON
+   Fixed-position floating button, bottom-right.
+   ══════════════════════════════════════════════════════════════ */
+.dm-toggle {
+  position: fixed;
+  bottom: 88px;
+  right: 32px;
+  z-index: 600;
+  width: var(--dm-toggle-size);
+  height: var(--dm-toggle-size);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2), 0 0 0 1.5px var(--border);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+.dm-toggle:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 0 2px var(--primary);
+}
+
+html[data-theme="dark"] .dm-toggle {
+  background: var(--surface);
+  color: var(--text-primary);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.5), 0 0 0 1.5px var(--border);
+}
+
+@media (max-width: 480px) {
+  .dm-toggle {
+    bottom: 76px;
+    right: 20px;
+  }
+}
+
+/* ── 5e. SU-specific accent tweaks ────────────────────────────── */
+/* Ensure gold accent remains visible in dark mode */
+html[data-theme="dark"] .section-label {
+  color: var(--accent-light);
+}
+html[data-theme="dark"] .stat-value {
+  color: var(--primary);
+}
+html[data-theme="dark"] .badge-red {
+  background: rgba(153,24,50,0.25);
+  color: #f08090;
+}
+html[data-theme="dark"] .badge-gold {
+  background: rgba(201,162,39,0.2);
+  color: #e0c060;
+}
+
+/* ── About highlight icons ───────────────────────────────────── */
+html[data-theme="dark"] .about-highlight-icon {
+  background: rgba(153,24,50,0.15);
+}
+
+/* ── Research cards (dark bg) — no change needed, just reinforce */
+html[data-theme="dark"] .research-card {
+  background: rgba(255,255,255,0.03);
+}
+
+/* ── Hex shapes — slightly lighter in dark ───────────────────── */
+html[data-theme="dark"] .hex-3 {
+  background: linear-gradient(135deg, #2a1838, #1a0a20);
+}
+html[data-theme="dark"] .hex-6 {
+  background: linear-gradient(135deg, #1a0a20, #2a1838);
+}
+
+/* ── 5f. programmes.html specific ─────────────────────────────── */
+html[data-theme="dark"] .section--alt {
+  background: var(--surface-alt) !important;
+}
+html[data-theme="dark"] .degree-card,
+html[data-theme="dark"] .path-card {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+html[data-theme="dark"] .section-heading {
+  color: var(--text-primary);
+}
+html[data-theme="dark"] .section-subheading {
+  color: var(--text-secondary);
+}
+
+/* ── 5g. courses.html / resources.html year sections ──────────── */
+html[data-theme="dark"] .year-section,
+html[data-theme="dark"] .year-section-header,
+html[data-theme="dark"] .module-grid,
+html[data-theme="dark"] .curriculum-section {
+  background: var(--light);
+}
+html[data-theme="dark"] .module-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+html[data-theme="dark"] .year-section-header {
+  background: var(--surface-alt);
+  border-color: var(--border);
+}
+
+/* ── 5h. honours / masters / phd / undergraduate sub-page ────── */
+html[data-theme="dark"] .info-block,
+html[data-theme="dark"] .spec-box,
+html[data-theme="dark"] .req-box,
+html[data-theme="dark"] .timeline-node,
+html[data-theme="dark"] .supervisor-card,
+html[data-theme="dark"] .fund-card,
+html[data-theme="dark"] .outcome-item,
+html[data-theme="dark"] .highlight-card {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+/* ── 5i. Table / zebra rows ───────────────────────────────────── */
+html[data-theme="dark"] table {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+html[data-theme="dark"] th {
+  background: var(--surface-alt);
+  color: var(--text-primary);
+}
+html[data-theme="dark"] tr:nth-child(even) td {
+  background: var(--surface-alt);
+}
+html[data-theme="dark"] td {
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+
+/* ── 5j. Inline code / pre ────────────────────────────────────── */
+html[data-theme="dark"] code,
+html[data-theme="dark"] pre {
+  background: var(--surface-alt);
+  color: var(--accent-light);
+  border-color: var(--border);
+}
+
+/* ── Form labels on light sections ──────────────────────────── */
+html[data-theme="dark"] label,
+html[data-theme="dark"] .form-label {
+  color: var(--text-secondary);
+}
+
+/* ── Horizontal rule ─────────────────────────────────────────── */
+html[data-theme="dark"] hr {
+  border-color: var(--border);
+}
+
+/* ── 5k. Accordion / FAQ ──────────────────────────────────────── */
+html[data-theme="dark"] details {
+  background: var(--surface);
+  border-color: var(--border);
+}
+html[data-theme="dark"] summary {
+  color: var(--text-primary);
+}
+
+/* ── 5l. CTA / banner blocks ──────────────────────────────────── */
+html[data-theme="dark"] .cta-block,
+html[data-theme="dark"] .cta-banner {
+  background: linear-gradient(135deg, var(--primary-dark), #3a0820);
+}
+
+/* ── 5m. Pill / chip filters ──────────────────────────────────── */
+html[data-theme="dark"] .filter-btn,
+html[data-theme="dark"] .chip {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+html[data-theme="dark"] .filter-btn.active,
+html[data-theme="dark"] .chip.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* ── 5n. news.html — dark mode overrides ──────────────────────── */
+
+/* Filter bar */
+html[data-theme="dark"] .news-filter-bar {
+  background: var(--surface);
+  border-bottom-color: var(--border);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Filter chips */
+html[data-theme="dark"] .filter-chip {
+  background: var(--surface-alt);
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+html[data-theme="dark"] .filter-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(224, 80, 112, 0.08);
+}
+html[data-theme="dark"] .filter-chip.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(224, 80, 112, 0.35);
+}
+
+/* Sidebar featured cards */
+html[data-theme="dark"] .sidebar-featured-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+html[data-theme="dark"] .sidebar-featured-card:hover {
+  border-color: rgba(224, 80, 112, 0.3);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+html[data-theme="dark"] .sidebar-featured-card h3 {
+  color: var(--text-primary);
+}
+html[data-theme="dark"] .sidebar-featured-card p {
+  color: var(--text-secondary);
+}
+html[data-theme="dark"] .sidebar-featured-card .news-cat {
+  background: rgba(224, 80, 112, 0.12);
+  color: var(--primary);
+}
+html[data-theme="dark"] .sidebar-featured-card .news-meta {
+  color: var(--text-muted);
+}
+
+/* Featured card — already dark bg, just refine border glow */
+html[data-theme="dark"] .featured-card {
+  background: linear-gradient(135deg, #0d0810 0%, #1a0a18 60%, rgba(153, 24, 50, 0.25) 100%);
+  border-color: rgba(201, 162, 39, 0.12);
+}
+html[data-theme="dark"] .featured-card:hover {
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(201, 162, 39, 0.18);
+}
+
+/* News articles grid */
+html[data-theme="dark"] .news-article {
+  background: var(--surface);
+  border-color: var(--border);
+}
+html[data-theme="dark"] .news-article:hover {
+  border-color: rgba(224, 80, 112, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+html[data-theme="dark"] .news-article h3 {
+  color: var(--text-primary);
+}
+html[data-theme="dark"] .news-article p {
+  color: var(--text-secondary);
+}
+html[data-theme="dark"] .news-article .news-cat {
+  background: rgba(224, 80, 112, 0.12);
+  color: var(--primary);
+}
+html[data-theme="dark"] .news-article .news-meta {
+  color: var(--text-muted);
+}
+
+/* Section headers */
+html[data-theme="dark"] .section-header h2 {
+  color: var(--text-primary);
+}
+html[data-theme="dark"] .section-header p {
+  color: var(--text-secondary);
+}
+
+/* Section dividers */
+html[data-theme="dark"] .section-divider {
+  border-top-color: var(--border);
+}
+
+/* Spotlight section — already dark, refine for deeper dark mode */
+html[data-theme="dark"] .spotlight-section {
+  background: linear-gradient(135deg, #0d0810 0%, #130a18 60%, rgba(15, 52, 96, 0.35) 100%);
+  border: 1px solid var(--border);
+}
+html[data-theme="dark"] .spotlight-card {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.07);
+}
+html[data-theme="dark"] .spotlight-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(201, 162, 39, 0.35);
+}
+
+/* Events timeline */
+html[data-theme="dark"] .events-timeline {
+  border-left-color: var(--primary);
+}
+html[data-theme="dark"] .event-item {
+  border-bottom-color: var(--border);
+}
+html[data-theme="dark"] .event-item::before {
+  background: var(--primary);
+  border-color: var(--light);
+}
+html[data-theme="dark"] .event-item .event-date {
+  color: var(--accent-light);
+}
+html[data-theme="dark"] .event-item h3 {
+  color: var(--text-primary);
+}
+html[data-theme="dark"] .event-item p {
+  color: var(--text-secondary);
+}
+
+/* Featured badge — keep gold accent visible */
+html[data-theme="dark"] .featured-badge {
+  background: rgba(201, 162, 39, 0.1);
+  border-color: rgba(201, 162, 39, 0.25);
+  color: var(--accent-light);
+}
+
+/* News article accent strip — boost glow */
+html[data-theme="dark"] .news-article-accent {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  opacity: 0.85;
+}
+
+/* Main body area inherits --light via var, but reinforce background */
+html[data-theme="dark"] .main {
+  background: var(--light);
+}
+
+/* Footer dark mode — ensure all footer text stays light on dark bg */
+html[data-theme="dark"] footer p,
+html[data-theme="dark"] footer li,
+html[data-theme="dark"] footer span,
+html[data-theme="dark"] footer address {
+  color: inherit;
+}
+
+/* Footer logo text in dark mode */
+html[data-theme="dark"] footer .nav-logo-cs {
+  color: var(--su-gold, #c9a227);
+}
+
+html[data-theme="dark"] footer .nav-logo-sub {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Footer links in dark mode — keep them light */
+html[data-theme="dark"] footer a:not(.btn) {
+  color: rgba(255, 255, 255, 0.55);
+}
+html[data-theme="dark"] footer a:not(.btn):hover {
+  color: var(--su-gold, #c9a227);
+}
+
+/* ── 5o. Quote / testimonial ──────────────────────────────────── */
+html[data-theme="dark"] blockquote {
+  background: var(--surface-alt);
+  border-left-color: var(--primary);
+  color: var(--text-secondary);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   7. CANONICAL NAVIGATION (.su-nav)
+   Rendered by the <su-nav> Web Component (components.js).
+   Fixed top bar with glassmorphism on scroll, side-by-side
+   button-style links, hamburger for mobile.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── The bar itself ────────────────────────────────────────────── */
+nav.su-nav,
+.su-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1100;
+  height: var(--su-nav-height);
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+nav.su-nav.su-nav--scrolled,
+.su-nav.su-nav--scrolled {
+  background: var(--su-nav-bg-scrolled);
+  backdrop-filter: blur(28px) saturate(1.6);
+  -webkit-backdrop-filter: blur(28px) saturate(1.6);
+  border-bottom: 1px solid rgba(201, 162, 39, 0.12);
+  box-shadow:
+    0 1px 0 0 rgba(201, 162, 39, 0.08),
+    0 4px 30px rgba(0, 0, 0, 0.5),
+    0 0 80px rgba(153, 24, 50, 0.06);
+}
+
+/* ── Inner container ───────────────────────────────────────────── */
+.su-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 36px;
+}
+
+/* ── Logo ──────────────────────────────────────────────────────── */
+.su-nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.su-nav__logo:hover {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 4px 18px var(--su-gold-glow));
+}
+.su-nav__logo-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 10px var(--su-gold-glow));
+  transition: filter 0.3s ease;
+}
+.su-nav__logo:hover .su-nav__logo-icon {
+  filter: drop-shadow(0 0 18px rgba(201, 162, 39, 0.6));
+}
+.su-nav__logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+.su-nav__logo-cs {
+  font-family: var(--font-heading, 'Inter', sans-serif);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px var(--su-gold-glow);
+}
+.su-nav__logo-sub {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--su-gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* ── Desktop links — side-by-side button style ─────────────────── */
+.su-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.su-nav__links li {
+  display: flex;
+  margin: 0;
+  /* Collapse adjacent borders so buttons sit flush */
+  margin-left: -1px;
+}
+.su-nav__links li:first-child {
+  margin-left: 0;
+}
+.su-nav__links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 9px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(255, 255, 255, 0.03);
+  position: relative;
+  transition: color 0.18s, background 0.18s, border-color 0.18s, transform 0.16s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+/* Gold bottom-edge indicator */
+.su-nav__links a::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--su-maroon), var(--su-gold));
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Hover state */
+.su-nav__links a:hover {
+  color: #fff;
+  background: rgba(153, 24, 50, 0.12);
+  border-color: rgba(153, 24, 50, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), 0 0 12px rgba(153, 24, 50, 0.1);
+  z-index: 1;
+}
+.su-nav__links a:hover::after {
+  transform: scaleX(1);
+}
+/* Active / current page */
+.su-nav__links a.su-active {
+  color: #fff;
+  background: rgba(153, 24, 50, 0.25);
+  border-color: rgba(153, 24, 50, 0.5);
+  box-shadow: inset 0 0 16px rgba(153, 24, 50, 0.1);
+  z-index: 1;
+}
+.su-nav__links a.su-active::after {
+  transform: scaleX(1);
+  height: 2px;
+  background: var(--su-gold);
+  box-shadow: 0 0 8px var(--su-gold-glow);
+}
+
+/* ── Hamburger button ──────────────────────────────────────────── */
+.su-nav__burger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 10px;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.su-nav__burger:hover {
+  background: rgba(201, 162, 39, 0.1);
+  border-color: var(--su-gold);
+  box-shadow: 0 0 12px var(--su-gold-glow);
+}
+.su-nav__burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 0;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s;
+}
+.su-nav__burger.su-open {
+  border-color: var(--su-gold);
+  background: rgba(153, 24, 50, 0.15);
+}
+.su-nav__burger.su-open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.su-nav__burger.su-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.su-nav__burger.su-open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* ── Mobile drawer ─────────────────────────────────────────────── */
+.su-nav__mobile {
+  display: none;
+  position: fixed;
+  top: var(--su-nav-height); left: 0; right: 0;
+  z-index: 1099;
+  background: rgba(10, 3, 8, 0.97);
+  backdrop-filter: blur(32px) saturate(1.4);
+  -webkit-backdrop-filter: blur(32px) saturate(1.4);
+  border-top: 1px solid rgba(201, 162, 39, 0.1);
+  border-bottom: 2px solid var(--su-maroon);
+  padding: 12px 0;
+  flex-direction: column;
+  gap: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+.su-nav__mobile.su-open {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+.su-nav__mobile a {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 14px 32px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-left: 3px solid transparent;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.su-nav__mobile a:hover {
+  color: #fff;
+  background: rgba(153, 24, 50, 0.08);
+  border-left-color: var(--su-maroon);
+}
+.su-nav__mobile a.su-active {
+  color: var(--su-gold);
+  background: rgba(153, 24, 50, 0.12);
+  border-left-color: var(--su-maroon);
+  text-shadow: 0 0 14px var(--su-gold-glow);
+}
+
+/* ── Responsive: hide desktop links, show burger ───────────────── */
+@media (max-width: 768px) {
+  .su-nav__links { display: none; }
+  .su-nav__burger { display: flex; }
+  .su-nav__inner { padding: 0 20px; }
+  .su-nav__logo-cs { font-size: 1.1rem; }
+  .su-nav__logo-icon { width: 36px; height: 36px; }
+}
+
+/* ── Dark mode: deeper scrolled bg ─────────────────────────────── */
+html[data-theme="dark"] .su-nav--scrolled {
+  background: rgba(5, 2, 8, 0.95);
+  border-bottom-color: rgba(201, 162, 39, 0.08);
+}
+
+/* ── Ensure body content isn't hidden under the fixed nav ──────── */
+/* Each page's hero already accounts for nav height via padding-top */
+
+/* ══════════════════════════════════════════════════════════════
+   8. FOOTER LOGO IMAGE
+   ══════════════════════════════════════════════════════════════ */
+.footer-logo__img {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   9. DARK MODE — PAGE-SPECIFIC GAPS
+   Overrides for elements only present on certain pages.
+   ══════════════════════════════════════════════════════════════ */
+
+/* courses.html: filter bar, search input, tab buttons */
+html[data-theme="dark"] .filter-bar {
+  background: rgba(28, 24, 37, 0.97);
+  border-color: var(--border);
+}
+html[data-theme="dark"] #module-search,
+html[data-theme="dark"] .tab-btn {
+  background: var(--surface-alt);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+html[data-theme="dark"] .tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+html[data-theme="dark"] .module-desc,
+html[data-theme="dark"] .resource-card p,
+html[data-theme="dark"] .faq-answer-inner {
+  color: var(--text-secondary);
+  border-top-color: var(--border);
+}
+
+/* resources.html: hardcoded white bars and cards */
+html[data-theme="dark"] .quick-links-bar {
+  background: rgba(28, 24, 37, 0.97);
+  border-color: var(--border);
+}
+html[data-theme="dark"] .quick-link-btn {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+html[data-theme="dark"] .ext-link-card {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+html[data-theme="dark"] .ext-link-icon {
+  background: var(--surface-alt);
+}
+html[data-theme="dark"] .faq-question:hover {
+  background: var(--surface-alt);
+}
+html[data-theme="dark"] .dates-table tbody tr:nth-child(even) td {
+  background: var(--surface-alt);
+}
+
+/* honours.html: hardcoded #fff cards and #333 text */
+html[data-theme="dark"] .hero-content-panel,
+html[data-theme="dark"] .sidebar-card,
+html[data-theme="dark"] .contact-card,
+html[data-theme="dark"] .info-box {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+/* undergraduate.html: .mtag-ext tint (dark on dark = invisible) */
+html[data-theme="dark"] .mtag-ext {
+  background: rgba(255, 255, 255, 0.07);
+}
+html[data-theme="dark"] .prog-meta-tag {
+  background: var(--surface-alt);
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+html[data-theme="dark"] .unique-combo {
+  background: var(--surface-alt);
+}
+
+/* programmes.html / courses.html: tab-content panel */
+html[data-theme="dark"] .tab-content {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+/* comparison table stripe */
+html[data-theme="dark"] .comparison-table tbody tr:nth-child(even) td {
+  background: var(--surface-alt);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   10. HACKATHON HERO OVERRIDES
+   Bold, sharp, punchy — brutalist-modern with SU identity.
+   Applies to every hero section across all 9 pages.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Shared base for ALL hero variants ─────────────────────────
+   Targets: .hero (index, programmes, honours, masters, phd)
+            .page-hero (courses, resources, undergraduate)         */
+
+header.hero,
+section.page-hero,
+header.page-hero {
+  background: #0a0408 !important;
+}
+
+/* Intensified gradient overlays — replace the gentle ones */
+header.hero::before,
+section.page-hero::before,
+header.page-hero::before {
+  background:
+    radial-gradient(ellipse 90% 70% at 15% 40%, rgba(153, 24, 50, 0.45) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 85% 15%, rgba(201, 162, 39, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 50% 90%, rgba(153, 24, 50, 0.2) 0%, transparent 50%) !important;
+}
+
+/* Sharper dot-grid overlay */
+header.hero::after,
+section.page-hero::after,
+header.page-hero::after {
+  background-image:
+    linear-gradient(rgba(201, 162, 39, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 162, 39, 0.04) 1px, transparent 1px) !important;
+  background-size: 40px 40px !important;
+}
+
+/* ── Hero titles — PUNCHY weight & spacing ─────────────────────── */
+header.hero h1,
+header.hero .hero__title,
+header.hero .hero-title,
+section.page-hero h1,
+header.page-hero h1 {
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+  text-shadow:
+    0 0 40px rgba(153, 24, 50, 0.3),
+    0 0 80px rgba(153, 24, 50, 0.15) !important;
+}
+
+/* Accent text: bold gold gradient with glow */
+header.hero h1 em,
+header.hero h1 span,
+header.hero .hero__title span,
+header.hero .hero-title em,
+section.page-hero h1 span,
+header.page-hero h1 em {
+  background: linear-gradient(135deg, #c9a227 0%, #e0b93a 40%, #f5d060 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  filter: drop-shadow(0 0 20px rgba(201, 162, 39, 0.5));
+}
+
+/* ── Subtitle text ─────────────────────────────────────────────── */
+header.hero .hero-subtitle,
+header.hero .hero__subtitle,
+header.hero .hero__sub,
+section.page-hero p,
+header.page-hero p {
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.01em;
+}
+
+/* ── Hero badges / eyebrows — SHARP brutalist style ────────────── */
+header.hero .hero-badge,
+header.hero .hero__badge,
+header.hero .hero__eyebrow,
+header.page-hero .hero-badge {
+  border-radius: 0 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  background: rgba(153, 24, 50, 0.3) !important;
+  border: 1px solid rgba(201, 162, 39, 0.4) !important;
+  color: var(--su-gold) !important;
+  box-shadow: 0 0 20px rgba(153, 24, 50, 0.2), inset 0 0 20px rgba(201, 162, 39, 0.05);
+  padding: 8px 20px !important;
+}
+
+/* ── Hero pills / stat chips — sharp edges ─────────────────────── */
+header.hero .hero__pill,
+header.hero .stat-chip {
+  border-radius: 0 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(153, 24, 50, 0.12) !important;
+  border: 1px solid rgba(201, 162, 39, 0.2) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+header.hero .hero__pill:hover,
+header.hero .stat-chip:hover {
+  transform: translateY(-2px);
+  border-color: rgba(201, 162, 39, 0.5) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 12px rgba(201, 162, 39, 0.15);
+}
+
+/* ── Hero stats (programmes.html) — bold numbers ───────────────── */
+header.hero .hero__stat-num {
+  font-weight: 900 !important;
+  font-size: 2.5rem !important;
+  background: linear-gradient(135deg, #c9a227, #f5d060) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  filter: drop-shadow(0 0 12px rgba(201, 162, 39, 0.4));
+}
+
+/* ── Hero CTA buttons — sharp, dramatic ────────────────────────── */
+header.hero .btn-primary,
+header.hero .btn.btn-primary {
+  border-radius: 0 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  background: linear-gradient(135deg, #991832 0%, #c02040 100%) !important;
+  border: none !important;
+  box-shadow:
+    0 4px 20px rgba(153, 24, 50, 0.5),
+    0 0 40px rgba(153, 24, 50, 0.2) !important;
+  transition: transform 0.16s ease, box-shadow 0.2s ease !important;
+}
+header.hero .btn-primary:hover,
+header.hero .btn.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow:
+    0 8px 32px rgba(153, 24, 50, 0.6),
+    0 0 60px rgba(153, 24, 50, 0.3) !important;
+}
+
+header.hero .btn-outline-white,
+header.hero .btn.btn-outline-white {
+  border-radius: 0 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  border: 2px solid rgba(201, 162, 39, 0.5) !important;
+  color: #fff !important;
+  background: transparent !important;
+  transition: transform 0.16s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease !important;
+}
+header.hero .btn-outline-white:hover,
+header.hero .btn.btn-outline-white:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  border-color: var(--su-gold) !important;
+  background: rgba(201, 162, 39, 0.08) !important;
+  box-shadow: 0 8px 32px rgba(201, 162, 39, 0.2), 0 0 20px rgba(201, 162, 39, 0.1) !important;
+}
+
+/* ── Breadcrumbs — gold accent ─────────────────────────────────── */
+header.hero .breadcrumb a,
+header.hero .hero__breadcrumb a,
+section.page-hero .breadcrumb a,
+header.page-hero .breadcrumb a {
+  color: rgba(255, 255, 255, 0.55) !important;
+  transition: color 0.2s ease;
+}
+header.hero .breadcrumb a:hover,
+header.hero .hero__breadcrumb a:hover,
+section.page-hero .breadcrumb a:hover,
+header.page-hero .breadcrumb a:hover {
+  color: var(--su-gold) !important;
+}
+header.hero .breadcrumb .current,
+header.hero .breadcrumb .breadcrumb-current,
+header.hero .hero__breadcrumb-current,
+header.hero .breadcrumb__current,
+section.page-hero .breadcrumb .current,
+header.page-hero .breadcrumb .current {
+  color: var(--su-gold) !important;
+  font-weight: 700;
+}
+
+/* ── Glow orbs (honours.html) — shift to SU palette ───────────── */
+header.hero .hero__glow {
+  background: radial-gradient(circle, rgba(153, 24, 50, 0.4) 0%, transparent 70%) !important;
+}
+header.hero .hero__glow-2 {
+  background: radial-gradient(circle, rgba(201, 162, 39, 0.2) 0%, transparent 70%) !important;
+}
+
+/* ── Grid overlays — unified gold tint ─────────────────────────── */
+header.hero .hero__grid,
+header.hero .hero-bg-grid,
+header.page-hero .hero-grid-overlay {
+  background-image:
+    linear-gradient(rgba(201, 162, 39, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 162, 39, 0.04) 1px, transparent 1px) !important;
+  background-size: 40px 40px !important;
+}
+
+/* ── Scroll indicator — gold accent ────────────────────────────── */
+header.hero .hero-scroll-arrow svg,
+header.hero .hero__scroll-arrow {
+  border-color: rgba(201, 162, 39, 0.4) !important;
+}
+
+/* ── Badge dot — gold pulse ────────────────────────────────────── */
+header.hero .hero-badge-dot,
+header.hero .hero-badge span:first-child {
+  color: var(--su-gold) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   11. HACKATHON SECTION OVERRIDES
+   Cards, CTAs, buttons, stats, filters — sharp edges throughout.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Section headings — bold and sharp ─────────────────────────── */
+.section-title,
+.section-heading,
+h2.section-title {
+  font-weight: 800 !important;
+  letter-spacing: -0.01em;
+}
+.section-title::after,
+.section-heading::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  margin-top: 16px;
+  border-radius: 0;
+}
+.section-header.centered .section-title::after,
+.section-header.centered .section-heading::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Research + publications dark section: brighter underline */
+#research .section-title::after,
+#publications .section-title::after {
+  background: linear-gradient(90deg, var(--primary-light, #c02040), var(--accent));
+}
+
+/* ── Section labels / eyebrows ─────────────────────────────────── */
+.section-label,
+.section-eyebrow {
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ── Cards — sharp edges, dramatic hover ───────────────────────── */
+.programme-card,
+.staff-card,
+.research-card,
+.module-card,
+.resource-card,
+.track-card,
+.req-card,
+.faq-item,
+.degree-card,
+.path-card,
+.contact-card,
+.ext-link-card,
+.supervisor-card {
+  border-radius: 0 !important;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.programme-card:hover,
+.staff-card:hover,
+.module-card:hover,
+.resource-card:hover,
+.track-card:hover,
+.degree-card:hover,
+.path-card:hover,
+.ext-link-card:hover,
+.supervisor-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(153, 24, 50, 0.18) !important;
+  border-color: rgba(153, 24, 50, 0.25) !important;
+}
+
+/* Dark mode card hover — vivid glow */
+html[data-theme="dark"] .programme-card:hover,
+html[data-theme="dark"] .staff-card:hover,
+html[data-theme="dark"] .module-card:hover,
+html[data-theme="dark"] .resource-card:hover,
+html[data-theme="dark"] .track-card:hover,
+html[data-theme="dark"] .degree-card:hover,
+html[data-theme="dark"] .ext-link-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(201, 162, 39, 0.15), 0 0 30px rgba(153, 24, 50, 0.08) !important;
+}
+
+/* ── CTA / banner blocks — sharp, glowing ──────────────────────── */
+.cta-block,
+.cta-banner,
+section[class*="cta"] {
+  border-radius: 0 !important;
+}
+
+/* ── Buttons outside hero — consistent sharp style ─────────────── */
+.btn-primary,
+.btn.btn-primary,
+a.btn-primary {
+  border-radius: 0 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: transform 0.16s ease, box-shadow 0.2s ease !important;
+}
+.btn-primary:hover,
+.btn.btn-primary:hover,
+a.btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 28px rgba(153, 24, 50, 0.4) !important;
+}
+
+.btn-outline,
+.btn-secondary,
+.btn.btn-outline {
+  border-radius: 0 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.btn-outline:hover,
+.btn-secondary:hover,
+.btn.btn-outline:hover {
+  border-color: var(--primary) !important;
+  box-shadow: 0 4px 16px rgba(153, 24, 50, 0.15) !important;
+}
+
+/* ── Stat items on home page ───────────────────────────────────── */
+.stat-item {
+  border-radius: 0 !important;
+  transition: background 0.2s, border-color 0.2s;
+}
+.stat-item:hover {
+  background: rgba(153, 24, 50, 0.04);
+}
+.stat-value {
+  font-weight: 900 !important;
+}
+
+/* ── Filter bars / tabs — sharp ────────────────────────────────── */
+.filter-bar,
+.quick-links-bar {
+  border-radius: 0 !important;
+}
+.filter-btn,
+.chip,
+.tab-btn,
+.quick-link-btn {
+  border-radius: 0 !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+}
+.filter-btn:hover,
+.chip:hover,
+.tab-btn:hover,
+.quick-link-btn:hover {
+  transform: translateY(-1px);
+}
+.filter-btn.active,
+.tab-btn.active,
+.quick-link-btn.active {
+  box-shadow: 0 4px 16px rgba(153, 24, 50, 0.3);
+}
+
+/* ── FAQ items ─────────────────────────────────────────────────── */
+.faq-item,
+.faq-q,
+.faq-question {
+  border-radius: 0 !important;
+}
+
+/* ── Footer — reinforce sharp edges ────────────────────────────── */
+footer {
+  border-radius: 0 !important;
+}
+
+/* ── Badge pills — sharp ──────────────────────────────────────── */
+.badge-dark,
+.badge-red,
+.badge-gold,
+.badge,
+.staff-tag,
+.hero-badge-dot,
+.news-category,
+.mtag-ext,
+.prog-meta-tag {
+  border-radius: 0 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Add a vivid accent line below hero via a border trick */
+.hero + *,
+.page-hero + * {
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, transparent 5%, var(--su-maroon) 20%, var(--su-gold) 50%, var(--su-maroon) 80%, transparent 95%) 1;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   12. HACKATHON ANIMATIONS
+   heroPulse, goldShimmer, slideUp — for dramatic hero entrances.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Subtle pulse on the hero background */
+@keyframes heroPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+header.hero::before,
+section.page-hero::before,
+header.page-hero::before {
+  animation: heroPulse 8s ease-in-out infinite;
+}
+
+/* Gold shimmer on accent text */
+@keyframes goldShimmer {
+  0% { filter: drop-shadow(0 0 20px rgba(201, 162, 39, 0.4)); }
+  50% { filter: drop-shadow(0 0 30px rgba(201, 162, 39, 0.7)); }
+  100% { filter: drop-shadow(0 0 20px rgba(201, 162, 39, 0.4)); }
+}
+
+header.hero h1 em,
+header.hero h1 span,
+header.hero .hero__title span,
+section.page-hero h1 span,
+header.page-hero h1 em {
+  animation: goldShimmer 4s ease-in-out infinite;
+}
+
+/* ── Entrance animations for hero content ──────────────────────── */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+header.hero .hero-content,
+header.hero .hero__inner,
+header.hero .hero__content,
+header.hero .hero-content,
+section.page-hero .page-hero-content,
+header.page-hero .page-hero-inner {
+  animation: slideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   13. UNIFIED FOOTER STYLES
+   Canonical footer layout — rendered by <su-footer> component.
+   Four-column grid: Brand, Programmes, Quick Links, Contact.
+   ══════════════════════════════════════════════════════════════ */
+
+footer[role="contentinfo"],
+footer {
+  background: #0f0f1e;
+  padding: 80px 0 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+  gap: 48px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.nav-logo-text { display: flex; flex-direction: column; }
+.nav-logo-cs {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+.nav-logo-sub {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+.footer-desc {
+  font-size: 0.87rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+.footer-brand {
+  border-left: 3px solid var(--su-maroon, #991832);
+  padding-left: 20px;
+}
+.footer-socials {
+  display: flex;
+  gap: 10px;
+}
+.footer-social {
+  width: 38px; height: 38px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.5);
+  transition: var(--transition);
+}
+.footer-social:hover {
+  background: rgba(153,24,50,0.2);
+  border-color: rgba(153,24,50,0.4);
+  color: #fff;
+}
+.footer-col h4 {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--su-maroon, #991832);
+  display: inline-block;
+}
+.footer-links { display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+  font-size: 0.87rem;
+  color: rgba(255,255,255,0.45);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.footer-links a:hover { color: var(--accent); padding-left: 4px; }
+.footer-links a::before {
+  content: '›';
+  color: var(--primary);
+  font-weight: 700;
+  transition: var(--transition);
+}
+.footer-contact-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 0.83rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.5;
+}
+.footer-contact-item svg { flex-shrink: 0; margin-top: 1px; color: var(--accent); }
+.footer-contact-item a {
+  color: rgba(255,255,255,0.45);
+  transition: var(--transition);
+}
+.footer-contact-item a:hover { color: var(--accent); }
+.footer-bottom {
+  padding: 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-top: 1px solid rgba(153, 24, 50, 0.2);
+}
+.footer-bottom p {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.3);
+}
+.footer-bottom a { color: rgba(255,255,255,0.45); transition: var(--transition); }
+.footer-bottom a:hover { color: var(--accent); }
+.footer-bottom-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.3);
+}
+
+/* Footer responsive */
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+}
+@media (max-width: 768px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   14. HACKATHON FOOTER OVERRIDES
+   Sharp edges, gold accent border-image, deeper dark background.
+   ══════════════════════════════════════════════════════════════ */
+
+footer {
+  background: #080410 !important;
+  border-top: 2px solid transparent !important;
+  border-image: linear-gradient(90deg, transparent 5%, var(--su-maroon) 25%, var(--su-gold) 50%, var(--su-maroon) 75%, transparent 95%) 1 !important;
+}
+
+/* Footer column headings */
+footer h4,
+footer [class*="col-title"],
+footer [class*="__col-title"] {
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: #fff !important;
+  font-size: 0.85rem !important;
+}
+
+/* Footer links */
+footer ul a,
+footer [class*="footer-links"] a,
+footer [class*="footer__links"] a {
+  font-weight: 600 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.82rem !important;
+  transition: color 0.2s ease, padding-left 0.2s ease !important;
+}
+footer ul a:hover,
+footer [class*="footer-links"] a:hover,
+footer [class*="footer__links"] a:hover {
+  color: var(--su-gold) !important;
+}
+
+/* Footer social icons — sharp */
+footer [class*="footer-social"],
+footer [class*="footer__social"] {
+  border-radius: 0 !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+}
+footer [class*="footer-social"]:hover,
+footer [class*="footer__social"]:hover {
+  transform: translateY(-2px) !important;
+  background: rgba(153, 24, 50, 0.25) !important;
+  border-color: var(--su-gold) !important;
+  box-shadow: 0 4px 16px rgba(201, 162, 39, 0.2) !important;
+}
+
+/* Footer bottom bar */
+footer [class*="footer-bottom"],
+footer [class*="footer__bottom"] {
+  border-top: 1px solid rgba(201, 162, 39, 0.1) !important;
+}
+
+/* Footer brand description */
+footer [class*="footer-desc"],
+footer [class*="footer__desc"] {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   15. GLOBAL HACKATHON POLISH
+   Final competition-winning touches across all pages.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Selection colour — SU maroon */
+::selection {
+  background: rgba(153, 24, 50, 0.4);
+  color: #fff;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus outline — gold ring */
+*:focus-visible {
+  outline: 2px solid var(--su-gold) !important;
+  outline-offset: 2px;
+}
+
+/* Links — subtle gold underline on hover */
+main a:not(.btn):not([class*="nav"]):not([class*="card"]):not([class*="footer"]) {
+  text-decoration-color: transparent;
+  transition: text-decoration-color 0.2s ease, color 0.2s ease;
+}
+main a:not(.btn):not([class*="nav"]):not([class*="card"]):not([class*="footer"]):hover {
+  text-decoration-color: var(--su-gold);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   16. ACCESSIBILITY — SKIP-TO-CONTENT LINK
+   Hidden off-screen until focused; allows keyboard users to
+   bypass navigation.
+   ══════════════════════════════════════════════════════════════ */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 10000;
+  padding: 0.75rem 1.5rem;
+  background: var(--su-gold);
+  color: #0a0a0a;
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-to-content:focus {
+  top: 1rem;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   17. SCROLL-TO-TOP BUTTON
+   Fixed bottom-right, appears after scrolling down 300px.
+   Show/hide logic is in each page's inline <script>.
+   ══════════════════════════════════════════════════════════════ */
+.scroll-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 599;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(153, 24, 50, 0.9);
+  border: 2px solid rgba(201, 162, 39, 0.4);
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, background 0.2s ease, transform 0.2s ease;
+}
+.scroll-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.scroll-to-top:hover {
+  background: var(--su-gold);
+  color: #0a0a0a;
+  transform: translateY(-2px);
+}
+.scroll-to-top:focus-visible {
+  outline: 3px solid var(--su-gold);
+  outline-offset: 2px;
+}
+@media (max-width: 480px) {
+  .scroll-to-top {
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   18. FOOTER TAGLINE
+   "Forward together / Sonke siya phambili"
+   ══════════════════════════════════════════════════════════════ */
+.footer-tagline {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  color: rgba(201, 162, 39, 0.6);
+}

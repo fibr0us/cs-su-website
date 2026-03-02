@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>var t=localStorage.getItem("su-theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News &amp; Events | Computer Science | Stellenbosch University</title>
+  <meta name="description" content="Latest news, events, and research seminars from the Computer Science Division at Stellenbosch University." />
+  <link rel="icon" type="image/svg+xml" href="su-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="theme.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--light);
+      color: var(--text-body);
+      line-height: 1.65;
+    }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 10rem 2rem 5rem;
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(153,24,50,0.3) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 20% 100%, rgba(201,162,39,0.1) 0%, transparent 60%);
+    }
+
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    }
+
+    .page-hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+
+    .breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1.5rem;
+      font-family: var(--font-heading);
+    }
+
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent-light); }
+    .breadcrumb span { color: rgba(255,255,255,0.3); }
+
+    .page-hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .page-hero h1 span { color: var(--accent); }
+
+    .page-hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 580px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    /* ── FILTER BAR ── */
+    .news-filter-bar {
+      background: var(--light);
+      border-bottom: 1px solid var(--mid-gray);
+      padding: 0.85rem 2rem;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: var(--su-nav-height, 72px);
+      z-index: 900;
+    }
+    .news-filter-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.6rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .news-filter-inner::-webkit-scrollbar { display: none; }
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.45rem 1rem;
+      border-radius: 0;
+      border: 1.5px solid var(--mid-gray);
+      background: var(--light);
+      color: var(--text-body);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition);
+      flex-shrink: 0;
+    }
+    .filter-chip:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(153,24,50,0.04);
+      transform: translateY(-1px);
+    }
+    .filter-chip.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(153,24,50,0.3);
+    }
+
+    /* ── MAIN ── */
+    .main { max-width: 1280px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+
+    /* ── FEATURED NEWS ── */
+    .featured-news {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+    .featured-card {
+      background: linear-gradient(135deg, var(--dark) 0%, #2a1018 60%, rgba(153,24,50,0.4) 100%);
+      border: 1px solid rgba(201,162,39,0.15);
+      border-radius: 0;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 340px;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .featured-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 80% 20%, rgba(201,162,39,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(153,24,50,0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .featured-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.3), 0 0 0 1px rgba(201,162,39,0.2);
+    }
+    .featured-card > * { position: relative; z-index: 1; }
+    .featured-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #c9a227;
+      background: rgba(153,24,50,0.25);
+      border: 1px solid rgba(153,24,50,0.45);
+      padding: 0.35rem 0.85rem;
+      border-radius: 0;
+      margin-bottom: 1rem;
+      width: fit-content;
+    }
+    .featured-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.4); }
+    }
+    .featured-card h2 {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+    .featured-card p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      max-width: 520px;
+    }
+    .featured-date {
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .featured-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .sidebar-featured-card {
+      background: var(--light);
+      border: 1px solid var(--mid-gray);
+      border-radius: 0;
+      padding: 1.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .sidebar-featured-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(153,24,50,0.2);
+    }
+    .sidebar-featured-card .news-cat {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 0.6rem;
+      border-radius: 0;
+      display: inline-block;
+      background: rgba(153,24,50,0.08);
+      padding: 0.25rem 0.6rem;
+    }
+    .sidebar-featured-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-body);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    .sidebar-featured-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .sidebar-featured-card .news-meta {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── NEWS GRID ── */
+    .news-section { margin-bottom: 3.5rem; }
+    .section-header { margin-bottom: 2rem; }
+    .section-label {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .section-header h2 {
+      font-family: var(--font-heading);
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--text-body);
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 560px;
+    }
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--mid-gray);
+      margin-bottom: 3.5rem;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .news-article {
+      background: var(--light);
+      border: 1px solid var(--mid-gray);
+      border-radius: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .news-article.fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease, box-shadow var(--transition), border-color var(--transition);
+    }
+    .news-article.fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .news-article:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(153,24,50,0.2);
+    }
+    .news-article-accent {
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+    .news-article-body {
+      padding: 1.6rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .news-article .news-cat {
+      font-family: var(--font-heading);
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      background: rgba(153,24,50,0.08);
+      padding: 0.2rem 0.55rem;
+      border-radius: 0;
+      display: inline-block;
+      width: fit-content;
+      margin-bottom: 0.75rem;
+    }
+    .news-article h3 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-body);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    .news-article p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .news-article .news-meta {
+      font-family: var(--font-heading);
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ── RESEARCH SPOTLIGHT ── */
+    .spotlight-section {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark-mid) 60%, rgba(15,52,96,0.9) 100%);
+      border-radius: 0;
+      padding: 3rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 3.5rem;
+    }
+    .spotlight-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 90% 50%, rgba(201,162,39,0.08) 0%, transparent 60%);
+    }
+    .spotlight-section > * { position: relative; }
+    .spotlight-section .section-label { color: var(--accent); }
+    .spotlight-section h2 {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+    .spotlight-section > p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+    .spotlight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .spotlight-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0;
+      padding: 1.25rem;
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .spotlight-card:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(153,24,50,0.4);
+    }
+    .spotlight-card h4 {
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #e8a0b0;
+      margin-bottom: 0.5rem;
+    }
+    .spotlight-card p {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+    }
+
+    /* ── EVENTS TIMELINE ── */
+    .events-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-left: 3px solid var(--primary);
+      margin-left: 1rem;
+      padding-left: 2rem;
+    }
+    .event-item {
+      position: relative;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--mid-gray);
+    }
+    .event-item:last-child { border-bottom: none; }
+    .event-item::before {
+      content: '';
+      position: absolute;
+      left: -2.55rem;
+      top: 1.6rem;
+      width: 12px;
+      height: 12px;
+      background: var(--primary);
+      border: 3px solid var(--light);
+      border-radius: 50%;
+    }
+    .event-item .event-date {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 0.35rem;
+    }
+    .event-item h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-body);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .event-item p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── FADE ANIMATION ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .featured-news { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .news-grid { grid-template-columns: 1fr; }
+      .spotlight-grid { grid-template-columns: 1fr; }
+      .page-hero { padding: 8rem 1.25rem 4rem; }
+      .spotlight-section { padding: 2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .main { padding: 2.5rem 1.25rem 4rem; }
+      .section-header h2 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+<!-- ── NAVIGATION (Web Component) ── -->
+<script src="components.js"></script>
+<su-nav></su-nav>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>&rsaquo;</span>
+      <span>News &amp; Events</span>
+    </div>
+    <h1>News &amp; <span>Events</span></h1>
+    <p>The latest from the Computer Science Division — research breakthroughs, departmental milestones, and upcoming events.</p>
+  </div>
+</section>
+
+<!-- ── FILTER BAR ── -->
+<div class="news-filter-bar">
+  <div class="news-filter-inner">
+    <button class="filter-chip active" data-filter="all">All News</button>
+    <button class="filter-chip" data-filter="research">Research</button>
+    <button class="filter-chip" data-filter="event">Events</button>
+    <button class="filter-chip" data-filter="achievement">Achievements</button>
+    <button class="filter-chip" data-filter="academic">Academic</button>
+    <button class="filter-chip" data-filter="community">Community</button>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<main class="main" id="main-content">
+
+  <!-- FEATURED NEWS -->
+  <section class="news-section">
+    <div class="featured-news fade-up">
+      <div class="featured-card">
+        <div class="featured-badge">
+          <span class="featured-badge-dot"></span>
+          Featured
+        </div>
+        <h2>Prof Engelbrecht Appointed as SARChI Chair in Artificial Intelligence</h2>
+        <p>Professor Andries Engelbrecht has been appointed as the South African Research Chair Initiative (SARChI) Chair in Artificial Intelligence at Stellenbosch University. The Chair represents a major national investment in AI research and will enable the CS Division to expand its work in neural networks, swarm intelligence, and computational intelligence.</p>
+        <span class="featured-date">February 2026 &middot; Achievement</span>
+      </div>
+      <div class="featured-sidebar">
+        <div class="sidebar-featured-card">
+          <span class="news-cat">Research</span>
+          <h3>COASTAL Framework Achieves New Concolic Testing Milestone</h3>
+          <p>The Software Engineering group's COASTAL tool — developed under Prof Willem Visser — has achieved a new milestone in concolic testing of Java programs, pushing the boundary of automated bug detection.</p>
+          <div class="news-meta">January 2026</div>
+        </div>
+        <div class="sidebar-featured-card">
+          <span class="news-cat">Event</span>
+          <h3>Div &amp; Conquer Hackathon 2026 Kicks Off</h3>
+          <p>Stellenbosch CS students participate in the annual Div &amp; Conquer Hackathon, redesigning the department website with cutting-edge web technologies.</p>
+          <div class="news-meta">February 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- LATEST NEWS -->
+  <section class="news-section">
+    <div class="section-header fade-up">
+      <div class="section-label">Latest</div>
+      <h2>Recent News &amp; Announcements</h2>
+      <p>Highlights from research, teaching, and community engagement across the CS Division.</p>
+    </div>
+
+    <div class="news-grid">
+
+      <article class="news-article fade-up" data-category="research">
+        <div class="news-article-accent"></div>
+        <div class="news-article-body">
+          <span class="news-cat">Research</span>
+          <h3>Machine Learning Group Publishes Earth Observation Paper in Remote Sensing</h3>
+          <p>Dr Trienko Grobler and Mkhuseli Ngxande co-authored a paper on satellite image classification using deep learning, published in the journal Remote Sensing of Environment.</p>
+          <div class="news-meta">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Feb 2026
+          </div>
+        </div>
+      </article>
+
+      <article class="news-article fade-up" data-category="achievement">
+        <div class="news-article-accent"></div>
+        <div class="news-article-body">
+          <span class="news-cat">Achievement</span>
+          <h3>Prof Bernd Fischer Receives Best Paper at TACAS 2026</h3>
+          <p>Professor Bernd Fischer's work on ESBMC — the Efficient SMT-Based Context-Bounded Model Checker — was awarded best paper at the 32nd International Conference on Tools and Algorithms (TACAS).</p>
+          <div class="news-meta">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Jan 2026
+          </div>
+        </div>
+      </article>
+
+      <article class="news-article fade-up" data-category="academic">
+        <div class="news-article-accent"></div>
+        <div class="news-article-body">
+          <span class="news-cat">Academic</span>
+          <h3>2026 Honours Orientation &amp; Project Registration Open</h3>
+          <p>The 2026 BCmp Honours cohort has been welcomed with a comprehensive orientation session. Project registration forms and supervisor agreements are due by 6 February.</p>
+          <div class="news-meta">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            2 Feb 2026
+          </div>
+        </div>
+      </article>
+
+      <article class="news-article fade-up" data-category="research">
+        <div class="news-article-accent"></div>
+        <div class="news-article-body">
+          <span class="news-cat">Research</span>
+          <h3>Automata Group Advances NFA Minimisation Algorithms</h3>
+          <p>Prof Brink van der Merwe and Dr Willem Bester published new results on NFA state complexity and minimisation algorithms, extending the group's long-standing contributions to formal language theory.</p>
+          <div class="news-meta">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Dec 2025
+          </div>
+        </div>
+      </article>
+
+      <article class="news-article fade-up" data-category="community">
+        <div class="news-article-accent"></div>
+        <div class="news-article-body">
+          <span class="news-cat">Community</span>
+          <h3>Prof Lynette van Zijl's Assistive Tech Project Expands to Western Cape Schools</h3>
+          <p>Professor van Zijl's assistive technology research, focused on accessibility tools for deaf learners, has been expanded to three additional schools in the Western Cape through an NRF Community Engagement grant.</p>
+          <div class="news-meta">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Nov 2025
+          </div>
+        </div>
+      </article>
+
+      <article class="news-article fade-up" data-category="achievement">
+        <div class="news-article-accent"></div>
+        <div class="news-article-body">
+          <span class="news-cat">Achievement</span>
+          <h3>Prof Maria Keet Delivers Keynote at International Semantic Web Conference</h3>
+          <p>Professor Keet presented the keynote address at ISWC 2025, discussing advances in ontology engineering and knowledge representation for African languages.</p>
+          <div class="news-meta">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Oct 2025
+          </div>
+        </div>
+      </article>
+
+      <article class="news-article fade-up" data-category="research">
+        <div class="news-article-accent"></div>
+        <div class="news-article-body">
+          <span class="news-cat">Research</span>
+          <h3>Steve Kroon's RL Research Accepted at NeurIPS 2025</h3>
+          <p>Associate Professor Steve Kroon's paper on safe reinforcement learning with constrained Markov decision processes has been accepted for presentation at NeurIPS 2025.</p>
+          <div class="news-meta">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Sep 2025
+          </div>
+        </div>
+      </article>
+
+      <article class="news-article fade-up" data-category="event">
+        <div class="news-article-accent"></div>
+        <div class="news-article-body">
+          <span class="news-cat">Event</span>
+          <h3>Annual CS Division Colloquium Series Returns</h3>
+          <p>The 2026 weekly colloquium series has commenced, featuring presentations by postgraduate students and invited speakers. All members of the university community are welcome.</p>
+          <div class="news-meta">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Feb 2026
+          </div>
+        </div>
+      </article>
+
+      <article class="news-article fade-up" data-category="academic">
+        <div class="news-article-accent"></div>
+        <div class="news-article-body">
+          <span class="news-cat">Academic</span>
+          <h3>New Data Science Module CS344 Launches in Semester 1</h3>
+          <p>A new undergraduate module in Applied Data Science (CS344) has been introduced to the curriculum, integrating machine learning, data wrangling, and real-world project work.</p>
+          <div class="news-meta">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Feb 2026
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- RESEARCH SPOTLIGHT -->
+  <section class="news-section">
+    <div class="spotlight-section fade-up">
+      <div class="section-label">Research Spotlight</div>
+      <h2>Active Research Highlights</h2>
+      <p>A closer look at the groundbreaking research happening across our four research groups.</p>
+
+      <div class="spotlight-grid">
+        <div class="spotlight-card">
+          <h4>ESBMC Model Checker</h4>
+          <p>Prof Bernd Fischer leads development of the Efficient SMT-Based Context-Bounded Model Checker, used worldwide for verifying C/C++ and Solidity programs. Latest version supports verification of smart contracts and multi-threaded code.</p>
+        </div>
+        <div class="spotlight-card">
+          <h4>Swarm Intelligence &amp; Neural Nets</h4>
+          <p>Prof Andries Engelbrecht's group advances particle swarm optimisation, differential evolution, and deep learning architectures — with applications in financial modelling, scheduling, and bioinformatics.</p>
+        </div>
+        <div class="spotlight-card">
+          <h4>Assistive Technology for Deaf Learners</h4>
+          <p>Prof Lynette van Zijl's team develops accessible computing tools and South African Sign Language resources, working directly with the deaf community and schools to bridge the digital divide.</p>
+        </div>
+        <div class="spotlight-card">
+          <h4>COASTAL Concolic Analyser</h4>
+          <p>Prof Willem Visser's COASTAL framework combines concrete and symbolic execution to automatically find bugs in Java programs. The tool is open source and actively used in software verification research.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- UPCOMING EVENTS -->
+  <section class="news-section">
+    <div class="section-header fade-up">
+      <div class="section-label">Calendar</div>
+      <h2>Upcoming Events</h2>
+      <p>Dates and deadlines relevant to students and staff in the CS Division.</p>
+    </div>
+
+    <div class="events-timeline fade-up">
+      <div class="event-item">
+        <div class="event-date">2 February 2026</div>
+        <h3>Honours Orientation</h3>
+        <p>Comprehensive orientation session for all new BCmp Honours students. Venue: Mathematical Sciences Building, A-wing.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">6 February 2026</div>
+        <h3>Honours Project Registration Deadline</h3>
+        <p>Submit supervisor agreement and project topic registration forms. Late submissions will not be considered.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">9 February 2026</div>
+        <h3>Honours Lectures Commence</h3>
+        <p>First day of formal Honours module lectures. Attendance is compulsory for all registered BCmp Honours students.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">Mid February 2026</div>
+        <h3>Semester 1 Teaching Begins</h3>
+        <p>All undergraduate and postgraduate coursework modules commence. Check SUNLearn for timetables and venue details.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">28 February 2026</div>
+        <h3>Div &amp; Conquer Hackathon</h3>
+        <p>Annual CS department hackathon. Teams redesign the department website using modern web technologies. Prizes for best design, innovation, and presentation.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">March 2026</div>
+        <h3>Weekly Colloquium Series</h3>
+        <p>Postgraduate students and invited speakers present their research weekly. Open to all members of the university community.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">Late May 2026</div>
+        <h3>Semester 1 Examinations</h3>
+        <p>End-of-semester examinations. Check the SU examination timetable for exact dates and venues.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">October 2026</div>
+        <h3>Honours Project Submission</h3>
+        <p>Final thesis submission deadline for BCmp Honours students. Confirm exact date with your supervisor.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- SEMINAR SCHEDULE -->
+  <section class="news-section">
+    <div class="section-header fade-up">
+      <div class="section-label">Seminars</div>
+      <h2>CS Research Seminar Series</h2>
+      <p>Weekly talks by staff, postgraduate students, and invited speakers. Held Wednesdays 13:00–14:00 in the A-wing Seminar Room (A302), Mathematical Sciences Building, unless noted otherwise.</p>
+    </div>
+
+    <div class="events-timeline fade-up">
+      <div class="event-item">
+        <div class="event-date">5 March 2026</div>
+        <h3>Compositional Verification of Distributed Protocols</h3>
+        <p><strong>Speaker:</strong> Prof Bernd Fischer &nbsp;|&nbsp; <strong>Venue:</strong> A302 &nbsp;|&nbsp; Presenting recent advances in modular model-checking techniques for network protocol correctness.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">12 March 2026</div>
+        <h3>Reinforcement Learning on Edge Devices</h3>
+        <p><strong>Speaker:</strong> Prof Steve Kroon &nbsp;|&nbsp; <strong>Venue:</strong> A302 &nbsp;|&nbsp; Efficient policy-gradient methods enabling real-time decision-making on resource-constrained hardware.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">19 March 2026</div>
+        <h3>Automata-Based Pattern Matching with Bounded Delay</h3>
+        <p><strong>Speaker:</strong> Prof Lynette van Zijl &nbsp;|&nbsp; <strong>Venue:</strong> A302 &nbsp;|&nbsp; Minimal NFA constructions for streaming text processing and their complexity-theoretic implications.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">26 March 2026</div>
+        <h3>Satellite Image Segmentation for Precision Agriculture</h3>
+        <p><strong>Speaker:</strong> Dr Trienko Grobler &nbsp;|&nbsp; <strong>Venue:</strong> A302 &nbsp;|&nbsp; Deep learning approaches to Sentinel-2 imagery for crop classification in Southern Africa.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">2 April 2026</div>
+        <h3>Co-Designing Accessible Mobile Health Interfaces</h3>
+        <p><strong>Speaker:</strong> Prof Bill Tucker &nbsp;|&nbsp; <strong>Venue:</strong> A302 &nbsp;|&nbsp; Participatory design methods for building digital health tools in low-resource rural communities.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">9 April 2026</div>
+        <h3>Multi-Objective PSO for Neural Architecture Search</h3>
+        <p><strong>Speaker:</strong> Prof Andries Engelbrecht &nbsp;|&nbsp; <strong>Venue:</strong> A302 &nbsp;|&nbsp; Swarm intelligence methods that co-optimize accuracy and computational cost in automated neural network design.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">16 April 2026</div>
+        <h3>Postgraduate Student Lightning Talks</h3>
+        <p><strong>Speakers:</strong> Honours &amp; MSc students &nbsp;|&nbsp; <strong>Venue:</strong> A302 &nbsp;|&nbsp; Six 10-minute presentations showcasing current postgraduate research projects across all four research groups.</p>
+      </div>
+      <div class="event-item">
+        <div class="event-date">23 April 2026</div>
+        <h3>Formal Verification of OS Kernels</h3>
+        <p><strong>Speaker:</strong> Prof Willem Visser &nbsp;|&nbsp; <strong>Venue:</strong> A302 &nbsp;|&nbsp; Techniques for systematic testing and verification of operating system kernel components.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER (Web Component) ── -->
+<su-footer></su-footer>
+
+<script>
+  const observerOpts = { threshold: 0.07, rootMargin: '0px 0px -40px 0px' };
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const parent = entry.target.closest('.news-grid');
+        const delay = parent
+          ? Array.from(parent.children).indexOf(entry.target) * 70
+          : 0;
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, observerOpts);
+
+  document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+
+  // ── FILTER CHIPS ──
+  const filterChips = document.querySelectorAll('.filter-chip');
+  const newsArticles = document.querySelectorAll('.news-article[data-category]');
+
+  filterChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      filterChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const filter = chip.getAttribute('data-filter');
+      newsArticles.forEach(article => {
+        if (filter === 'all' || article.getAttribute('data-category') === filter) {
+          article.style.display = '';
+        } else {
+          article.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+  <!-- ─── SCROLL TO TOP ─── -->
+  <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top" title="Scroll to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+  <script>
+    (function(){var btn=document.getElementById('scrollToTop');window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>400)});btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();
+  </script>
+  <!-- ─── DARK MODE TOGGLE ─── -->
+  <button class="dm-toggle" id="dmToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+  <script>
+    (function() {
+      var dmToggle = document.getElementById('dmToggle');
+      var htmlEl = document.documentElement;
+      var savedTheme = localStorage.getItem('su-theme') || 'light';
+      htmlEl.setAttribute('data-theme', savedTheme);
+      dmToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+      dmToggle.addEventListener('click', function() {
+        var isDark = htmlEl.getAttribute('data-theme') === 'dark';
+        var next = isDark ? 'light' : 'dark';
+        htmlEl.setAttribute('data-theme', next);
+        localStorage.setItem('su-theme', next);
+        dmToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+      });
+    })();
+  </script>
+</body>
+</html>

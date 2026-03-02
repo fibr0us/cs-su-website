@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>var t=localStorage.getItem("su-theme");if(t)document.documentElement.setAttribute("data-theme",t);</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Resources | Computer Science | Stellenbosch University</title>
+  <meta name="description" content="Student resources for CS at Stellenbosch University — academic support, computing facilities, important contacts, key dates, and frequently asked questions." />
+  <link rel="icon" type="image/svg+xml" href="su-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="theme.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--light);
+      color: var(--text-body);
+      line-height: 1.65;
+    }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 10rem 2rem 5rem;
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(153,24,50,0.3) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 20% 100%, rgba(201,162,39,0.1) 0%, transparent 60%);
+    }
+
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    }
+
+    .page-hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+
+    .breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1.5rem;
+      font-family: var(--font-heading);
+    }
+
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent-light); }
+    .breadcrumb span { color: rgba(255,255,255,0.3); }
+
+    .page-hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .page-hero h1 span { color: var(--accent); }
+
+    .page-hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 580px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    /* ── QUICK LINKS BAR ── */
+    .quick-links-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--mid-gray);
+      padding: 0.85rem 2rem;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: var(--su-nav-height, 72px);
+      z-index: 900;
+    }
+
+    .quick-links-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.6rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+
+    .quick-links-inner::-webkit-scrollbar { display: none; }
+
+    .quick-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.45rem 1rem;
+      border-radius: 30px;
+      border: 1.5px solid var(--mid-gray);
+      background: var(--surface);
+      color: var(--text-body);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all var(--transition);
+      flex-shrink: 0;
+    }
+
+    .quick-link-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(153,24,50,0.04);
+      transform: translateY(-1px);
+    }
+
+    .quick-link-btn svg { color: var(--primary); flex-shrink: 0; }
+
+    /* ── MAIN ── */
+    .main { max-width: 1280px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+
+    /* ── SECTION COMMON ── */
+    .resources-section { margin-bottom: 4rem; }
+
+    .section-header { margin-bottom: 2rem; }
+
+    .section-label {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-header h2 {
+      font-family: var(--font-heading);
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 560px;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--mid-gray);
+      margin-bottom: 4rem;
+    }
+
+    /* ── CARDS GRID ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .resource-card {
+      background: var(--surface);
+      border: 1px solid var(--mid-gray);
+      border-radius: var(--border-radius);
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .resource-card.fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease, box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .resource-card.fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .resource-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(153,24,50,0.2);
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(153,24,50,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .resource-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: -0.02em;
+    }
+
+    .resource-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    /* ── CONTACT CARDS ── */
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--mid-gray);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .contact-card.fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease, box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .contact-card.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    .contact-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(153,24,50,0.25);
+    }
+
+    .contact-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(153,24,50,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .contact-body { flex: 1; min-width: 0; }
+
+    .contact-body h3 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-body a {
+      font-size: 0.88rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      word-break: break-all;
+    }
+
+    .contact-body a:hover { color: var(--primary-light); text-decoration: underline; }
+
+    .contact-body p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+      line-height: 1.5;
+    }
+
+    .contact-card.address .contact-icon { background: rgba(153,24,50,0.08); color: var(--primary); }
+
+    /* ── DATES TABLE ── */
+    .dates-table-wrap {
+      border-radius: var(--border-radius);
+      border: 1px solid var(--mid-gray);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .dates-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .dates-table thead {
+      background: var(--dark);
+      color: white;
+    }
+
+    .dates-table thead th {
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.9rem 1.25rem;
+      text-align: left;
+    }
+
+    .dates-table tbody tr {
+      border-bottom: 1px solid var(--mid-gray);
+      transition: background var(--transition);
+    }
+
+    .dates-table tbody tr:last-child { border-bottom: none; }
+    .dates-table tbody tr:hover { background: rgba(153,24,50,0.03); }
+    .dates-table tbody tr:nth-child(even) td { background: rgba(240,240,245,0.5); }
+    .dates-table tbody tr:nth-child(even):hover td { background: rgba(153,24,50,0.03); }
+
+    .dates-table tbody td {
+      padding: 0.85rem 1.25rem;
+      color: var(--text-body);
+    }
+
+    .dates-table tbody td:first-child {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    .dates-table a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    .dates-table a:hover { text-decoration: underline; }
+
+    .date-badge {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.18rem 0.55rem;
+      border-radius: 30px;
+      background: rgba(153,24,50,0.1);
+      color: var(--primary);
+      letter-spacing: 0.03em;
+    }
+
+    /* ── POSTGRAD SECTION ── */
+    .postgrad-section {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark-mid) 60%, rgba(15,52,96,0.9) 100%);
+      border-radius: var(--border-radius);
+      padding: 3rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .postgrad-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 90% 50%, rgba(201,162,39,0.08) 0%, transparent 60%);
+    }
+
+    .postgrad-section > * { position: relative; }
+
+    .postgrad-section .section-label { color: var(--accent); border-left: 3px solid rgba(153,24,50,0.6); padding-left: 0.6rem; }
+
+    .postgrad-section h2 {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .postgrad-section > p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .postgrad-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .postgrad-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--border-radius-sm);
+      padding: 1.25rem;
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    .postgrad-card:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(153,24,50,0.4);
+    }
+
+    .postgrad-card h4 {
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #e8a0b0;
+      margin-bottom: 0.5rem;
+    }
+
+    .postgrad-card p {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+    }
+
+    /* ── USEFUL LINKS GRID ── */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .ext-link-card {
+      background: var(--surface);
+      border: 1px solid var(--mid-gray);
+      border-radius: var(--border-radius);
+      padding: 1.25rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      text-decoration: none;
+      color: var(--text-body);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .ext-link-card.fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .ext-link-card.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    .ext-link-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(153,24,50,0.25);
+      color: var(--primary);
+    }
+
+    .ext-link-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: var(--light-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      flex-shrink: 0;
+      transition: background var(--transition);
+    }
+
+    .ext-link-card:hover .ext-link-icon { background: rgba(153,24,50,0.1); }
+
+    .ext-link-name {
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .ext-link-url {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
+    }
+
+    .ext-link-card:hover .ext-link-url { color: rgba(153,24,50,0.6); }
+
+    /* ── FAQ ACCORDION ── */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--mid-gray);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+
+    .faq-item.open { border-color: rgba(153,24,50,0.3); }
+
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      transition: background var(--transition);
+    }
+
+    .faq-question:hover { background: var(--light-gray); }
+    .faq-item.open .faq-question { background: rgba(153,24,50,0.03); }
+
+    .faq-question span {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .faq-chevron {
+      color: var(--primary);
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .faq-item.open .faq-answer { max-height: 300px; }
+
+    .faq-answer-inner {
+      padding: 0 1.5rem 1.25rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      border-top: 1px solid var(--light-gray);
+      padding-top: 1rem;
+    }
+
+    .faq-answer-inner a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    .faq-answer-inner a:hover { text-decoration: underline; }
+
+    /* ── FADE ANIMATION ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .cards-grid, .contacts-grid, .links-grid { grid-template-columns: 1fr; }
+      .postgrad-grid { grid-template-columns: 1fr; }
+      .page-hero { padding: 8rem 1.25rem 4rem; }
+      .postgrad-section { padding: 2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .main { padding: 2.5rem 1.25rem 4rem; }
+      .section-header h2 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+<!-- ── NAVIGATION (Web Component) ── -->
+<script src="components.js"></script>
+<su-nav></su-nav>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>Resources</span>
+    </div>
+    <h1>Student <span>Resources</span></h1>
+    <p>Everything you need to succeed in the CS Division at Stellenbosch University</p>
+  </div>
+</section>
+
+<!-- ── QUICK LINKS BAR ── -->
+<div class="quick-links-bar">
+  <div class="quick-links-inner">
+    <a href="https://mystudies.sun.ac.za" target="_blank" rel="noopener" class="quick-link-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+      </svg>
+      SU Student Portal
+    </a>
+    <a href="https://learn.sun.ac.za" target="_blank" rel="noopener" class="quick-link-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      </svg>
+      SUNLearn
+    </a>
+    <a href="https://library.sun.ac.za" target="_blank" rel="noopener" class="quick-link-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+      Library
+    </a>
+    <a href="https://its.sun.ac.za" target="_blank" rel="noopener" class="quick-link-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
+      IT Services
+    </a>
+    <a href="https://www.sun.ac.za/english/faculty/science/postgraduate" target="_blank" rel="noopener" class="quick-link-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+      </svg>
+      Postgrad Office
+    </a>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<main class="main" id="main-content">
+
+  <!-- SECTION 1: ACADEMIC SUPPORT -->
+  <section class="resources-section">
+    <div class="section-header fade-up">
+      <div class="section-label">Section 01</div>
+      <h2>Academic Support</h2>
+      <p>We're committed to your success. Multiple support channels are available throughout the semester.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="resource-card fade-up">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3>Tutors &amp; Consultants</h3>
+        <p>First-year and second-year modules have dedicated tutors. Check SUNLearn for your module's tutor schedule and consultation times.</p>
+      </div>
+
+      <div class="resource-card fade-up">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+        </div>
+        <h3>Writing Centre</h3>
+        <p>The SU Writing Centre offers help with academic writing, reports, and theses. Especially valuable for Honours and postgraduate students.</p>
+      </div>
+
+      <div class="resource-card fade-up">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+        </div>
+        <h3>Mathematics Support</h3>
+        <p>The Mathematics Division offers academic support for struggling students in quantitative and mathematical modules relevant to CS.</p>
+      </div>
+
+      <div class="resource-card fade-up">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <h3>CS Staff Office Hours</h3>
+        <p>Most CS staff keep regular office hours. Check individual staff pages on the department website, or contact them directly by email.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- SECTION 2: COMPUTING RESOURCES -->
+  <section class="resources-section">
+    <div class="section-header fade-up">
+      <div class="section-label">Section 02</div>
+      <h2>Computing Resources</h2>
+      <p>Access the hardware, software, and infrastructure you need for your studies and research.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="resource-card fade-up">
+        <div class="card-icon" style="background:rgba(22,33,62,0.08);color:var(--dark-mid);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <h3>Computer Labs</h3>
+        <p>The Department has dedicated computer labs available to CS students throughout the semester. Access requires a valid student card.</p>
+      </div>
+
+      <div class="resource-card fade-up">
+        <div class="card-icon" style="background:rgba(22,33,62,0.08);color:var(--dark-mid);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+          </svg>
+        </div>
+        <h3>Linux Systems</h3>
+        <p>CS students have access to departmental Linux servers for coursework and research tasks. SSH access is provided after enrolment.</p>
+      </div>
+
+      <div class="resource-card fade-up">
+        <div class="card-icon" style="background:rgba(22,33,62,0.08);color:var(--dark-mid);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
+          </svg>
+        </div>
+        <h3>Software Licences</h3>
+        <p>SU provides licences for Microsoft Office, MATLAB, and other commercial tools via IT Services. Visit its.sun.ac.za for the full software catalogue.</p>
+      </div>
+
+      <div class="resource-card fade-up">
+        <div class="card-icon" style="background:rgba(22,33,62,0.08);color:var(--dark-mid);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3>Cloud Computing</h3>
+        <p>Research students may apply for access to cloud computing resources for ML and data-intensive workloads. Contact your supervisor to apply.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- SECTION 3: IMPORTANT CONTACTS -->
+  <section class="resources-section">
+    <div class="section-header fade-up">
+      <div class="section-label">Section 03</div>
+      <h2>Important Contacts</h2>
+      <p>Reach out to the right person. We're here to help.</p>
+    </div>
+
+    <div class="contacts-grid">
+      <div class="contact-card fade-up">
+        <div class="contact-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div class="contact-body">
+          <h3>Undergraduate Enquiries</h3>
+          <a href="mailto:undergrad@cs.sun.ac.za">undergrad@cs.sun.ac.za</a>
+          <p>Queries about BSc CS, BDatSci, module selection, and all undergraduate matters.</p>
+        </div>
+      </div>
+
+      <div class="contact-card fade-up">
+        <div class="contact-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div class="contact-body">
+          <h3>Postgraduate Enquiries</h3>
+          <a href="mailto:postgrad@cs.sun.ac.za">postgrad@cs.sun.ac.za</a>
+          <p>Honours applications, Master's, PhD admissions, and all postgraduate matters.</p>
+        </div>
+      </div>
+
+      <div class="contact-card fade-up">
+        <div class="contact-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <div class="contact-body">
+          <h3>General / Secretary</h3>
+          <a href="mailto:secretary@cs.sun.ac.za">secretary@cs.sun.ac.za</a>
+          <p>General departmental enquiries and administrative matters.</p>
+        </div>
+      </div>
+
+      <div class="contact-card fade-up">
+        <div class="contact-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.59 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 15.92z"/>
+          </svg>
+        </div>
+        <div class="contact-body">
+          <h3>Main Phone</h3>
+          <a href="tel:+27218084232">+27 21 808 4232</a>
+          <p>Division reception, Mon–Fri 08:00–16:00</p>
+        </div>
+      </div>
+
+      <div class="contact-card address fade-up">
+        <div class="contact-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <div class="contact-body">
+          <h3>Physical Address</h3>
+          <p>A-wing, Mathematical Sciences Building<br />Stellenbosch University Campus<br />Matieland, 7602</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Embedded Map & Directions -->
+    <div class="fade-up" style="margin-top:2.5rem;">
+      <div style="border:2px solid rgba(201,162,39,0.3);overflow:hidden;">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=18.8615%2C-33.9335%2C18.8680%2C-33.9290&layer=mapnik&marker=-33.9313%2C18.8648"
+          width="100%"
+          height="350"
+          style="border:0;display:block;"
+          loading="lazy"
+          title="Map showing Stellenbosch University Mathematical Sciences Building location"
+          aria-label="Interactive map of Stellenbosch University campus showing the Mathematical Sciences Building">
+        </iframe>
+      </div>
+      <div style="margin-top:1.25rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;">
+        <div style="padding:1.25rem;background:var(--card-bg,rgba(255,255,255,0.03));border:1px solid var(--card-border,rgba(255,255,255,0.06));">
+          <h4 style="font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent,#c9a227);margin-bottom:0.75rem;">Directions by Car</h4>
+          <p style="font-size:0.9rem;line-height:1.7;color:var(--text-secondary,rgba(255,255,255,0.6));">
+            From the N1/N2, take the R304 towards Stellenbosch. Follow Victoria Street, then turn onto Merriman Avenue. The Mathematical Sciences Building (A-wing) is on the main campus, accessible via Bosman Street. Visitor parking is available on Merriman Avenue and at the Neelsie Student Centre parking garage.
+          </p>
+        </div>
+        <div style="padding:1.25rem;background:var(--card-bg,rgba(255,255,255,0.03));border:1px solid var(--card-border,rgba(255,255,255,0.06));">
+          <h4 style="font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent,#c9a227);margin-bottom:0.75rem;">Public Transport &amp; Parking</h4>
+          <p style="font-size:0.9rem;line-height:1.7;color:var(--text-secondary,rgba(255,255,255,0.6));">
+            The campus is a 15-minute walk from Stellenbosch train station. MyCiTi and Golden Arrow bus routes serve the town centre. On-campus pay parking is available at the Neelsie Centre garage and along Merriman Avenue. Bicycle racks are located outside the Mathematical Sciences Building.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- SECTION 4: KEY DATES -->
+  <section class="resources-section">
+    <div class="section-header fade-up">
+      <div class="section-label">Section 04</div>
+      <h2>Key Dates &amp; Calendars</h2>
+      <p>Important annual dates for Honours students and general academic planning.</p>
+    </div>
+
+    <div class="dates-table-wrap fade-up">
+      <table class="dates-table" aria-label="Key academic dates">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Event</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2 Feb</td>
+            <td>Honours Orientation</td>
+            <td><span class="date-badge">Annual</span> Check each year — date may shift slightly</td>
+          </tr>
+          <tr>
+            <td>6 Feb</td>
+            <td>Honours Project Registration Deadline</td>
+            <td>Submit supervisor agreement form by this date</td>
+          </tr>
+          <tr>
+            <td>9 Feb</td>
+            <td>Honours Lectures Begin</td>
+            <td>Attendance is compulsory for all Honours modules</td>
+          </tr>
+          <tr>
+            <td>Mid Feb</td>
+            <td>Semester 1 Teaching Commences</td>
+            <td>Check <a href="https://www.sun.ac.za/english/academic-calendar" target="_blank" rel="noopener">SU Academic Calendar</a> for exact date</td>
+          </tr>
+          <tr>
+            <td>Late May</td>
+            <td>Semester 1 Examinations</td>
+            <td><a href="https://www.sun.ac.za/english/learning-teaching/ctl/examination-timetable" target="_blank" rel="noopener">SU Examination Timetable</a></td>
+          </tr>
+          <tr>
+            <td>Mid Jul</td>
+            <td>Semester 2 Teaching Commences</td>
+            <td>Check SU Academic Calendar for exact date</td>
+          </tr>
+          <tr>
+            <td>Oct/Nov</td>
+            <td>Semester 2 Examinations</td>
+            <td><a href="https://www.sun.ac.za/english/learning-teaching/ctl/examination-timetable" target="_blank" rel="noopener">SU Examination Timetable</a></td>
+          </tr>
+          <tr>
+            <td>Oct</td>
+            <td>Honours Project Submission</td>
+            <td>Final thesis submission deadline — confirm with supervisor</td>
+          </tr>
+          <tr>
+            <td>Nov</td>
+            <td>Honours Oral Defense</td>
+            <td>Scheduled by department after thesis submission</td>
+          </tr>
+          <tr>
+            <td>Dec</td>
+            <td>Graduation Ceremonies</td>
+            <td>Check <a href="https://www.sun.ac.za" target="_blank" rel="noopener">sun.ac.za</a> for ceremony dates and booking</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- SECTION 5: POSTGRADUATE RESOURCES -->
+  <section class="resources-section">
+    <div class="postgrad-section fade-up">
+      <div class="section-label">Section 05</div>
+      <h2>Postgraduate Resources</h2>
+      <p>Dedicated information for Honours, Master's, and PhD students in the CS Division.</p>
+
+      <div class="postgrad-grid">
+        <div class="postgrad-card">
+          <h4>NRF Bursary Applications</h4>
+          <p>South African postgraduate students can apply for NRF bursaries and scholarships. Applications typically open in April–May for the following year. Visit <a href="https://www.nrf.ac.za" target="_blank" rel="noopener" style="color:var(--accent-light);">nrf.ac.za</a> for current calls.</p>
+        </div>
+
+        <div class="postgrad-card">
+          <h4>Thesis Formatting Guidelines</h4>
+          <p>Stellenbosch University provides official formatting guidelines for dissertations and theses. Download the template from the SU Library website or contact your faculty administrator.</p>
+        </div>
+
+        <div class="postgrad-card">
+          <h4>Ethics Clearance</h4>
+          <p>Research involving human subjects, surveys, or sensitive data requires ethics committee clearance. Contact the Faculty Research Ethics Committee early — the process can take 4–8 weeks.</p>
+        </div>
+
+        <div class="postgrad-card">
+          <h4>Conference Funding (NRF)</h4>
+          <p>Registered postgraduate students may apply for NRF conference funding to present their research at national and international conferences. Consult your supervisor and the postgraduate office.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- SECTION 6: USEFUL LINKS -->
+  <section class="resources-section">
+    <div class="section-header fade-up">
+      <div class="section-label">Section 06</div>
+      <h2>Useful Links</h2>
+      <p>Essential external resources for CS students at Stellenbosch.</p>
+    </div>
+
+    <div class="links-grid">
+      <a href="https://www.sun.ac.za" target="_blank" rel="noopener" class="ext-link-card fade-up">
+        <div class="ext-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ext-link-name">SU Main Website</div>
+          <div class="ext-link-url">sun.ac.za</div>
+        </div>
+      </a>
+
+      <a href="https://mystudies.sun.ac.za" target="_blank" rel="noopener" class="ext-link-card fade-up">
+        <div class="ext-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ext-link-name">SU Student Portal</div>
+          <div class="ext-link-url">mystudies.sun.ac.za</div>
+        </div>
+      </a>
+
+      <a href="https://learn.sun.ac.za" target="_blank" rel="noopener" class="ext-link-card fade-up">
+        <div class="ext-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ext-link-name">SUNLearn (LMS)</div>
+          <div class="ext-link-url">learn.sun.ac.za</div>
+        </div>
+      </a>
+
+      <a href="https://library.sun.ac.za" target="_blank" rel="noopener" class="ext-link-card fade-up">
+        <div class="ext-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ext-link-name">SU Library</div>
+          <div class="ext-link-url">library.sun.ac.za</div>
+        </div>
+      </a>
+
+      <a href="https://its.sun.ac.za" target="_blank" rel="noopener" class="ext-link-card fade-up">
+        <div class="ext-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ext-link-name">IT Services</div>
+          <div class="ext-link-url">its.sun.ac.za</div>
+        </div>
+      </a>
+
+      <a href="https://www.nrf.ac.za" target="_blank" rel="noopener" class="ext-link-card fade-up">
+        <div class="ext-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ext-link-name">NRF</div>
+          <div class="ext-link-url">nrf.ac.za</div>
+        </div>
+      </a>
+
+      <a href="https://www.csir.co.za" target="_blank" rel="noopener" class="ext-link-card fade-up">
+        <div class="ext-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ext-link-name">CSIR</div>
+          <div class="ext-link-url">csir.co.za</div>
+        </div>
+      </a>
+
+      <a href="https://education.github.com" target="_blank" rel="noopener" class="ext-link-card fade-up">
+        <div class="ext-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ext-link-name">GitHub Education</div>
+          <div class="ext-link-url">education.github.com</div>
+        </div>
+      </a>
+
+      <a href="https://stackoverflow.com" target="_blank" rel="noopener" class="ext-link-card fade-up">
+        <div class="ext-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <div>
+          <div class="ext-link-name">Stack Overflow</div>
+          <div class="ext-link-url">stackoverflow.com</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- FAQ -->
+  <section class="resources-section">
+    <div class="section-header fade-up">
+      <div class="section-label">FAQ</div>
+      <h2>Frequently Asked Questions</h2>
+      <p>Quick answers to the most common student queries.</p>
+    </div>
+
+    <div class="faq-list fade-up">
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do I register for a module?</span>
+          <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            Module registration is done via the <a href="https://mystudies.sun.ac.za" target="_blank" rel="noopener">SU Student Portal (mystudies.sun.ac.za)</a>. Consult your programme advisor if you need assistance selecting modules or if a prerequisite approval is required. Registration windows open before each semester — check the academic calendar.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Who do I contact about my academic record?</span>
+          <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            Contact the Faculty of Science's student administration office for queries about your academic record, transcripts, or re-marks. Your academic record can also be viewed via the <a href="https://mystudies.sun.ac.za" target="_blank" rel="noopener">SU Student Portal</a>.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do I find a supervisor for Honours / Master's / PhD?</span>
+          <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            Browse staff research interests on the department website, then email potential supervisors directly with a brief motivation and your academic record. Contact <a href="mailto:postgrad@cs.sun.ac.za">postgrad@cs.sun.ac.za</a> for guidance if you're unsure where to start. It is advisable to approach supervisors early, as capacity is limited.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Are there part-time study options?</span>
+          <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            Undergraduate programmes (BSc CS, BDatSci) are generally full-time. Some postgraduate options — particularly Master's by research — may accommodate part-time arrangements depending on supervisor agreement. Contact <a href="mailto:postgrad@cs.sun.ac.za">postgrad@cs.sun.ac.za</a> for specific queries.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do I access the departmental Linux servers?</span>
+          <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            Linux server access is set up as part of module onboarding in relevant modules (e.g., SC272). Your lecturer or tutor will provide SSH credentials and connection details at the start of the semester. Contact <a href="mailto:secretary@cs.sun.ac.za">secretary@cs.sun.ac.za</a> for general IT access queries.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>When does the Honours project officially begin?</span>
+          <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            The Honours project (CSc781) officially begins with the Honours orientation at the start of February. The project registration deadline is 6 February, and Honours lectures begin 9 February. Students are strongly encouraged to identify a supervisor and preliminary topic before the start of the year.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER (Web Component) ── -->
+<su-footer></su-footer>
+
+<script>
+  const observerOpts = { threshold: 0.07, rootMargin: '0px 0px -40px 0px' };
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.closest('.cards-grid, .contacts-grid, .links-grid')
+          ? Array.from(entry.target.parentElement.children).indexOf(entry.target) * 70
+          : 0;
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, observerOpts);
+
+  document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+
+  // ── FAQ ACCORDION ──
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(openItem => {
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+
+      // Open clicked (if was closed)
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>
+  <!-- ─── SCROLL TO TOP ─── -->
+  <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top" title="Scroll to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+  <script>
+    (function(){var btn=document.getElementById('scrollToTop');window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>400)});btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();
+  </script>
+  <!-- ─── DARK MODE TOGGLE ─── -->
+  <button class="dm-toggle" id="dmToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+  <script>
+    (function() {
+      var dmToggle = document.getElementById('dmToggle');
+      var htmlEl = document.documentElement;
+      var savedTheme = localStorage.getItem('su-theme') || 'light';
+      htmlEl.setAttribute('data-theme', savedTheme);
+      dmToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+      dmToggle.addEventListener('click', function() {
+        var isDark = htmlEl.getAttribute('data-theme') === 'dark';
+        var next = isDark ? 'light' : 'dark';
+        htmlEl.setAttribute('data-theme', next);
+        localStorage.setItem('su-theme', next);
+        dmToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+      });
+    })();
+  </script>
+</body>
+</html>
