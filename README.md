@@ -65,6 +65,11 @@ All colours, spacing, shadows, and typography are defined as CSS custom properti
 - Primary (maroon): `#991832`
 - Accent (gold): `#c9a227`
 
+**Brand font:**
+- SU-Raleway-Light
+- SU-Raleway-Regular
+- SU-Raleway-Medium
+  
 **Key tokens:** `--surface`, `--surface-alt`, `--border`, `--text-primary`, `--text-secondary`, `--text-muted`, `--shadow-sm/md/lg/xl`, `--radius-sm/md/lg/xl`, `--font-heading`, `--font-body`
 
 ### Dark Mode
