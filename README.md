@@ -140,9 +140,9 @@ vercel --prod
 | Criterion | How We Address It |
 |-----------|-------------------|
 | **Design** | Cohesive hackathon-tier dark aesthetic, SU brand colours, consistent token system, dramatic hero sections |
-| **Functionality** | Course search & filtering, dark mode toggle with persistence, scroll-to-top, interactive FAQ accordions, smooth scroll navigation |
+| **Functionality** | Course search & filtering, dark mode toggle with persistence, scroll-to-top, interactive FAQ accordions, smooth scroll navigation, mobile support |
 | **Completeness** | All 10 required content areas covered across 9 pages — programmes, staff, research, news, resources, publications, seminars, map |
 | **Responsiveness** | CSS Grid/Flexbox layouts, mobile hamburger nav, media queries at 1024/768/480px breakpoints |
 | **Usability** | Skip-to-content links, semantic HTML, ARIA labels, lazy loading, keyboard navigation, sticky filter bars |
-| **Creativity** | Web Components architecture, brutalist-modern design language, hexagonal "years of excellence" animation, gradient research cards |
+| **Creativity** | Web Components architecture, brutalist-modern design language, gradient research cards, maroon text selection |
 
